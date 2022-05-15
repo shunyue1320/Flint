@@ -1,0 +1,3 @@
+workspaces:
+  - "web/**"
+  - "packages/**"
