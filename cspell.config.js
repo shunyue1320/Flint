@@ -174,5 +174,6 @@ module.exports = {
     "cspell.config.js",
     "pnpm-lock.yaml",
     ".eslintrc.js",
+    "extensions.json",
   ],
 };
