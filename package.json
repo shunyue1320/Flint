@@ -17,6 +17,8 @@
     "typescript": "^4.6.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-angular": "^17.0.0",
     "cspell": "^5.21.0",
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1"
