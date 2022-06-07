@@ -5,6 +5,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export interface LoginPanelContentProps {
   transitionKey: React.Key;
+  children: React.ReactNode;
 }
 
 export const LoginPanelContent: React.FC<LoginPanelContentProps> = ({

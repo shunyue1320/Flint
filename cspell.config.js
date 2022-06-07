@@ -169,6 +169,7 @@ module.exports = {
   ],
   ignorePaths: [
     "**/coverage/**",
+    "**/.vscode/**",
     "**/node_modules/**",
     "**/dist/**",
     "cspell.config.js",
