@@ -8,7 +8,7 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="login-page-container">
       <LoginPanel>
-        <LoginWithPhone />
+        <LoginWithPhone renderQRCode={() => <div>二维码</div>} />
       </LoginPanel>
     </div>
   );

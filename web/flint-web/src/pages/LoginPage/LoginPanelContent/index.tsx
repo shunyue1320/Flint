@@ -14,7 +14,7 @@ export const LoginPanelContent: React.FC<LoginPanelContentProps> = ({
 }) => {
   return (
     <TransitionGroup className="login-panel-content">
-      <CSSTransition key={transitionKey} unmountOnExit className="slider-in" time={400}>
+      <CSSTransition key={transitionKey} unmountOnExit className="slider-in" timeout={400}>
         {children}
       </CSSTransition>
     </TransitionGroup>

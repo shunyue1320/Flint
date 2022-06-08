@@ -7,4 +7,14 @@ export default defineConfig({
   server: {
     open: true,
   },
+  resolve: {
+    alias: [{ find: /^~/, replacement: "" }],
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
 });
