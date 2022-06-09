@@ -1,10 +1,32 @@
+@grey-1: #e5e8f0;
+
 .login-panel-container {
   width: 960px;
   height: 640px;
   display: flex;
 }
 
-.login-panel-cover, .login-panel-inner {
+.login-panel-cover,
+.login-panel-inner {
   flex: 1;
   overflow: hidden;
+}
+
+.login-width-limiter {
+  width: 320px;
+  margin: 0 auto 48px;
+}
+
+.login-splitter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+
+  &::before,
+  &::after {
+    flex: 1;
+    content: "";
+    border-top: 1px dashed var(--grey-1);
+    margin: 0 16px;
+  }
 }

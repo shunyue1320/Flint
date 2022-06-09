@@ -1,3 +1,4 @@
+import "../flat-components.less";
 import "../theme.less";
 
 import React from "react";

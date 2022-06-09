@@ -56,6 +56,9 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({ renderQRCode }) 
             onChange={ev => setPhone(ev.currentTarget.value)}
           />
         </div>
+        <div className="login-splitter">
+          <span className="login-splitter-text">也可以通过以下方式直接登录</span>
+        </div>
       </div>
     );
   }
