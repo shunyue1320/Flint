@@ -11,6 +11,9 @@ import { LoginPanelContent } from "../LoginPanelContent";
 export function validatePhone(phone: string): boolean {
   return phone.length >= 5 && !/\D/.test(phone);
 }
+export function validateCode(code: string): boolean {
+  return code.length === 6;
+}
 
 export interface LoginWithPhoneProps {
   renderQRCode: () => React.ReactNode;
@@ -18,8 +21,9 @@ export interface LoginWithPhoneProps {
 
 export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({ renderQRCode }) => {
   const [showQRCode, setShowQRCode] = useState(false);
-  const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+86");
+  const [phone, setPhone] = useState("");
+  const [code, setCode] = useState("");
 
   function renderQRCodePage(): React.ReactNode {
     return (
@@ -54,6 +58,18 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({ renderQRCode }) 
             status={!phone || validatePhone(phone) ? "" : "error"}
             value={phone}
             onChange={ev => setPhone(ev.currentTarget.value)}
+          />
+          <Input
+            placeholder="请输入验证码"
+            prefix={<img alt="checked" draggable={false} src={checkedSVG} />}
+            status={!code || validateCode(code) ? undefined : "error"}
+            suffix={
+              <Button disabled={!validatePhone(phone)} size="small" type="link">
+                发送验证码
+              </Button>
+            }
+            value={code}
+            onChange={ev => setCode(ev.currentTarget.value)}
           />
         </div>
         <div className="login-splitter">
