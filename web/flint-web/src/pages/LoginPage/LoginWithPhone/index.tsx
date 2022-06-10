@@ -7,6 +7,7 @@ import { Input, Select, Button } from "antd";
 import { COUNTRY_CODES } from "./data";
 import { LoginTitle } from "../LoginTitle";
 import { LoginPanelContent } from "../LoginPanelContent";
+import { LoginAgreement, LoginAgreementProps } from "../LoginAgreement";
 
 export function validatePhone(phone: string): boolean {
   return phone.length >= 5 && !/\D/.test(phone);
@@ -16,14 +17,21 @@ export function validateCode(code: string): boolean {
 }
 
 export interface LoginWithPhoneProps {
+  privacyURL?: LoginAgreementProps["privacyURL"];
+  serviceURL?: LoginAgreementProps["privacyURL"];
   renderQRCode: () => React.ReactNode;
 }
 
-export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({ renderQRCode }) => {
+export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
+  privacyURL,
+  serviceURL,
+  renderQRCode,
+}) => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [countryCode, setCountryCode] = useState("+86");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
+  const [agreed, setAgreed] = useState(false);
 
   function renderQRCodePage(): React.ReactNode {
     return (
@@ -70,6 +78,12 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({ renderQRCode }) 
             }
             value={code}
             onChange={ev => setCode(ev.currentTarget.value)}
+          />
+          <LoginAgreement
+            checked={agreed}
+            privacyURL={privacyURL}
+            serviceURL={serviceURL}
+            onChange={setAgreed}
           />
         </div>
         <div className="login-splitter">
