@@ -32,6 +32,8 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [agreed, setAgreed] = useState(false);
+  console.log("==========11", validatePhone(phone) && validateCode(code));
+  const canLogin = validatePhone(phone) && validateCode(code);
 
   function renderQRCodePage(): React.ReactNode {
     return (
@@ -85,6 +87,9 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
             serviceURL={serviceURL}
             onChange={setAgreed}
           />
+          <Button className="login-big-button" disabled={!canLogin} type="primary">
+            注册或登录
+          </Button>
         </div>
         <div className="login-splitter">
           <span className="login-splitter-text">也可以通过以下方式直接登录</span>
