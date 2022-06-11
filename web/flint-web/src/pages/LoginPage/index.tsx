@@ -10,6 +10,7 @@ export const LoginPage: React.FC = () => {
     <div className="login-page-container">
       <LoginPanel>
         <LoginWithPhone
+          buttons={["wechat", "github"]}
           privacyURL={PRIVACY_URL}
           renderQRCode={() => <div>二维码</div>}
           serviceURL={SERVICE_URL}
