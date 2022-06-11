@@ -2,15 +2,17 @@ import checkedSVG from "./icons/checked.svg";
 import "./index.less";
 
 import React, { useCallback, useMemo, useState } from "react";
-import { Input, Select, Button, Modal } from "antd";
+import { Input, Select, Button, Modal, message } from "antd";
 
 import { COUNTRY_CODES } from "./data";
 import { LoginTitle } from "../LoginTitle";
 import { LoginPanelContent } from "../LoginPanelContent";
 import { LoginAgreement, LoginAgreementProps } from "../LoginAgreement";
 import { LoginButtons, LoginButtonsDescription, LoginButtonProviderType } from "../LoginButtons";
+import { useIsUnMounted, useSafePromise } from "../../../utils/hooks";
 
 export function validatePhone(phone: string): boolean {
+  console.log("------111");
   return phone.length >= 5 && !/\D/.test(phone);
 }
 export function validateCode(code: string): boolean {
@@ -22,6 +24,7 @@ export interface LoginWithPhoneProps {
   privacyURL?: LoginAgreementProps["privacyURL"];
   serviceURL?: LoginAgreementProps["serviceURL"];
   renderQRCode: () => React.ReactNode;
+  loginOrRegister: (countryCode: string, phone: string, code: string) => Promise<boolean>;
 }
 
 export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
@@ -29,7 +32,10 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   privacyURL,
   serviceURL,
   renderQRCode,
+  loginOrRegister,
 }) => {
+  const sp = useSafePromise();
+
   const buttons = useMemo<LoginButtonsDescription>(
     () =>
       userButtons
@@ -46,8 +52,30 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [clickedLogin, setClickedLogin] = useState(false);
+
   const canLogin = validatePhone(phone) && validateCode(code);
-  console.log("1111====点击");
+
+  const login = useCallback(async () => {
+    if (!agreed) {
+      if (!(await requestAgreement({ privacyURL, serviceURL }))) {
+        return;
+      }
+      setAgreed(true);
+      if (canLogin) {
+        setClickedLogin(true);
+        const success = await sp(loginOrRegister(countryCode, phone, code));
+        if (success) {
+          // 登入成功截流
+          await sp(new Promise(resolve => setTimeout(resolve, 60000)));
+        } else {
+          message.error("登录失败");
+        }
+        setClickedLogin(false);
+      }
+    }
+  }, [agreed, canLogin, privacyURL, serviceURL, sp, loginOrRegister, countryCode, phone, code]);
+
   const providerLogin = useCallback(async () => {
     if (!agreed) {
       if (!(await requestAgreement({ privacyURL, serviceURL }))) {
@@ -109,7 +137,13 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
             serviceURL={serviceURL}
             onChange={setAgreed}
           />
-          <Button className="login-big-button" disabled={!canLogin} type="primary">
+          <Button
+            className="login-big-button"
+            disabled={!canLogin}
+            loading={clickedLogin}
+            type="primary"
+            onClick={login}
+          >
             注册或登录
           </Button>
         </div>
