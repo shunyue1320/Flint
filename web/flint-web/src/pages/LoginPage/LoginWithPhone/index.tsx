@@ -12,7 +12,6 @@ import { LoginButtons, LoginButtonsDescription, LoginButtonProviderType } from "
 import { useIsUnMounted, useSafePromise } from "../../../utils/hooks";
 
 export function validatePhone(phone: string): boolean {
-  console.log("------111");
   return phone.length >= 5 && !/\D/.test(phone);
 }
 export function validateCode(code: string): boolean {
@@ -25,6 +24,7 @@ export interface LoginWithPhoneProps {
   serviceURL?: LoginAgreementProps["serviceURL"];
   renderQRCode: () => React.ReactNode;
   loginOrRegister: (countryCode: string, phone: string, code: string) => Promise<boolean>;
+  sendVerificationCode: (countryCode: string, phone: string) => Promise<boolean>;
 }
 
 export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
@@ -33,6 +33,7 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   serviceURL,
   renderQRCode,
   loginOrRegister,
+  sendVerificationCode,
 }) => {
   const sp = useSafePromise();
 
@@ -47,14 +48,43 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
     [userButtons],
   );
 
+  const isUnMountRef = useIsUnMounted();
   const [showQRCode, setShowQRCode] = useState(false);
   const [countryCode, setCountryCode] = useState("+86");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
+  const [countdown, setCountdown] = useState(0);
   const [clickedLogin, setClickedLogin] = useState(false);
 
   const canLogin = validatePhone(phone) && validateCode(code);
+
+  const sendCode = useCallback(async () => {
+    if (validatePhone(phone)) {
+      setSendingCode(true);
+      const sent = await sp(sendVerificationCode(countryCode, phone));
+      setSendingCode(false);
+      if (sent) {
+        void message.info("已发送验证码");
+        let count = 60;
+        setCountdown(count);
+        const timer = setInterval(() => {
+          // 如果组件卸载了就清除定时器，防止内存泄漏
+          if (isUnMountRef.current) {
+            clearInterval(timer);
+            return;
+          }
+          setCountdown(--count);
+          if (count === 0) {
+            clearInterval(timer);
+          }
+        }, 1000);
+      } else {
+        message.error("验证码发送失败");
+      }
+    }
+  }, [countryCode, phone, isUnMountRef, sendVerificationCode, sp]);
 
   const login = useCallback(async () => {
     if (!agreed) {
@@ -124,9 +154,18 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
             prefix={<img alt="checked" draggable={false} src={checkedSVG} />}
             status={!code || validateCode(code) ? undefined : "error"}
             suffix={
-              <Button disabled={!validatePhone(phone)} size="small" type="link">
-                发送验证码
-              </Button>
+              countdown > 0 ? (
+                <span className="login-countdown">{countdown} 秒后重新获取</span>
+              ) : (
+                <Button
+                  disabled={sendingCode || !validatePhone(phone)}
+                  size="small"
+                  type="link"
+                  onClick={sendCode}
+                >
+                  发送验证码
+                </Button>
+              )
             }
             value={code}
             onChange={ev => setCode(ev.currentTarget.value)}
