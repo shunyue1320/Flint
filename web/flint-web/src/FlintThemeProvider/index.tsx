@@ -13,7 +13,7 @@ export interface FlintThemeBodyProviderProps {
 }
 
 export const FlintThemeBodyProvider: FC<FlintThemeBodyProviderProps> = ({
-  prefersColorScheme = "light",
+  prefersColorScheme = "auto",
   children,
 }) => {
   const darkMode = useDarkMode(prefersColorScheme);

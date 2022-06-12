@@ -13,13 +13,18 @@ import { errorTips } from "../../components/Tips/ErrorTips";
 import { WeChatLogin } from "./WeChatLogin";
 import { LoginButtonProviderType } from "./LoginButtons";
 import { LoginDisposer } from "./utils";
+import { NEED_BINDING_PHONE } from "../../constants/config";
 
 export const LoginPage: React.FC = () => {
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
   const loginDisposer = useRef<LoginDisposer>();
 
   const setLoginResult = useCallback((userInfo: LoginProcessResult | null) => {
+    console.log("userInfo ====", userInfo);
     setLoginResult_(userInfo);
+    // 中国已绑定手机号用户自动跳转到 home 页面
+    if (userInfo && NEED_BINDING_PHONE ? userInfo.hasPhone : true) {
+    }
   }, []);
 
   const onLoginResult = useCallback(async (authData: LoginProcessResult) => {

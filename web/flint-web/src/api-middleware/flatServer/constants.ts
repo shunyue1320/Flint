@@ -7,7 +7,7 @@ export const FLAT_SERVER_VERSIONS = {
 } as const;
 
 export const FLAT_SERVER_LOGIN = {
-  WECHAT_CALLBACK: `${FLAT_SERVER_VERSIONS.V1}/login/agora/callback`,
+  WECHAT_CALLBACK: `${FLAT_SERVER_VERSIONS.V1}/login/weChat/web/callback`,
 };
 
 export enum Status {

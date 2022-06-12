@@ -9,6 +9,16 @@ export interface LoginProcessResult {
   agoraSSOLoginID?: string;
 }
 
+export interface loginProcessPayload {
+  authUUID: string;
+}
+
+export async function loginProcess(authUUID: string): Promise<LoginProcessResult> {
+  return await postNotAuth<loginProcessPayload, LoginProcessResult>("login/process", {
+    authUUID,
+  });
+}
+
 export interface setAuthUUIDPayload {
   authUUID: string;
 }
