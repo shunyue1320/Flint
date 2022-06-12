@@ -1,0 +1,1 @@
+export type LoginDisposer = () => void;

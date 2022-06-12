@@ -8,8 +8,13 @@ import { COUNTRY_CODES } from "./data";
 import { LoginTitle } from "../LoginTitle";
 import { LoginPanelContent } from "../LoginPanelContent";
 import { LoginAgreement, LoginAgreementProps } from "../LoginAgreement";
-import { LoginButtons, LoginButtonsDescription, LoginButtonProviderType } from "../LoginButtons";
-import { useIsUnMounted, useSafePromise } from "../../../utils/hooks";
+import {
+  LoginButtons,
+  LoginButtonsDescription,
+  LoginButtonProviderType,
+  LoginButtonsProps,
+} from "../LoginButtons";
+import { useIsUnMounted, useSafePromise } from "../../../utils/hooks/lifecycle";
 
 export function validatePhone(phone: string): boolean {
   return phone.length >= 5 && !/\D/.test(phone);
@@ -25,6 +30,7 @@ export interface LoginWithPhoneProps {
   renderQRCode: () => React.ReactNode;
   loginOrRegister: (countryCode: string, phone: string, code: string) => Promise<boolean>;
   sendVerificationCode: (countryCode: string, phone: string) => Promise<boolean>;
+  onClickButton: LoginButtonsProps["onClick"];
 }
 
 export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
@@ -34,6 +40,7 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   renderQRCode,
   loginOrRegister,
   sendVerificationCode,
+  onClickButton,
 }) => {
   const sp = useSafePromise();
 
@@ -106,14 +113,24 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
     }
   }, [agreed, canLogin, privacyURL, serviceURL, sp, loginOrRegister, countryCode, phone, code]);
 
-  const providerLogin = useCallback(async () => {
-    if (!agreed) {
-      if (!(await requestAgreement({ privacyURL, serviceURL }))) {
-        return;
+  const providerLogin = useCallback(
+    async (provider: LoginButtonProviderType) => {
+      // 勾选协议弹窗
+      if (!agreed) {
+        if (!(await requestAgreement({ privacyURL, serviceURL }))) {
+          return;
+        }
+        setAgreed(true);
       }
-      setAgreed(true);
-    }
-  }, [agreed]);
+
+      if (provider === "wechat") {
+        setShowQRCode(true);
+      } else {
+        onClickButton(provider);
+      }
+    },
+    [agreed, privacyURL, serviceURL, onClickButton],
+  );
 
   function renderQRCodePage(): React.ReactNode {
     return (
