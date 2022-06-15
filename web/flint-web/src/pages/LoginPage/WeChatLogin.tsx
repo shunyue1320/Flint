@@ -28,7 +28,7 @@ export const WeChatLogin: React.FC<WeChatLoginProps> = ({ setLoginResult }) => {
 
     setQRCodeURL(getQRCodeURL(authUUID));
 
-    // 每隔2秒通过authUUID获取用户登入状态 作用：不在前端暴露 appid secret
+    // 3. 每隔2秒通过authUUID获取用户登入状态 作用：后端通过 redirectURL 获取的 code 请求微信拿到用户信息与token 不在前端暴露 appid secret
     const loginProcessRequest = (ticket: Ticket, authUUID: string): void => {
       ticket.current = window.setTimeout(async () => {
         const data = await sp(loginProcess(authUUID));
@@ -40,7 +40,7 @@ export const WeChatLogin: React.FC<WeChatLoginProps> = ({ setLoginResult }) => {
       }, 2000);
     };
 
-    // 告诉服务器 state=authUUID 防止csrf攻击（跨站请求伪造攻击）
+    // 1. 告诉服务器 state=authUUID 防止csrf攻击（跨站请求伪造攻击）
     sp(setAuthUUID(authUUID))
       .then(loginProcessRequest.bind(null, ticket, authUUID))
       .catch(errorTips);
@@ -70,7 +70,7 @@ export const WeChatLogin: React.FC<WeChatLoginProps> = ({ setLoginResult }) => {
 export default WeChatLogin;
 
 function getQRCodeURL(authUUID: string): string {
-  // redirectURL: 授权回调域 (扫码授权后 iframe 跳转到 redirectURL 请求后端)
+  // 2. redirectURL: 授权回调域 (扫码授权后 iframe 跳转到 redirectURL 请求后端)
   const redirectURL = encodeURIComponent(`${FLAT_SERVER_LOGIN.WECHAT_CALLBACK}`);
   const qrCodeStyle = `
   .impowerBox .qrcode {

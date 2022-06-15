@@ -231,7 +231,6 @@ export function requestAgreement({
 }: RequestAgreementParams): Promise<boolean> {
   return new Promise<boolean>(resolve => {
     Modal.confirm({
-      title: "已阅读并同意",
       content: (
         <div>
           已阅读并同意{" "}
