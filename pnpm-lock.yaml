@@ -57,6 +57,7 @@ importers:
       classnames: ^2.3.1
       dotenv: ^16.0.1
       dotenv-expand: ^8.0.3
+      mobx: ^6.6.0
       react: ^18.0.0
       react-dom: ^18.0.0
       react-router-dom: ^6.3.0
@@ -70,6 +71,7 @@ importers:
       antd: 4.21.0_ef5jwxihqo6n7gxfmzogljlgcm
       axios: 0.27.2
       classnames: 2.3.1
+      mobx: 6.6.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -4808,6 +4810,10 @@ packages:
   /minimist/1.2.6:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
     dev: true
+
+  /mobx/6.6.0:
+    resolution: {integrity: sha512-MNTKevLH/6DShLZcmSL351+JgiJPO56A4GUpoiDQ3/yZ0mAtclNLdHK9q4BcQhibx8/JSDupfTpbX2NZPemlRg==}
+    dev: false
 
   /moment/2.29.3:
     resolution: {integrity: sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==}
