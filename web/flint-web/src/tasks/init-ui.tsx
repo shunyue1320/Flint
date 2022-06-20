@@ -5,9 +5,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { AppRoutes } from "../AppRoutes";
+import { StoreProvider } from "../components/StoreProvider";
 
 const App: React.FC = () => {
-  return <AppRoutes />;
+  return (
+    <StoreProvider>
+      <AppRoutes />
+    </StoreProvider>
+  );
 };
 
 export const initUI = (): void => {
