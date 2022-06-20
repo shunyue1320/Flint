@@ -48,6 +48,7 @@ export const WeChatLogin: React.FC<WeChatLoginProps> = ({ setLoginResult }) => {
     return () => {
       window.clearTimeout(ticket.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
