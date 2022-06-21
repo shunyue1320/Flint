@@ -9,6 +9,7 @@ export type UserInfo = Omit<LoginProcessResult, "agoraSSOLoginID">;
 // 全局存储中的属性是全局持久化和共享的。
 export class GlobalStore {
   public userInfo: UserInfo | null = null;
+  public lastLoginCheck: number | null = null;
 
   public constructor() {
     autoPersistStore({ storeLSName: "GlobalStore", store: this, version: LS_VERSION });
@@ -16,6 +17,10 @@ export class GlobalStore {
 
   public updateUserInfo = (userInfo: UserInfo | null): void => {
     this.userInfo = userInfo;
+  };
+
+  public updateLastLoginCheck = (val: number | null): void => {
+    this.lastLoginCheck = val;
   };
 }
 

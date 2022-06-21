@@ -1,4 +1,4 @@
-import { postNotAuth } from "./utils";
+import { postNotAuth, post } from "./utils";
 
 export interface LoginProcessResult {
   name: string;
@@ -17,6 +17,20 @@ export async function loginProcess(authUUID: string): Promise<LoginProcessResult
   return await postNotAuth<loginProcessPayload, LoginProcessResult>("login/process", {
     authUUID,
   });
+}
+
+export interface LoginCheckPayload { }
+
+export interface LoginCheckResult {
+  name: string;
+  avatar: string;
+  userUUID: string;
+  token: string;
+  hasPhone: boolean;
+}
+
+export async function loginCheck(token?: string): Promise<LoginCheckResult> {
+  return await post<LoginCheckPayload, LoginCheckResult>("login", {}, {}, token);
 }
 
 export interface setAuthUUIDPayload {
