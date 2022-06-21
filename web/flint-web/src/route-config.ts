@@ -12,6 +12,8 @@ export const routeConfig = {
   },
 };
 
+export type ExtraRouteConfig = {};
+
 // 范型 T 继承自 RouteNameType 所以 enum
 type CheckRouteConfig<
   T extends {
@@ -19,7 +21,7 @@ type CheckRouteConfig<
       path: String;
     };
   },
-> = T;
+  > = T;
 
 // 将 routeConfig 转成类型传递给 CheckRouteConfig 的 T 范型 （目的：确保 routeConfig 使用了所有的 RouteNameType ）
 export type RouteConfig = CheckRouteConfig<typeof routeConfig>;

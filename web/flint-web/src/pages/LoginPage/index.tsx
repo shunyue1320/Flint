@@ -15,22 +15,27 @@ import { LoginButtonProviderType } from "./LoginButtons";
 import { LoginDisposer } from "./utils";
 import { NEED_BINDING_PHONE } from "../../constants/config";
 import { GlobalStoreContext } from "../../components/StoreProvider";
+import { usePushNavigate, RouteNameType } from "../../utils/routes";
 
 console.log("NEED_BINDING_PHONE", NEED_BINDING_PHONE);
 
 export const LoginPage: React.FC = () => {
+  const pushNavigate = usePushNavigate();
   const globalStore = useContext(GlobalStoreContext);
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
   const loginDisposer = useRef<LoginDisposer>();
 
-  const setLoginResult = useCallback((userInfo: LoginProcessResult | null) => {
-    globalStore.updateUserInfo(userInfo);
-    setLoginResult_(userInfo);
-    // 是中国已绑定手机号用户自动跳转到 home 页面
-    if (userInfo && (NEED_BINDING_PHONE ? userInfo.hasPhone : true)) {
-      // pushHistory(RouteNameType.HomePage);
-    }
-  }, []);
+  const setLoginResult = useCallback(
+    (userInfo: LoginProcessResult | null) => {
+      globalStore.updateUserInfo(userInfo);
+      setLoginResult_(userInfo);
+      // 是中国已绑定手机号用户自动跳转到 home 页面
+      if (userInfo && (NEED_BINDING_PHONE ? userInfo.hasPhone : true)) {
+        pushNavigate(RouteNameType.HomePage);
+      }
+    },
+    [globalStore, pushNavigate],
+  );
 
   const onLoginResult = useCallback(async (authData: LoginProcessResult) => {
     if (authData.agoraSSOLoginID) {
