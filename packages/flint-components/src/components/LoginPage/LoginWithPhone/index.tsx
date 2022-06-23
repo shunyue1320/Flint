@@ -14,7 +14,9 @@ import {
   LoginButtonProviderType,
   LoginButtonsProps,
 } from "../LoginButtons";
-import { useIsUnMounted, useSafePromise } from "../../../utils/hooks/lifecycle";
+import { useIsUnMounted, useSafePromise } from "../../../utils/hooks";
+
+export * from "../LoginButtons";
 
 export function validatePhone(phone: string): boolean {
   return phone.length >= 5 && !/\D/.test(phone);

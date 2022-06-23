@@ -98,6 +98,7 @@ importers:
       classnames: ^2.3.1
       dotenv: ^16.0.1
       dotenv-expand: ^8.0.3
+      flint-components: workspace:*
       mobx: ^6.6.0
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -112,6 +113,7 @@ importers:
       antd: 4.21.0_ef5jwxihqo6n7gxfmzogljlgcm
       axios: 0.27.2
       classnames: 2.3.1
+      flint-components: link:../../packages/flint-components
       mobx: 6.6.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0

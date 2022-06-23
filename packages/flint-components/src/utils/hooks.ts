@@ -1,5 +1,4 @@
 import { RefObject, useCallback, useEffect, useRef } from "react";
-import { NODE_ENV } from "../../constants/process";
 
 export function useIsUnMounted(): RefObject<boolean> {
   const isUnMountRef = useRef(false);
@@ -55,7 +54,7 @@ export function useSafePromise(): <T, E = unknown>(
         } else if (onUnmountedError) {
           onUnmountedError(error as E);
         } else {
-          if (NODE_ENV === "development") {
+          if (process.env.NODE_ENV === "development") {
             console.error("An error occurs from a promise after a component is unmounted", error);
           }
         }

@@ -1,11 +1,18 @@
 import "./index.less";
 
 import React from "react";
+import { Cover } from "./icons/Cover";
 
+export * from "./LoginWithPhone";
 export interface LoginPanelProps {
-  children: React.ReactDOM;
+  children: React.ReactNode;
 }
 
-export const LoginPanel: React.FC<LoginPanelProps> = () => {
-  return <div>11111111</div>;
+export const LoginPanel: React.FC<LoginPanelProps> = ({ children }) => {
+  return (
+    <div className="login-panel-container">
+      <div className="login-panel-cover">{<Cover />}</div>
+      <div className="login-panel-inner">{children}</div>
+    </div>
+  );
 };

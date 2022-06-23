@@ -1,8 +1,8 @@
 import "./style.less";
 
 import React, { useCallback, useState, useRef, useContext } from "react";
-import { LoginPanel } from "./LoginPanel";
-import { LoginWithPhone } from "./LoginWithPhone";
+import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-components";
+
 import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
 import {
   loginPhone,
@@ -11,7 +11,6 @@ import {
 } from "../../api-middleware/flatServer";
 import { errorTips } from "../../components/Tips/ErrorTips";
 import { WeChatLogin } from "./WeChatLogin";
-import { LoginButtonProviderType } from "./LoginButtons";
 import { LoginDisposer } from "./utils";
 import { NEED_BINDING_PHONE } from "../../constants/config";
 import { GlobalStoreContext } from "../../components/StoreProvider";
