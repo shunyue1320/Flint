@@ -2,6 +2,7 @@
   "name": "flint-components",
   "version": "0.1.0",
   "private": true,
+  "main": "./src/index.ts",
   "scripts": {
     "start": "start-storybook -p 6007 -s public",
     "build": "build-storybook -s public"
@@ -21,6 +22,8 @@
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
+    "less": "^4.1.2",
+    "less-loader": "^11.0.0",
     "prop-types": "^15.8.1",
     "webpack": "^5.73.0"
   }
