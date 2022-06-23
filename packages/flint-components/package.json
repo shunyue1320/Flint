@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./theme/index.less": "./src/theme/index.less"
+  },
   "scripts": {
     "start": "start-storybook -p 6007 -s public",
     "build": "build-storybook -s public"

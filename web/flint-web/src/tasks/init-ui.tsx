@@ -1,4 +1,4 @@
-import "../flat-components.less";
+import "flint-components/theme/index.less";
 import "../theme.less";
 
 import React from "react";

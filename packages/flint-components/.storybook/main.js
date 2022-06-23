@@ -40,6 +40,7 @@ module.exports = {
     config.module.rules.unshift({
       test: /\.less$/,
       sideEffects: true,
+      // https://github.com/ant-design/create-react-app-antd/blob/master/craco.config.js
       use: ["style-loader", "css-loader", "less-loader"],
     });
 

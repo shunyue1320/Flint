@@ -1,4 +1,3 @@
-@import "./antd.mod.less";
 @import "./variables/colors.less";
 
 .genColors (@name, @counter: 0) when (@counter <= 12) {
@@ -13,12 +12,4 @@
   .genColors(green);
   .genColors(yellow);
   .genColors(red);
-}
-
-.flat-theme-root:extend(.flat-colors-root) {
-  --brand: var(--blue-6);
-}
-
-.flat-theme-root {
-  background-color: var(--grey-0);
 }
