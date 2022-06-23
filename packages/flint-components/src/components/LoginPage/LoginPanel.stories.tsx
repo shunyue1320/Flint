@@ -2,6 +2,8 @@ import React from "react";
 import { Meta, Story } from "@storybook/react";
 
 import { LoginPanel } from ".";
+import { LoginWithPhone } from "./LoginWithPhone";
+import { Overview as StoryLoginWithPhone } from "./LoginWithPhone/LoginWithPhone.stories";
 
 const storyMeta: Meta = {
   title: "LoginPage/LoginPanel",
@@ -30,7 +32,11 @@ const storyMeta: Meta = {
 export default storyMeta;
 
 export const PlayableExample: Story<{ region: "CN" | "US" }> = () => {
-  return <LoginPanel></LoginPanel>;
+  return (
+    <LoginPanel>
+      <LoginWithPhone {...(StoryLoginWithPhone.args as any)} />
+    </LoginPanel>
+  );
 };
 
 PlayableExample.args = {
