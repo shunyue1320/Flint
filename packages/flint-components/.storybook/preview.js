@@ -33,13 +33,17 @@ export const parameters = {
   viewport: {
     viewports: {
       ...MINIMAL_VIEWPORTS,
+      flintDesktop: {
+        name: "Flint Desktop",
+        styles: { width: "960px", height: "640px" },
+      },
     },
   },
 };
 
 export const decorators = [
   (Story, context) => {
-    const channel = addons.getChannel();
+    // const channel = addons.getChannel();
     const darkMode = useDarkMode(context.globals.prefersColorScheme);
 
     useEffect(() => {
