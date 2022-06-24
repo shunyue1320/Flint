@@ -2,7 +2,7 @@ import { addons } from "@storybook/addons";
 import { useEffect } from "react";
 import { get } from "lodash-es";
 
-import { FlintThemeBodyProvider, useDarkMode } from "../src/components/FlatThemeProvider";
+import { FlintThemeBodyProvider, useDarkMode } from "../src/components/FlintThemeProvider";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 
 export const parameters = {

@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FlintThemeBodyProvider } from "flint-components";
 
 import { AppRouteErrorBoundary } from "./AppRouteErrorBoundary";
 import { RouteConfig, routeConfig } from "../route-config";
 import { routePages } from "./route-pages";
-import { FlintThemeBodyProvider } from "../FlintThemeProvider";
 
 export const AppRoutes: React.FC = () => {
   return (
