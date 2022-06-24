@@ -41,7 +41,22 @@ module.exports = {
       test: /\.less$/,
       sideEffects: true,
       // https://github.com/ant-design/create-react-app-antd/blob/master/craco.config.js
-      use: ["style-loader", "css-loader", "less-loader"],
+      use: [
+        {
+          loader: "style-loader",
+        },
+        {
+          loader: "css-loader",
+        },
+        {
+          loader: "less-loader",
+          options: {
+            lessOptions: {
+              javascriptEnabled: true,
+            },
+          },
+        },
+      ],
     });
 
     return config;

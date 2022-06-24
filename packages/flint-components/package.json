@@ -12,8 +12,12 @@
     "build": "build-storybook -s public"
   },
   "dependencies": {
+    "antd": "^4.21.0",
+    "lodash-es": "^4.17.21",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-transition-group": "^4.4.2",
+    "react-use": "^17.4.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.5.9",
