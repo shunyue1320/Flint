@@ -16,13 +16,13 @@ import { NEED_BINDING_PHONE } from "../../constants/config";
 import { GlobalStoreContext } from "../../components/StoreProvider";
 import { usePushNavigate, RouteNameType } from "../../utils/routes";
 
-console.log("NEED_BINDING_PHONE", NEED_BINDING_PHONE);
-
 export const LoginPage: React.FC = () => {
   const pushNavigate = usePushNavigate();
   const globalStore = useContext(GlobalStoreContext);
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
   const loginDisposer = useRef<LoginDisposer>();
+
+  const [roomUUID] = useState(() => sessionStorage.getItem("roomUUID"));
 
   const setLoginResult = useCallback(
     (userInfo: LoginProcessResult | null) => {
@@ -36,11 +36,26 @@ export const LoginPage: React.FC = () => {
     [globalStore, pushNavigate],
   );
 
-  const onLoginResult = useCallback(async (authData: LoginProcessResult) => {
-    if (authData.agoraSSOLoginID) {
-      console.log(authData.agoraSSOLoginID);
-    }
-  }, []);
+  const onLoginResult = useCallback(
+    async (authData: LoginProcessResult) => {
+      globalStore.updateUserInfo(authData);
+      if (NEED_BINDING_PHONE && !authData.hasPhone) {
+        setLoginResult(authData);
+        return;
+      }
+      if (!roomUUID) {
+        pushNavigate(RouteNameType.HomePage);
+        return;
+      }
+
+      if (globalStore.isTurnOffDeviceTest) {
+        console.log("直接前往房间");
+      } else {
+        console.log("先去测试页面测试麦克风与相机，再前往房间");
+      }
+    },
+    [globalStore, pushNavigate, roomUUID, setLoginResult],
+  );
 
   const handleLogin = useCallback((loginChannel: LoginButtonProviderType) => {
     if (loginDisposer.current) {

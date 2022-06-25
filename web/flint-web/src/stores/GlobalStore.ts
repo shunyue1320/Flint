@@ -10,6 +10,7 @@ export type UserInfo = Omit<LoginProcessResult, "agoraSSOLoginID">;
 export class GlobalStore {
   public userInfo: UserInfo | null = null;
   public lastLoginCheck: number | null = null;
+  public isTurnOffDeviceTest = false;
 
   public constructor() {
     autoPersistStore({ storeLSName: "GlobalStore", store: this, version: LS_VERSION });
@@ -21,6 +22,10 @@ export class GlobalStore {
 
   public updateLastLoginCheck = (val: number | null): void => {
     this.lastLoginCheck = val;
+  };
+
+  public toggleDeviceTest = (): void => {
+    this.isTurnOffDeviceTest = !this.isTurnOffDeviceTest;
   };
 }
 
