@@ -69,6 +69,7 @@ importers:
       react-dom: ^18.2.0
       react-transition-group: ^4.4.2
       react-use: ^17.4.0
+      tachyons: ^4.12.0
       webpack: ^5.73.0
     dependencies:
       antd: 4.21.0_biqbaboplfbrettd7655fr4n2y
@@ -77,6 +78,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-transition-group: 4.4.2_biqbaboplfbrettd7655fr4n2y
       react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
+      tachyons: 4.12.0
     devDependencies:
       '@storybook/addon-actions': 6.5.9_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-essentials': 6.5.9_cnty5as3esjm6p6nkro7caw4wu
@@ -15121,6 +15123,10 @@ packages:
   /synchronous-promise/2.0.15:
     resolution: {integrity: sha512-k8uzYIkIVwmT+TcglpdN50pS2y1BDcUnBPK9iJeGu0Pl1lOI8pD6wtzgw91Pjpe+RxtTncw32tLxs/R0yNL2Mg==}
     dev: true
+
+  /tachyons/4.12.0:
+    resolution: {integrity: sha512-2nA2IrYFy3raCM9fxJ2KODRGHVSZNTW3BR0YnlGsLUf1DA3pk3YfWZ/DdfbnZK6zLZS+jUenlUGJsKcA5fUiZg==}
+    dev: false
 
   /tapable/1.1.3:
     resolution: {integrity: sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA==}

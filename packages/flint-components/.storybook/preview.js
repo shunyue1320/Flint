@@ -1,3 +1,5 @@
+import "tachyons/css/tachyons.min.css";
+
 import { addons } from "@storybook/addons";
 import { useEffect } from "react";
 import { get } from "lodash-es";
