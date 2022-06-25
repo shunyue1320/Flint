@@ -1,5 +1,34 @@
 import { postNotAuth, post } from "./utils";
 
+export interface bindingPhoneSendCodePayload {
+  phone: string; // +86155...
+}
+
+export type bindingPhoneSendCodeResult = {};
+
+export async function bindingPhoneSendCode(phone: string): Promise<bindingPhoneSendCodeResult> {
+  return await postNotAuth<bindingPhoneSendCodePayload, bindingPhoneSendCodeResult>(
+    "user/binding/platform/phone/sendMessage ",
+    {
+      phone,
+    },
+  );
+}
+
+export interface BindingPhonePayload {
+  phone: string;
+  code: number;
+}
+
+export type BindingPhoneResult = {};
+
+export async function bindingPhone(phone: string, code: number): Promise<BindingPhoneResult> {
+  return await post<BindingPhonePayload, BindingPhoneResult>("user/binding/platform/phone", {
+    phone,
+    code,
+  });
+}
+
 export interface LoginProcessResult {
   name: string;
   avatar: string;

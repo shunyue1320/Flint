@@ -5,6 +5,8 @@ import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-compo
 
 import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
 import {
+  bindingPhone,
+  bindingPhoneSendCode,
   loginPhone,
   loginPhoneSendCode,
   LoginProcessResult,
@@ -28,7 +30,7 @@ export const LoginPage: React.FC = () => {
     (userInfo: LoginProcessResult | null) => {
       globalStore.updateUserInfo(userInfo);
       setLoginResult_(userInfo);
-      // 是中国已绑定手机号用户自动跳转到 home 页面
+      // 是中国已绑定手机号用户自动跳转到 home 页面， 没有绑定走 isBindingPhone 显示绑定页面
       if (userInfo && (NEED_BINDING_PHONE ? userInfo.hasPhone : true)) {
         pushNavigate(RouteNameType.HomePage);
       }
@@ -83,17 +85,31 @@ export const LoginPage: React.FC = () => {
     <div className="login-page-container">
       <LoginPanel>
         <LoginWithPhone
+          bindingPhone={async (countryCode, phone, code) =>
+            wrap(bindingPhone(countryCode + phone, Number(code)))
+          }
           buttons={["wechat", "github"]}
+          // 清空 userInfo
+          cancelBindingPhone={() => setLoginResult(null)}
+          isBindingPhone={NEED_BINDING_PHONE && (loginResult ? !loginResult.hasPhone : false)}
           loginOrRegister={(countryCode, phone, code) =>
             wrap(loginPhone(countryCode + phone, Number(code)).then(onLoginResult))
           }
           privacyURL={PRIVACY_URL}
           renderQRCode={() => <WeChatLogin setLoginResult={setLoginResult} />}
+          // 发送 绑定 验证码
+          sendBindingPhoneCode={async (countryCode, phone) =>
+            wrap(bindingPhoneSendCode(countryCode + phone))
+          }
+          // 发送 登录 验证码
           sendVerificationCode={async (countryCode, phone) =>
             wrap(loginPhoneSendCode(countryCode + phone))
           }
           serviceURL={SERVICE_URL}
           onClickButton={handleLogin}
+          // sendBindingPhoneCode?: (countryCode: string, phone: string) => Promise<boolean>;
+          // bindingPhone?: (countryCode: string, phone: string, code: string) => Promise<boolean>;
+          // cancelBindingPhone?: () => void;
         />
       </LoginPanel>
     </div>
