@@ -59,6 +59,11 @@ module.exports = {
       ],
     });
 
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "flat-i18n": path.resolve(__dirname, "..", "..", "flat-i18n"),
+    };
+
     return config;
   },
 };
