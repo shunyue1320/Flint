@@ -8,6 +8,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "storybook-react-i18next",
   ],
   framework: "@storybook/react",
   core: {
@@ -61,7 +62,7 @@ module.exports = {
 
     config.resolve.alias = {
       ...config.resolve.alias,
-      "flat-i18n": path.resolve(__dirname, "..", "..", "flat-i18n"),
+      "flint-i18n": path.resolve(__dirname, "..", "..", "flint-i18n"),
     };
 
     return config;

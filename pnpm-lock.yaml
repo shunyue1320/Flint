@@ -72,6 +72,7 @@ importers:
       react-i18next: ^11.17.3
       react-transition-group: ^4.4.2
       react-use: ^17.4.0
+      storybook-react-i18next: ^1.1.2
       tachyons: ^4.12.0
       webpack: ^5.73.0
     dependencies:
@@ -99,6 +100,7 @@ importers:
       less: 4.1.2
       less-loader: 11.0.0_less@4.1.2+webpack@5.73.0
       prop-types: 15.8.1
+      storybook-react-i18next: 1.1.2_6xv2on6jwglmro54nkax5ax42m
       webpack: 5.73.0
 
   web/flint-web:
@@ -9908,7 +9910,6 @@ packages:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
     dependencies:
       void-elements: 3.1.0
-    dev: false
 
   /html-tags/3.2.0:
     resolution: {integrity: sha512-vy7ClnArOZwCnqZgvv+ddgHgJiAFXe3Ge9ML5/mBctVJoUoYPCdxVucOywjDARn6CVoh3dRSFdPHy2sX80L0Wg==}
@@ -9994,13 +9995,11 @@ packages:
     resolution: {integrity: sha512-wukWnFeU7rKIWT66VU5i8I+3Zc4wReGcuDK2+kuFhtoxBRGWGdvYI9UQmqNL/yQH1KogWwh+xGEaIPH8V/i2Zg==}
     dependencies:
       '@babel/runtime': 7.18.3
-    dev: false
 
   /i18next/21.8.10:
     resolution: {integrity: sha512-7xRb6y4QlSqZRZ3uA5BIEsLuZpmxpzHLizQyKjDDThOcvdfgICOX7aFoBnh4BSWcLtJamTqSweaOuK22A2xqkA==}
     dependencies:
       '@babel/runtime': 7.18.3
-    dev: false
 
   /iconv-lite/0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -13826,7 +13825,6 @@ packages:
       i18next: 21.8.10
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: false
 
   /react-inspector/5.1.1_react@18.2.0:
     resolution: {integrity: sha512-GURDaYzoLbW8pMGXwYPDBIv6nqei4kK7LPRZ9q9HCZF54wqXz/dnylBp/kfE9XmekBhHvLDdcYeyIwSrvtOiWg==}
@@ -14908,6 +14906,54 @@ packages:
     resolution: {integrity: sha512-CMtO2Uneg3SAz/d6fZ/6qbqqQHi2ynq6/KzMD/26gTkiEShCcpqFfTHgOxsE0egAq6SX3FmN4CeSqn8BzXQkJg==}
     dev: true
 
+  /storybook-i18n/1.1.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-UHZlbTe77zIeQ6F8F1VAzB6PpUUQGPD/u0NasxDrB7VjqDRKsBUFLDdSa0vhhX9gGdaWALO+LX/6+LE3MNaYIw==}
+    peerDependencies:
+      '@storybook/addons': '>=6.5.0'
+      '@storybook/api': '>=6.5.0'
+      '@storybook/components': '>=6.5.0'
+      '@storybook/core-events': '>=6.5.0'
+      '@storybook/theming': '>=6.5.0'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: true
+
+  /storybook-react-i18next/1.1.2_6xv2on6jwglmro54nkax5ax42m:
+    resolution: {integrity: sha512-7KT/wIpV0C5IfExMZ/vfEpPVdXaHNPYhl3XkaGtLfQjmqS+EsNLbR4LyKcQaB8oKtMWMdEbg9mQ4aBJWPBdK/w==}
+    peerDependencies:
+      '@storybook/addons': '>=6.5.0'
+      '@storybook/api': '>=6.5.0'
+      '@storybook/components': '>=6.5.0'
+      '@storybook/core-events': '>=6.5.0'
+      '@storybook/theming': '>=6.5.0'
+      i18next: '>=21.0.0'
+      i18next-browser-languagedetector: ^6.1.4
+      i18next-http-backend: ^1.4.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-i18next: ^11.17.1
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      i18next: 21.8.10
+      i18next-browser-languagedetector: 6.1.4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-i18next: 11.17.3_c76r735imieyshiewj4bh5xlwy
+      storybook-i18n: 1.1.2_biqbaboplfbrettd7655fr4n2y
+    dev: true
+
   /stream-browserify/2.0.2:
     resolution: {integrity: sha512-nX6hmklHs/gr2FuxYDltq8fJA1GDlxKQCz8O/IM4atRqBH8OORmBNgfvW5gG10GT/qQ9u0CzIvr2X5Pkt6ntqg==}
     dependencies:
@@ -15901,7 +15947,6 @@ packages:
   /void-elements/3.1.0:
     resolution: {integrity: sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /vscode-languageserver-textdocument/1.0.4:
     resolution: {integrity: sha512-/xhqXP/2A2RSs+J8JNXpiiNVvvNM0oTosNVmQnunlKvq9o4mupHOBAnnzH0lwIPKazXKvAKsVp1kr+H/K4lgoQ==}

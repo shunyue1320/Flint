@@ -1,3 +1,5 @@
 {
-  "app-name": "{{appName}}"
+  "app-name": "{{appName}}",
+  "online-interaction-to-synchronize-ideas": "在线互动，让想法同步",
+  "app-welcome": "欢迎使用 {{appName}}"
 }

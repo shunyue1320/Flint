@@ -4,7 +4,6 @@ import detector from "i18next-browser-languagedetector";
 import en from "flint-i18n/locales/en.json";
 import zhCN from "flint-i18n/locales/zh-CN.json";
 import varsCNen from "flint-i18n/vars/cn/en.json";
-import exp from "constants";
 
 const resources = {
   en: {

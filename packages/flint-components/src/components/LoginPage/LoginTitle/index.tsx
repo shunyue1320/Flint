@@ -1,6 +1,7 @@
 import "./index.less";
 
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface LoginTitleProps {
   title?: string;
@@ -8,10 +9,13 @@ export interface LoginTitleProps {
 }
 
 export const LoginTitle: React.FC<LoginTitleProps> = ({ title, subtitle }) => {
+  const { t } = useTranslation();
   return (
     <div className="login-title">
-      <h2 className="login-title-text">{title || "欢迎使用 Flat"}</h2>
-      <p className="login-title-subtext">{subtitle || "在线互动，让想法同步"}</p>
+      <h2 className="login-title-text">{title || t("app-welcome")}</h2>
+      <p className="login-title-subtext">
+        {subtitle || t("online-interaction-to-synchronize-ideas")}
+      </p>
     </div>
   );
 };

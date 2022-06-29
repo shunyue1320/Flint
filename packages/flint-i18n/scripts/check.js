@@ -2,7 +2,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 
-// diff(['a', 'b'], ['a']) == ['b']
+// diff(['a', 'b'], ['a']) 返回 ['b']
 const diff = (origin, target) => {
   target = target.reduce((o, k) => {
     o[k] = "";

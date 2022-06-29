@@ -1,3 +1,5 @@
 {
-  "app-name": "{{appName}}"
+  "app-name": "{{appName}}",
+  "online-interaction-to-synchronize-ideas": "Interact online to keep ideas in sync",
+  "app-welcome": "Welcome to {{appName}}"
 }

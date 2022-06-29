@@ -1,11 +1,14 @@
 import "tachyons/css/tachyons.min.css";
 
-import { addons } from "@storybook/addons";
 import { useEffect } from "react";
 import { get } from "lodash-es";
-
-import { FlintThemeBodyProvider, useDarkMode } from "../src/components/FlintThemeProvider";
+import { addons } from "@storybook/addons";
+import { useTranslation } from "react-i18next";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
+
+import { i18n } from "./i18next.js";
+import { AntdProvider } from "../src/theme/antd.mod";
+import { FlintThemeBodyProvider, useDarkMode } from "../src/components/FlintThemeProvider";
 
 export const parameters = {
   options: {
@@ -32,6 +35,12 @@ export const parameters = {
       },
     ],
   },
+  i18n,
+  locale: "zh-CN",
+  locales: {
+    en: { title: "English", right: "🇺🇸" },
+    "zh-CN": { title: "中文", right: "🇨🇳" },
+  },
   viewport: {
     viewports: {
       ...MINIMAL_VIEWPORTS,
@@ -44,6 +53,11 @@ export const parameters = {
 };
 
 export const decorators = [
+  (Story, context) => {
+    const { i18n } = useTranslation();
+    console.log("i18n = ", i18n);
+    return <AntdProvider lang={i18n.language}>{Story(context)}</AntdProvider>;
+  },
   (Story, context) => {
     // const channel = addons.getChannel();
     const darkMode = useDarkMode(context.globals.prefersColorScheme);

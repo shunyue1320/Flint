@@ -37,6 +37,7 @@
     "less": "^4.1.2",
     "less-loader": "^11.0.0",
     "prop-types": "^15.8.1",
+    "storybook-react-i18next": "^1.1.2",
     "webpack": "^5.73.0"
   }
 }
