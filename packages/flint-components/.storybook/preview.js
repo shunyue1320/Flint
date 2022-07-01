@@ -53,9 +53,9 @@ export const parameters = {
 };
 
 export const decorators = [
+  // 设置 antd 的语言
   (Story, context) => {
     const { i18n } = useTranslation();
-    console.log("i18n = ", i18n);
     return <AntdProvider lang={i18n.language}>{Story(context)}</AntdProvider>;
   },
   (Story, context) => {
