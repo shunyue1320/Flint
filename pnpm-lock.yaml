@@ -122,9 +122,13 @@ importers:
       dotenv: ^16.0.1
       dotenv-expand: ^8.0.3
       flint-components: workspace:*
+      flint-i18n: workspace:*
+      i18next: ^21.8.11
+      i18next-browser-languagedetector: ^6.1.4
       mobx: ^6.6.0
       react: ^18.0.0
       react-dom: ^18.0.0
+      react-i18next: ^11.17.3
       react-router-dom: ^6.3.0
       react-transition-group: ^4.4.2
       react-use: ^17.4.0
@@ -137,9 +141,13 @@ importers:
       axios: 0.27.2
       classnames: 2.3.1
       flint-components: link:../../packages/flint-components
+      flint-i18n: link:../../packages/flint-i18n
+      i18next: 21.8.11
+      i18next-browser-languagedetector: 6.1.4
       mobx: 6.6.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
+      react-i18next: 11.17.3_3adr43nwh4baw2bkwpzkfldo3e
       react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
       react-transition-group: 4.4.2_ef5jwxihqo6n7gxfmzogljlgcm
       react-use: 17.4.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -13810,6 +13818,27 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-is: 17.0.2
     dev: true
+
+  /react-i18next/11.17.3_3adr43nwh4baw2bkwpzkfldo3e:
+    resolution: {integrity: sha512-rIrLl5cLDoHdXFWdjKurRpatA3MPC9j3yTZidv0GmJEea5+XGXl42p7NupA1dmghoLGOXllShNUobgPYtgEcRA==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.18.3
+      html-escaper: 2.0.2
+      html-parse-stringify: 3.0.1
+      i18next: 21.8.11
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    dev: false
 
   /react-i18next/11.17.3_vth7g6zw6lco7clwxal23of2km:
     resolution: {integrity: sha512-rIrLl5cLDoHdXFWdjKurRpatA3MPC9j3yTZidv0GmJEea5+XGXl42p7NupA1dmghoLGOXllShNUobgPYtgEcRA==}
