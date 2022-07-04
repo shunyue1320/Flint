@@ -18,7 +18,7 @@ i18next
   .use(LanguageDetector) // 浏览器语言检测器
   .use(initReactI18next) // 将i18n向下传递到react-i18next
   .init({
-    resources: resources,
+    resources,
     fallbackLng: "zh-CN", // 如果检测到的lng不可用，则使用en
     interpolation: {
       escapeValue: false, // react already safes from xss

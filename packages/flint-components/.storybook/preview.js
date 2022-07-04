@@ -3,6 +3,7 @@ import "tachyons/css/tachyons.min.css";
 import { useEffect } from "react";
 import { get } from "lodash-es";
 import { addons } from "@storybook/addons";
+import { UPDATE_GLOBALS } from "@storybook/core-events";
 import { useTranslation } from "react-i18next";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 
@@ -59,7 +60,7 @@ export const decorators = [
     return <AntdProvider lang={i18n.language}>{Story(context)}</AntdProvider>;
   },
   (Story, context) => {
-    // const channel = addons.getChannel();
+    const channel = addons.getChannel();
     const darkMode = useDarkMode(context.globals.prefersColorScheme);
 
     useEffect(() => {
@@ -69,6 +70,14 @@ export const decorators = [
 
       document.querySelectorAll(".flat-theme-root").forEach(el => {
         el.style.backgroundColor = bgColor;
+      });
+
+      channel.emit(UPDATE_GLOBALS, {
+        globals: {
+          backgrounds: {
+            value: bgColor,
+          },
+        },
       });
     }, [darkMode]);
 

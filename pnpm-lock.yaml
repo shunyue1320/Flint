@@ -55,6 +55,7 @@ importers:
       '@storybook/addon-interactions': ^6.5.9
       '@storybook/addon-links': ^6.5.9
       '@storybook/builder-webpack5': ^6.5.9
+      '@storybook/core-events': ^6.5.9
       '@storybook/manager-webpack5': ^6.5.9
       '@storybook/node-logger': ^6.5.9
       '@storybook/preset-create-react-app': ^4.1.2
@@ -92,6 +93,7 @@ importers:
       '@storybook/addon-interactions': 6.5.9_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-links': 6.5.9_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.9_biqbaboplfbrettd7655fr4n2y
+      '@storybook/core-events': 6.5.9
       '@storybook/manager-webpack5': 6.5.9_biqbaboplfbrettd7655fr4n2y
       '@storybook/node-logger': 6.5.9
       '@storybook/preset-create-react-app': 4.1.2_2eqhlckgn2tvd7vkamrlpnzyce
@@ -100,7 +102,7 @@ importers:
       less: 4.1.2
       less-loader: 11.0.0_less@4.1.2+webpack@5.73.0
       prop-types: 15.8.1
-      storybook-react-i18next: 1.1.2_2j73op65xzddsdvbjx3t547zbm
+      storybook-react-i18next: 1.1.2_kmb2yategffvf2sh7yey6waoka
       webpack: 5.73.0
 
   packages/flint-i18n:
@@ -14909,7 +14911,7 @@ packages:
     resolution: {integrity: sha512-CMtO2Uneg3SAz/d6fZ/6qbqqQHi2ynq6/KzMD/26gTkiEShCcpqFfTHgOxsE0egAq6SX3FmN4CeSqn8BzXQkJg==}
     dev: true
 
-  /storybook-i18n/1.1.2_biqbaboplfbrettd7655fr4n2y:
+  /storybook-i18n/1.1.2_qozexz7vw32ukenjtym2qdpypu:
     resolution: {integrity: sha512-UHZlbTe77zIeQ6F8F1VAzB6PpUUQGPD/u0NasxDrB7VjqDRKsBUFLDdSa0vhhX9gGdaWALO+LX/6+LE3MNaYIw==}
     peerDependencies:
       '@storybook/addons': '>=6.5.0'
@@ -14925,11 +14927,12 @@ packages:
       react-dom:
         optional: true
     dependencies:
+      '@storybook/core-events': 6.5.9
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: true
 
-  /storybook-react-i18next/1.1.2_2j73op65xzddsdvbjx3t547zbm:
+  /storybook-react-i18next/1.1.2_kmb2yategffvf2sh7yey6waoka:
     resolution: {integrity: sha512-7KT/wIpV0C5IfExMZ/vfEpPVdXaHNPYhl3XkaGtLfQjmqS+EsNLbR4LyKcQaB8oKtMWMdEbg9mQ4aBJWPBdK/w==}
     peerDependencies:
       '@storybook/addons': '>=6.5.0'
@@ -14949,12 +14952,13 @@ packages:
       react-dom:
         optional: true
     dependencies:
+      '@storybook/core-events': 6.5.9
       i18next: 21.8.11
       i18next-browser-languagedetector: 6.1.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 11.17.3_vth7g6zw6lco7clwxal23of2km
-      storybook-i18n: 1.1.2_biqbaboplfbrettd7655fr4n2y
+      storybook-i18n: 1.1.2_qozexz7vw32ukenjtym2qdpypu
     dev: true
 
   /stream-browserify/2.0.2:
