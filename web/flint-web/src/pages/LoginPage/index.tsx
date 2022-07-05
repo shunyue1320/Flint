@@ -114,6 +114,12 @@ export const LoginPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (urlParams.utm_source === "agora") {
+      handleLogin("agora");
+    }
+  }, [handleLogin, urlParams.utm_source]);
+
+  useEffect(() => {
     const checkNormalLogin = async (): Promise<void> => {
       const userInfo = await sp(loginCheck(urlParams.token));
       if (NEED_BINDING_PHONE && !userInfo.hasPhone) {
