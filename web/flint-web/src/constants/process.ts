@@ -16,3 +16,7 @@ export const GITHUB = Object.freeze({
 export const GOOGLE = Object.freeze({
   CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID,
 });
+
+export const AGORA_OAUTH = Object.freeze({
+  CLIENT_ID: process.env.AGORA_OAUTH_CLIENT_ID,
+});

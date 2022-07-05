@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
 
 import { routeConfig, RouteConfig, RouteNameType, ExtraRouteConfig } from "../route-config";
@@ -69,4 +69,22 @@ export function useReplaceNavigate(): <T extends RouteNameType>(
   );
 
   return replaceNavigate;
+}
+
+export function useURLParams(): Record<string, string> {
+  const urlSearchParams = useMemo(
+    () => new URLSearchParams(window.location.search),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [window.location.search],
+  );
+
+  const params = useMemo(() => {
+    const res: Record<string, string> = {};
+    for (const [key, value] of urlSearchParams.entries()) {
+      res[key] = value;
+    }
+    return res;
+  }, [urlSearchParams]);
+
+  return params;
 }

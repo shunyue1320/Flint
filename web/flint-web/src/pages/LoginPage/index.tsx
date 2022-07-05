@@ -1,6 +1,6 @@
 import "./style.less";
 
-import React, { useCallback, useState, useRef, useContext } from "react";
+import React, { useCallback, useState, useRef, useContext, useEffect } from "react";
 import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-components";
 
 import {
@@ -9,24 +9,30 @@ import {
   loginPhone,
   loginPhoneSendCode,
   LoginProcessResult,
+  loginCheck,
 } from "../../api-middleware/flatServer";
 import { LoginDisposer } from "./utils";
 import { WeChatLogin } from "./WeChatLogin";
 import { githubLogin } from "./githubLogin";
 import { googleLogin } from "./googleLogin";
+import { agoraLogin } from "./agoraLogin";
 import { NEED_BINDING_PHONE } from "../../constants/config";
 import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
 import { errorTips } from "../../components/Tips/ErrorTips";
 import { GlobalStoreContext } from "../../components/StoreProvider";
-import { usePushNavigate, RouteNameType } from "../../utils/routes";
+import { usePushNavigate, RouteNameType, useURLParams } from "../../utils/routes";
+import { useSafePromise } from "../../utils/hooks/lifecycle";
 
 export const LoginPage: React.FC = () => {
   const pushNavigate = usePushNavigate();
   const globalStore = useContext(GlobalStoreContext);
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
   const loginDisposer = useRef<LoginDisposer>();
-
+  // 是否存在房间 UUID
   const [roomUUID] = useState(() => sessionStorage.getItem("roomUUID"));
+
+  const sp = useSafePromise();
+  const urlParams = useURLParams();
 
   const setLoginResult = useCallback(
     (userInfo: LoginProcessResult | null) => {
@@ -61,6 +67,12 @@ export const LoginPage: React.FC = () => {
     [globalStore, pushNavigate, roomUUID, setLoginResult],
   );
 
+  const onBoundPhone = useCallback(() => {
+    if (loginResult) {
+      onLoginResult({ ...loginResult, hasPhone: true });
+    }
+  }, [loginResult, onLoginResult]);
+
   const handleLogin = useCallback(
     (loginChannel: LoginButtonProviderType) => {
       if (loginDisposer.current) {
@@ -70,6 +82,7 @@ export const LoginPage: React.FC = () => {
 
       switch (loginChannel) {
         case "agora": {
+          agoraLogin(onLoginResult);
           return;
         }
         case "github": {
@@ -88,12 +101,35 @@ export const LoginPage: React.FC = () => {
     [onLoginResult],
   );
 
+  useEffect(() => {
+    return () => {
+      if (loginDisposer.current) {
+        loginDisposer.current();
+        loginDisposer.current = void 0;
+      }
+      sessionStorage.clear();
+    };
+  }, []);
+
+  useEffect(() => {
+    const checkNormalLogin = async (): Promise<void> => {
+      const userInfo = await sp(loginCheck(urlParams.token));
+      if (NEED_BINDING_PHONE && !userInfo.hasPhone) {
+        setLoginResult(userInfo);
+      }
+    };
+
+    checkNormalLogin().catch(err => {
+      console.warn(err);
+    });
+  }, [setLoginResult, sp, urlParams.token]);
+
   return (
     <div className="login-page-container">
       <LoginPanel>
         <LoginWithPhone
           bindingPhone={async (countryCode, phone, code) =>
-            wrap(bindingPhone(countryCode + phone, Number(code)))
+            wrap(bindingPhone(countryCode + phone, Number(code)).then(onBoundPhone))
           }
           buttons={["wechat", "github"]}
           // 清空 userInfo
