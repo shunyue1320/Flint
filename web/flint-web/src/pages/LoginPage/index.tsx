@@ -3,7 +3,6 @@ import "./style.less";
 import React, { useCallback, useState, useRef, useContext } from "react";
 import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-components";
 
-import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
 import {
   bindingPhone,
   bindingPhoneSendCode,
@@ -11,10 +10,12 @@ import {
   loginPhoneSendCode,
   LoginProcessResult,
 } from "../../api-middleware/flatServer";
-import { errorTips } from "../../components/Tips/ErrorTips";
-import { WeChatLogin } from "./WeChatLogin";
 import { LoginDisposer } from "./utils";
+import { WeChatLogin } from "./WeChatLogin";
+import { githubLogin } from "./githubLogin";
 import { NEED_BINDING_PHONE } from "../../constants/config";
+import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
+import { errorTips } from "../../components/Tips/ErrorTips";
 import { GlobalStoreContext } from "../../components/StoreProvider";
 import { usePushNavigate, RouteNameType } from "../../utils/routes";
 
@@ -59,27 +60,31 @@ export const LoginPage: React.FC = () => {
     [globalStore, pushNavigate, roomUUID, setLoginResult],
   );
 
-  const handleLogin = useCallback((loginChannel: LoginButtonProviderType) => {
-    if (loginDisposer.current) {
-      loginDisposer.current();
-      loginDisposer.current = void 0;
-    }
+  const handleLogin = useCallback(
+    (loginChannel: LoginButtonProviderType) => {
+      if (loginDisposer.current) {
+        loginDisposer.current();
+        loginDisposer.current = void 0;
+      }
 
-    switch (loginChannel) {
-      case "agora": {
-        return;
+      switch (loginChannel) {
+        case "agora": {
+          return;
+        }
+        case "github": {
+          loginDisposer.current = githubLogin(onLoginResult);
+          return;
+        }
+        case "google": {
+          return;
+        }
+        default: {
+          return;
+        }
       }
-      case "github": {
-        return;
-      }
-      case "google": {
-        return;
-      }
-      default: {
-        return;
-      }
-    }
-  }, []);
+    },
+    [onLoginResult],
+  );
 
   return (
     <div className="login-page-container">
@@ -107,9 +112,6 @@ export const LoginPage: React.FC = () => {
           }
           serviceURL={SERVICE_URL}
           onClickButton={handleLogin}
-          // sendBindingPhoneCode?: (countryCode: string, phone: string) => Promise<boolean>;
-          // bindingPhone?: (countryCode: string, phone: string, code: string) => Promise<boolean>;
-          // cancelBindingPhone?: () => void;
         />
       </LoginPanel>
     </div>

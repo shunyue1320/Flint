@@ -8,6 +8,7 @@ export const FLAT_SERVER_VERSIONS = {
 
 export const FLAT_SERVER_LOGIN = {
   WECHAT_CALLBACK: `${FLAT_SERVER_VERSIONS.V1}/login/weChat/web/callback`,
+  GITHUB_CALLBACK: `${FLAT_SERVER_VERSIONS.V1}/login/github/callback`,
 };
 
 export enum Status {
