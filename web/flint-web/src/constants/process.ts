@@ -12,3 +12,7 @@ export const WECHAT = Object.freeze({
 export const GITHUB = Object.freeze({
   CLIENT_ID: process.env.GITHUB_CLIENT_ID,
 });
+
+export const GOOGLE = Object.freeze({
+  CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID,
+});

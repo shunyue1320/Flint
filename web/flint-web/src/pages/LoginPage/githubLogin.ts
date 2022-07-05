@@ -23,6 +23,7 @@ export const githubLogin: LoginExecutor = onSuccess => {
         const data = await loginProcess(authUUID);
         if (!data.name) {
           timer = window.setTimeout(githubLoginProcessRequest, 2000);
+          return;
         }
 
         onSuccess(data);

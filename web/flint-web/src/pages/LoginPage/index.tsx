@@ -13,6 +13,7 @@ import {
 import { LoginDisposer } from "./utils";
 import { WeChatLogin } from "./WeChatLogin";
 import { githubLogin } from "./githubLogin";
+import { googleLogin } from "./googleLogin";
 import { NEED_BINDING_PHONE } from "../../constants/config";
 import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
 import { errorTips } from "../../components/Tips/ErrorTips";
@@ -76,6 +77,7 @@ export const LoginPage: React.FC = () => {
           return;
         }
         case "google": {
+          loginDisposer.current = googleLogin(onLoginResult);
           return;
         }
         default: {
