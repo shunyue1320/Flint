@@ -1,6 +1,7 @@
 import "./style.less";
 
 import React, { useCallback, useState, useRef, useContext, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-components";
 
 import {
@@ -17,13 +18,14 @@ import { githubLogin } from "./githubLogin";
 import { googleLogin } from "./googleLogin";
 import { agoraLogin } from "./agoraLogin";
 import { NEED_BINDING_PHONE } from "../../constants/config";
-import { PRIVACY_URL, SERVICE_URL } from "../../constants/process";
+import { PRIVACY_URL_CN, PRIVACY_URL, SERVICE_URL_CN, SERVICE_URL } from "../../constants/process";
 import { errorTips } from "../../components/Tips/ErrorTips";
 import { GlobalStoreContext } from "../../components/StoreProvider";
 import { usePushNavigate, RouteNameType, useURLParams } from "../../utils/routes";
 import { useSafePromise } from "../../utils/hooks/lifecycle";
 
 export const LoginPage: React.FC = () => {
+  const { i18n } = useTranslation();
   const pushNavigate = usePushNavigate();
   const globalStore = useContext(GlobalStoreContext);
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
@@ -124,6 +126,9 @@ export const LoginPage: React.FC = () => {
     });
   }, [setLoginResult, sp, urlParams.token]);
 
+  const privacyURL = i18n.language.startsWith("zh") ? PRIVACY_URL_CN : PRIVACY_URL;
+  const serviceURL = i18n.language.startsWith("zh") ? SERVICE_URL_CN : SERVICE_URL;
+
   return (
     <div className="login-page-container">
       <LoginPanel>
@@ -138,7 +143,7 @@ export const LoginPage: React.FC = () => {
           loginOrRegister={(countryCode, phone, code) =>
             wrap(loginPhone(countryCode + phone, Number(code)).then(onLoginResult))
           }
-          privacyURL={PRIVACY_URL}
+          privacyURL={privacyURL}
           renderQRCode={() => <WeChatLogin setLoginResult={setLoginResult} />}
           // 发送 绑定 验证码
           sendBindingPhoneCode={async (countryCode, phone) =>
@@ -148,7 +153,7 @@ export const LoginPage: React.FC = () => {
           sendVerificationCode={async (countryCode, phone) =>
             wrap(loginPhoneSendCode(countryCode + phone))
           }
-          serviceURL={SERVICE_URL}
+          serviceURL={serviceURL}
           onClickButton={handleLogin}
         />
       </LoginPanel>
