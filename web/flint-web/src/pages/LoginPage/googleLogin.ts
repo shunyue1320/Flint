@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { loginProcess, setAuthUUID } from "src/api-middleware/flatServer";
 import { LoginExecutor } from "./utils";
-import { errorTips } from "src/components/Tips/ErrorTips";
-import { FLAT_SERVER_LOGIN } from "../../api-middleware/flatServer/constants";
 import { GOOGLE } from "../../constants/process";
+import { errorTips } from "../../components/Tips/ErrorTips";
+import { loginProcess, setAuthUUID } from "../../api-middleware/flatServer";
+import { FLAT_SERVER_LOGIN } from "../../api-middleware/flatServer/constants";
 
 export const googleLogin: LoginExecutor = onSuccess => {
   let timer = NaN;

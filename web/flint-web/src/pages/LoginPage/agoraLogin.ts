@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { setAuthUUID } from "src/api-middleware/flatServer";
 import { LoginExecutor } from "./utils";
-import { errorTips } from "src/components/Tips/ErrorTips";
-import { FLAT_SERVER_LOGIN } from "../../api-middleware/flatServer/constants";
 import { AGORA_OAUTH } from "../../constants/process";
+import { errorTips } from "../../components/Tips/ErrorTips";
+import { setAuthUUID } from "../../api-middleware/flatServer";
+import { FLAT_SERVER_LOGIN } from "../../api-middleware/flatServer/constants";
 
 export const agoraLogin: LoginExecutor = () => {
   const authUUID = uuidv4();
