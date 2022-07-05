@@ -1,5 +1,5 @@
 import "./index.less";
-import React from "React";
+import React from "react";
 import { LoginButton, LoginButtonProviderType } from "../LoginButton";
 
 export type { LoginButtonProviderType };

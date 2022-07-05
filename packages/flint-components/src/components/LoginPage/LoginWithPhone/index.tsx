@@ -139,17 +139,18 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
         return;
       }
       setAgreed(true);
-      if (canLogin) {
-        setClickedLogin(true);
-        const success = await sp(loginOrRegister(countryCode, phone, code));
-        if (success) {
-          // 登入成功截流
-          await sp(new Promise(resolve => setTimeout(resolve, 60000)));
-        } else {
-          message.error("登录失败");
-        }
-        setClickedLogin(false);
+    }
+
+    if (canLogin) {
+      setClickedLogin(true);
+      const success = await sp(loginOrRegister(countryCode, phone, code));
+      if (success) {
+        // 登入成功截流
+        await sp(new Promise(resolve => setTimeout(resolve, 60000)));
+      } else {
+        message.error("登录失败");
       }
+      setClickedLogin(false);
     }
   }, [agreed, canLogin, privacyURL, serviceURL, sp, loginOrRegister, countryCode, phone, code]);
 
@@ -161,7 +162,7 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
       }
       setAgreed(true);
     }
-    //
+
     if (canBinding && bindingPhone) {
       setClickedBinding(true);
       const success = await sp(bindingPhone(countryCode, phone, bindingPhoneCode));
