@@ -27,10 +27,10 @@ const App: React.FC = () => {
       forceUpdate();
     };
 
-    i18n.on("onLangChanged", onLangChanged);
+    i18n.on("languageChanged", onLangChanged);
 
     return () => {
-      i18n.off("onLangChanged", onLangChanged);
+      i18n.off("languageChanged", onLangChanged);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

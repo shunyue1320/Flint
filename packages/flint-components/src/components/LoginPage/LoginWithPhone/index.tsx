@@ -3,6 +3,8 @@ import "./index.less";
 
 import React, { useCallback, useMemo, useState } from "react";
 import { Input, Select, Button, Modal, message } from "antd";
+import { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { COUNTRY_CODES } from "./data";
 import { LoginTitle } from "../LoginTitle";
@@ -53,6 +55,7 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   onClickButton,
 }) => {
   const sp = useSafePromise();
+  const { t } = useTranslation();
 
   const buttons = useMemo<LoginButtonsDescription>(
     () =>
@@ -289,6 +292,7 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
     <LoginPanelContent transitionKey={key}>
       {isBindingPhone
         ? renderBindPhonePage({
+            t,
             phone,
             setPhone,
             countdown,
@@ -339,6 +343,7 @@ export function requestAgreement({
 }
 
 export interface RenderBindPhonePageProps {
+  t: TFunction;
   phone: string;
   setPhone: (phone: string) => void;
   countdown: number;
@@ -355,6 +360,7 @@ export interface RenderBindPhonePageProps {
 
 // 大陆用户绑定手机号
 export function renderBindPhonePage({
+  t,
   phone,
   setPhone,
   countdown,
@@ -371,9 +377,9 @@ export function renderBindPhonePage({
   return (
     <div className="login-with-phone binding">
       <div className="login-width-limiter">
-        <LoginTitle />
+        <LoginTitle subtitle={t("need-bind-phone")} title={t("bind-phone")} />
         <Input
-          placeholder="请输入手机号"
+          placeholder={t("enter-phone")}
           prefix={
             <Select bordered={false} defaultValue="+86" onChange={setCountryCode}>
               {COUNTRY_CODES.map(code => (
@@ -389,12 +395,14 @@ export function renderBindPhonePage({
           onChange={ev => setPhone(ev.currentTarget.value)}
         />
         <Input
-          placeholder="请输入验证码"
+          placeholder={t("enter-code")}
           prefix={<img alt="checked" draggable={false} src={checkedSVG} />}
           status={!bindingPhoneCode || validateCode(bindingPhoneCode) ? undefined : "error"}
           suffix={
             countdown > 0 ? (
-              <span className="login-countdown">{countdown} 秒后重新获取</span>
+              <span className="login-countdown">
+                {t("seconds-to-resend", { seconds: countdown })}
+              </span>
             ) : (
               <Button
                 disabled={sendingCode || !validatePhone(phone)}
@@ -403,7 +411,7 @@ export function renderBindPhonePage({
                 type="link"
                 onClick={sendBindingCode}
               >
-                发送验证码
+                {t("send-verify-code")}
               </Button>
             )
           }
@@ -417,10 +425,10 @@ export function renderBindPhonePage({
           type="primary"
           onClick={bindPhone}
         >
-          注册或登录
+          {t("confirm")}
         </Button>
         <Button className="login-btn-back" type="link" onClick={cancelBindingPhone}>
-          返回
+          {t("back")}
         </Button>
       </div>
     </div>

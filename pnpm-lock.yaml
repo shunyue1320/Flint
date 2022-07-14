@@ -61,6 +61,7 @@ importers:
       '@storybook/preset-create-react-app': ^4.1.2
       '@storybook/react': ^6.5.9
       '@storybook/testing-library': ^0.0.13
+      '@types/react-transition-group': ^4.4.4
       antd: ^4.21.0
       i18next: ^21.8.11
       i18next-browser-languagedetector: ^6.1.4
@@ -99,6 +100,7 @@ importers:
       '@storybook/preset-create-react-app': 4.1.2_2eqhlckgn2tvd7vkamrlpnzyce
       '@storybook/react': 6.5.9_77qya4viz6n5uqluzf7gq77ukm
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
+      '@types/react-transition-group': 4.4.4
       less: 4.1.2
       less-loader: 11.0.0_less@4.1.2+webpack@5.73.0
       prop-types: 15.8.1

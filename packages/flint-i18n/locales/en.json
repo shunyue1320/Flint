@@ -1,5 +1,13 @@
 {
   "app-name": "{{appName}}",
   "online-interaction-to-synchronize-ideas": "Interact online to keep ideas in sync",
-  "app-welcome": "Welcome to {{appName}}"
+  "app-welcome": "Welcome to {{appName}}",
+  "bind-phone": "Bind phone",
+  "need-bind-phone": "Need to bind phone",
+  "enter-phone": "Please enter phone number",
+  "enter-code": "Please enter verification code",
+  "seconds-to-resend": "{{seconds}} seconds to resend",
+  "send-verify-code": "Send code",
+  "confirm": "Confirm",
+  "back": "Back"
 }

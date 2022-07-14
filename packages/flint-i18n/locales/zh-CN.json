@@ -1,5 +1,13 @@
 {
   "app-name": "{{appName}}",
   "online-interaction-to-synchronize-ideas": "在线互动，让想法同步",
-  "app-welcome": "欢迎使用 {{appName}}"
+  "app-welcome": "欢迎使用 {{appName}}",
+  "bind-phone": "绑定手机号",
+  "need-bind-phone": "根据相关政策法规，需要绑定手机号",
+  "enter-phone": "请输入手机号",
+  "enter-code": "请输入验证码",
+  "seconds-to-resend": "{{seconds}} 秒后重新获取",
+  "send-verify-code": "发送验证码",
+  "confirm": "确定",
+  "back": "返回"
 }

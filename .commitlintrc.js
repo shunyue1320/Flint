@@ -35,6 +35,7 @@ module.exports = {
         "component",
         "storybook",
         "flint-components",
+        "flint-i18n",
         "flint-types",
         "web",
         "i18n",
