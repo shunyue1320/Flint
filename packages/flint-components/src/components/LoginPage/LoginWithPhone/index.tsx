@@ -3,8 +3,7 @@ import "./index.less";
 
 import React, { useCallback, useMemo, useState } from "react";
 import { Input, Select, Button, Modal, message } from "antd";
-import { TFunction } from "i18next";
-import { useTranslation } from "react-i18next";
+import { useTranslation, TFunction } from "react-i18next";
 
 import { COUNTRY_CODES } from "./data";
 import { LoginTitle } from "../LoginTitle";

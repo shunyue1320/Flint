@@ -71,7 +71,7 @@ importers:
       prop-types: ^15.8.1
       react: ^18.2.0
       react-dom: ^18.2.0
-      react-i18next: ^11.17.3
+      react-i18next: ^11.18.1
       react-transition-group: ^4.4.2
       react-use: ^17.4.0
       storybook-react-i18next: ^1.1.2
@@ -84,7 +84,7 @@ importers:
       lodash-es: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-i18next: 11.17.3_vth7g6zw6lco7clwxal23of2km
+      react-i18next: 11.18.1_vth7g6zw6lco7clwxal23of2km
       react-transition-group: 4.4.2_biqbaboplfbrettd7655fr4n2y
       react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
       tachyons: 4.12.0
@@ -104,7 +104,7 @@ importers:
       less: 4.1.2
       less-loader: 11.0.0_less@4.1.2+webpack@5.73.0
       prop-types: 15.8.1
-      storybook-react-i18next: 1.1.2_kmb2yategffvf2sh7yey6waoka
+      storybook-react-i18next: 1.1.2_74sa7d42bwtdn2q7u4ntum444e
       webpack: 5.73.0
 
   packages/flint-i18n:
@@ -130,7 +130,7 @@ importers:
       mobx: ^6.6.0
       react: ^18.0.0
       react-dom: ^18.0.0
-      react-i18next: ^11.17.3
+      react-i18next: ^11.18.1
       react-router-dom: ^6.3.0
       react-transition-group: ^4.4.2
       react-use: ^17.4.0
@@ -149,7 +149,7 @@ importers:
       mobx: 6.6.0
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      react-i18next: 11.17.3_3adr43nwh4baw2bkwpzkfldo3e
+      react-i18next: 11.18.1_3adr43nwh4baw2bkwpzkfldo3e
       react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
       react-transition-group: 4.4.2_ef5jwxihqo6n7gxfmzogljlgcm
       react-use: 17.4.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -9892,6 +9892,7 @@ packages:
 
   /html-escaper/2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
+    dev: true
 
   /html-minifier-terser/5.1.1:
     resolution: {integrity: sha512-ZPr5MNObqnV/T9akshPKbVgyOqLmy+Bxo7juKCfTfnjNniTAMdy4hz21YQqoofMBJD2kdREaqPPdThoR78Tgxg==}
@@ -13821,8 +13822,8 @@ packages:
       react-is: 17.0.2
     dev: true
 
-  /react-i18next/11.17.3_3adr43nwh4baw2bkwpzkfldo3e:
-    resolution: {integrity: sha512-rIrLl5cLDoHdXFWdjKurRpatA3MPC9j3yTZidv0GmJEea5+XGXl42p7NupA1dmghoLGOXllShNUobgPYtgEcRA==}
+  /react-i18next/11.18.1_3adr43nwh4baw2bkwpzkfldo3e:
+    resolution: {integrity: sha512-S8cl4mvIOSA7OQCE5jNy2yhv705Vwi+7PinpqKIYcBmX/trJtHKqrf6CL67WJSA8crr2JU+oxE9jn9DQIrQezg==}
     peerDependencies:
       i18next: '>= 19.0.0'
       react: '>= 16.8.0'
@@ -13835,15 +13836,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.18.3
-      html-escaper: 2.0.2
       html-parse-stringify: 3.0.1
       i18next: 21.8.11
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
     dev: false
 
-  /react-i18next/11.17.3_vth7g6zw6lco7clwxal23of2km:
-    resolution: {integrity: sha512-rIrLl5cLDoHdXFWdjKurRpatA3MPC9j3yTZidv0GmJEea5+XGXl42p7NupA1dmghoLGOXllShNUobgPYtgEcRA==}
+  /react-i18next/11.18.1_vth7g6zw6lco7clwxal23of2km:
+    resolution: {integrity: sha512-S8cl4mvIOSA7OQCE5jNy2yhv705Vwi+7PinpqKIYcBmX/trJtHKqrf6CL67WJSA8crr2JU+oxE9jn9DQIrQezg==}
     peerDependencies:
       i18next: '>= 19.0.0'
       react: '>= 16.8.0'
@@ -13856,7 +13856,6 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.18.3
-      html-escaper: 2.0.2
       html-parse-stringify: 3.0.1
       i18next: 21.8.11
       react: 18.2.0
@@ -14963,7 +14962,7 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: true
 
-  /storybook-react-i18next/1.1.2_kmb2yategffvf2sh7yey6waoka:
+  /storybook-react-i18next/1.1.2_74sa7d42bwtdn2q7u4ntum444e:
     resolution: {integrity: sha512-7KT/wIpV0C5IfExMZ/vfEpPVdXaHNPYhl3XkaGtLfQjmqS+EsNLbR4LyKcQaB8oKtMWMdEbg9mQ4aBJWPBdK/w==}
     peerDependencies:
       '@storybook/addons': '>=6.5.0'
@@ -14988,7 +14987,7 @@ packages:
       i18next-browser-languagedetector: 6.1.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-i18next: 11.17.3_vth7g6zw6lco7clwxal23of2km
+      react-i18next: 11.18.1_vth7g6zw6lco7clwxal23of2km
       storybook-i18n: 1.1.2_qozexz7vw32ukenjtym2qdpypu
     dev: true
 
