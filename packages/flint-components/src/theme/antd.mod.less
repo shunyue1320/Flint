@@ -19,3 +19,67 @@
     color: var(--text);
   }
 }
+
+/******** Input ********/
+.flat-color-scheme-dark {
+  .ant-input {
+    color: var(--text-stronger);
+    background-color: transparent;
+    border-color: var(--grey-8);
+
+    &::placeholder {
+      color: var(--text-weak);
+    }
+
+    &::selection {
+      background-color: var(--grey-6);
+    }
+  }
+
+  .ant-input:-webkit-autofill,
+  .ant-input:-webkit-autofill:hover,
+  .ant-input:-webkit-autofill:focus {
+    border: 1px solid var(--grey-10);
+    -webkit-text-fill-color: #fff;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .ant-input[disabled],
+  .ant-input[disabled]::placeholder {
+    color: var(--text-weak);
+  }
+  .ant-input-disabled + span {
+    color: var(--text-weak);
+  }
+}
+
+/******** Form Input ********/
+.flat-color-scheme-dark {
+  .ant-input-affix-wrapper {
+    color: var(--text);
+    background: var(--grey-10);
+    border: 1px solid var(--grey-8);
+  }
+
+  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
+  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover {
+    background: var(--grey-10);
+    border-color: var(--danger);
+  }
+}
+
+/******** Selector ********/
+.ant-select {
+  .ant-select-selector {
+    background-color: var(--grey-3);
+    color: var(--text);
+
+    .ant-select-selection-item {
+      background-color: #fff;
+    }
+
+    .ant-select-selection-item-remove {
+      color: #fff;
+    }
+  }
+}
