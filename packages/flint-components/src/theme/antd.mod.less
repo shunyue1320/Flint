@@ -1,6 +1,198 @@
 @import "./variables/antd.mod.less";
 @import "~antd/dist/antd.less";
 
+.btn-color(@name: false) {
+  // @name 是字符串 ant-btn-xxx    否则 ant-btn
+  @className: if((isstring(@name)), ~"ant-btn-@{name}", ant-btn);
+  // @prefix 是字符串 --f-btn--xxx 否则 --f-btn
+  @prefix: if((isstring(@name)), "--f-btn-@{name}", "--f-btn");
+
+  .@{className} {
+    color: var(~"@{prefix}-text");
+    border-color: var(~"@{prefix}-border");
+    background-color: var(~"@{prefix}-bg");
+  }
+
+  .@{className}:focus,
+  .@{className}.is-focus {
+    color: var(~"@{prefix}-text-focus");
+    border-color: var(~"@{prefix}-border-focus");
+    background-color: var(~"@{prefix}-bg-focus");
+  }
+
+  .@{className}:hover,
+  .@{className}.is-hover {
+    color: var(~"@{prefix}-text-hover");
+    border-color: var(~"@{prefix}-border-hover");
+    background-color: var(~"@{prefix}-bg-hover");
+  }
+
+  .@{className}:active,
+  .@{className}.is-active {
+    color: var(~"@{prefix}-text-active");
+    border-color: var(~"@{prefix}-border-active");
+    background-color: var(~"@{prefix}-bg-active");
+  }
+
+  .@{className}:disabled {
+    color: var(~"@{prefix}-text-disabled") !important;
+    border-color: var(~"@{prefix}-border-disabled") !important;
+    background-color: var(~"@{prefix}-bg-disabled") !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
+/******** Buttons ********/
+.ant-btn {
+  --f-btn-text: var(--grey-6);
+  --f-btn-bg: #fff;
+  --f-btn-border: var(--grey-3);
+
+  --f-btn-text-focus: var(--primary);
+  --f-btn-bg-focus: var(--f-btn-bg);
+  --f-btn-border-focus: var(--f-btn-text-focus);
+
+  --f-btn-text-hover: var(--primary-weak);
+  --f-btn-bg-hover: var(--f-btn-bg);
+  --f-btn-border-hover: var(--f-btn-text-hover);
+
+  --f-btn-text-active: var(--primary-strong);
+  --f-btn-bg-active: var(--f-btn-bg);
+  --f-btn-border-active: var(--f-btn-border-active);
+
+  --f-btn-text-disabled: var(--grey-5);
+  --f-btn-bg-disabled: var(--grey-2);
+  --f-btn-border-disabled: var(--f-btn-bg-disabled);
+
+  --f-btn-primary-text: #fff;
+  --f-btn-primary-bg: var(--primary);
+  --f-btn-primary-border: var(--primary-strong);
+
+  --f-btn-primary-text-focus: var(--f-btn-primary-text);
+  --f-btn-primary-bg-focus: var(--primary-weak);
+  --f-btn-primary-border-focus: var(--f-btn-primary-border);
+
+  --f-btn-primary-text-hover: var(--f-btn-primary-text);
+  --f-btn-primary-bg-hover: var(--primary-weak);
+  --f-btn-primary-border-hover: var(--f-btn-primary-border);
+
+  --f-btn-primary-text-active: var(--f-btn-primary-text);
+  --f-btn-primary-bg-active: var(--primary-strong);
+  --f-btn-primary-border-active: var(--f-btn-primary-border);
+
+  --f-btn-primary-text-disabled: var(--f-btn-text-disabled);
+  --f-btn-primary-bg-disabled: var(--f-btn-bg-disabled);
+  --f-btn-primary-border-disabled: var(--f-btn-border-disabled);
+
+  --f-btn-text-text: var(--text);
+  --f-btn-text-bg: transparent;
+  --f-btn-text-border: transparent;
+
+  --f-btn-text-text-focus: var(--primary);
+  --f-btn-text-bg-focus: transparent;
+  --f-btn-text-border-focus: transparent;
+
+  --f-btn-text-text-hover: var(--f-btn-text-text);
+  --f-btn-text-bg-hover: var(--blue-1);
+  --f-btn-text-border-hover: var(--f-btn-text-bg-hover);
+
+  --f-btn-text-text-active: var(--f-btn-text-text);
+  --f-btn-text-bg-active: var(--blue-2);
+  --f-btn-text-border-active: var(--f-btn-text-bg-active);
+
+  --f-btn-text-text-disabled: var(--grey-3);
+  --f-btn-text-bg-disabled: transparent;
+  --f-btn-text-border-disabled: transparent;
+
+  --f-btn-link-text: var(--primary);
+  --f-btn-link-bg: transparent;
+  --f-btn-link-border: transparent;
+
+  --f-btn-link-text-focus: var(--primary);
+  --f-btn-link-bg-focus: transparent;
+  --f-btn-link-border-focus: transparent;
+
+  --f-btn-link-text-hover: var(--primary-weak);
+  --f-btn-link-bg-hover: transparent;
+  --f-btn-link-border-hover: transparent;
+
+  --f-btn-link-text-active: var(--primary-strong);
+  --f-btn-link-bg-active: transparent;
+  --f-btn-link-border-active: transparent;
+
+  --f-btn-link-text-disabled: var(--grey-3);
+  --f-btn-link-bg-disabled: transparent;
+  --f-btn-link-border-disabled: transparent;
+
+  --f-btn-dangerous-text: var(--danger);
+  --f-btn-dangerous-bg: var(--f-btn-bg);
+  --f-btn-dangerous-border: var(--danger);
+
+  --f-btn-dangerous-text-focus: var(--danger);
+  --f-btn-dangerous-bg-focus: var(--f-btn-dangerous-bg);
+  --f-btn-dangerous-border-focus: var(--f-btn-dangerous-text-focus);
+
+  --f-btn-dangerous-text-hover: var(--danger-weak);
+  --f-btn-dangerous-bg-hover: var(--f-btn-dangerous-bg);
+  --f-btn-dangerous-border-hover: var(--f-btn-dangerous-text-hover);
+
+  --f-btn-dangerous-text-active: var(--danger-strong);
+  --f-btn-dangerous-bg-active: var(--f-btn-dangerous-bg);
+  --f-btn-dangerous-border-active: var(--f-btn-dangerous-text-active);
+
+  --f-btn-dangerous-text-disabled: var(--f-btn-text-disabled);
+  --f-btn-dangerous-bg-disabled: var(--f-btn-bg-disabled);
+  --f-btn-dangerous-border-disabled: var(--f-btn-border-disabled);
+}
+
+.flat-color-scheme-dark {
+  .ant-btn {
+    --f-btn-text: var(--grey-4);
+    --f-btn-bg: transparent;
+    --f-btn-border: var(--grey-6);
+
+    --f-btn-text-hover: var(--primary-strong);
+
+    --f-btn-text-active: var(--primary-weak);
+
+    --f-btn-text-disabled: var(--grey-7);
+    --f-btn-bg-disabled: var(--grey-9);
+    --f-btn-border-disabled: var(--grey-9);
+
+    --f-btn-primary-border: var(--primary-weak);
+
+    --f-btn-primary-bg-focus: var(--primary-strong);
+
+    --f-btn-primary-bg-hover: var(--primary-strong);
+
+    --f-btn-primary-bg-active: var(--primary-weak);
+
+    --f-btn-text-bg-hover: var(--grey-8);
+
+    --f-btn-text-bg-active: var(--grey-9);
+
+    --f-btn-text-text-disabled: var(--grey-7);
+
+    --f-btn-link-text-hover: var(--primary-strong);
+
+    --f-btn-link-text-active: var(--primary-weak);
+
+    --f-btn-link-text-disabled: var(--grey-7);
+
+    --f-btn-dangerous-text-hover: var(--danger-strong);
+
+    --f-btn-dangerous-text-active: var(--danger-weak);
+  }
+}
+
+// 给 ant-btn ｜ ant-btn-text ｜ ant-btn-link ｜ ant-btn-primary ｜ ant-btn-dangerous 设置统一主题色
+.btn-color();
+.btn-color("text");
+.btn-color("link");
+.btn-color("primary");
+.btn-color("dangerous");
+
 /******** Modal ********/
 .ant-modal-content {
   border-radius: 8px;
@@ -81,5 +273,38 @@
     .ant-select-selection-item-remove {
       color: #fff;
     }
+  }
+
+  .ant-select-arrow {
+    color: var(--text);
+  }
+}
+
+.flat-color-scheme-dark {
+  .ant-select {
+    .ant-select-selector {
+      background-color: var(--grey-10);
+      border: 1px solid var(--grey-8);
+
+      .ant-select-selection-item {
+        background-color: var(--grey-10);
+
+        .ant-select-selection-item-remove {
+          color: var(--grey-0);
+        }
+      }
+    }
+  }
+}
+
+/******** Checkbox ********/
+.flat-color-scheme-dark {
+  .ant-checkbox-inner {
+    background-color: transparent;
+    border-color: var(--grey-6);
+  }
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--primary-strong);
+    border-color: var(--primary-strong);
   }
 }
