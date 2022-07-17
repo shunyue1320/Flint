@@ -9,5 +9,9 @@
   "seconds-to-resend": "{{seconds}} 秒后重新获取",
   "send-verify-code": "发送验证码",
   "confirm": "确定",
-  "back": "返回"
+  "back": "返回",
+  "login-wechat": "微信",
+  "login-github": "GitHub",
+  "login-google": "Google",
+  "login-agora": "声网"
 }

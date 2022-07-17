@@ -9,5 +9,9 @@
   "seconds-to-resend": "{{seconds}} seconds to resend",
   "send-verify-code": "Send code",
   "confirm": "Confirm",
-  "back": "Back"
+  "back": "Back",
+  "login-wechat": "微信",
+  "login-github": "GitHub",
+  "login-google": "Google",
+  "login-agora": "声网"
 }

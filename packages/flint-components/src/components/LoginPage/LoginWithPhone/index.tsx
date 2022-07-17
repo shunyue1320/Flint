@@ -59,12 +59,12 @@ export const LoginWithPhone: React.FC<LoginWithPhoneProps> = ({
   const buttons = useMemo<LoginButtonsDescription>(
     () =>
       userButtons
-        ? userButtons.map(e => ({ provider: e, text: undefined }))
+        ? userButtons.map(e => ({ provider: e, text: t(`login-${e}`) }))
         : [
-            { provider: "wechat", text: undefined },
-            { provider: "github", text: undefined },
+            { provider: "wechat", text: t("login-wechat") },
+            { provider: "github", text: t("login-github") },
           ],
-    [userButtons],
+    [t, userButtons],
   );
 
   const isUnMountRef = useIsUnMounted();
