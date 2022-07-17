@@ -93,7 +93,10 @@ module.exports = {
     "pickone", // chance
     "viewports", // storybook
     "videojs", // @videojs/vhs-utils
+    "telebox", // @netless/widnow-manager
+    "Buildin", // @netless/widnow-manager
     "zindex", // antd
+    "geogebra", // @netless/app-geogebra
     "commitlintrc", // @commitlint/cli
     "unpublish", // agora-rtc-sdk-ng
     "multipass", // svgo
