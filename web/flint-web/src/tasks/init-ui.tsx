@@ -14,6 +14,12 @@ import { AppRoutes } from "../AppRoutes";
 import { StoreProvider } from "../components/StoreProvider";
 import { useUpdate } from "react-use";
 
+// 分离MboX的全局状态避免第三方模块响应式影响 https://www.mobxjs.com/configuration#isolateglobalstate-boolean
+import { configure } from "mobx";
+configure({
+  isolateGlobalState: true,
+});
+
 const App: React.FC = () => {
   const forceUpdate = useUpdate();
   const antdLocale = useMemo(

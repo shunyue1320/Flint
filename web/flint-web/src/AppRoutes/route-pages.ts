@@ -1,21 +1,22 @@
-import { lazy } from "react";
+import { ComponentType } from "react";
 import { RouteNameType } from "../route-config";
 
 export type RoutePages = {
   readonly [key in RouteNameType]: {
-    readonly title: String;
-    readonly hasHeader?: String;
-    readonly component: React.LazyExoticComponent<any>;
+    readonly title: string;
+    readonly hasHeader?: true;
+    readonly component: () => Promise<{ default: ComponentType<any> }>;
   };
 };
 
 export const routePages: RoutePages = {
   [RouteNameType.LoginPage]: {
     title: "LoginPage",
-    component: lazy(() => import("../pages/LoginPage")),
+    component: () => import("../pages/LoginPage"),
   },
   [RouteNameType.HomePage]: {
     title: "HomePage",
-    component: lazy(() => import("../pages/HomePage")),
+    hasHeader: true,
+    component: () => import("../pages/HomePage"),
   },
 };

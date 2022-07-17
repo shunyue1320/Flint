@@ -1,7 +1,8 @@
-import React from "react";
+import React, { ComponentType } from "react";
 
 export interface AppRouteContainerProps {
-  children: React.ReactNode;
+  Comp: ComponentType<any>;
+  title: string;
 }
 
 export interface AppRouteErrorBoundaryState {
@@ -30,6 +31,7 @@ export class AppRouteErrorBoundary extends React.PureComponent<
       return <h1>加载错误...</h1>;
     }
 
-    return this.props.children;
+    const { Comp } = this.props;
+    return React.createElement(Comp);
   }
 }

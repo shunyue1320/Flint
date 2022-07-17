@@ -113,6 +113,8 @@ importers:
   web/flint-web:
     specifiers:
       '@ant-design/icons': ^4.7.0
+      '@loadable/component': ^5.15.2
+      '@types/loadable__component': ^5.13.4
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       '@types/react-transition-group': ^4.4.4
@@ -139,6 +141,7 @@ importers:
       vite: ^2.9.9
     dependencies:
       '@ant-design/icons': 4.7.0_ef5jwxihqo6n7gxfmzogljlgcm
+      '@loadable/component': 5.15.2_react@18.1.0
       antd: 4.21.0_ef5jwxihqo6n7gxfmzogljlgcm
       axios: 0.27.2
       classnames: 2.3.1
@@ -155,6 +158,7 @@ importers:
       react-use: 17.4.0_ef5jwxihqo6n7gxfmzogljlgcm
       uuid: 8.3.2
     devDependencies:
+      '@types/loadable__component': 5.13.4
       '@types/react': 18.0.9
       '@types/react-dom': 18.0.4
       '@types/react-transition-group': 4.4.4
@@ -3314,6 +3318,18 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.13
     dev: true
 
+  /@loadable/component/5.15.2_react@18.1.0:
+    resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      '@babel/runtime': 7.18.3
+      hoist-non-react-statics: 3.3.2
+      react: 18.1.0
+      react-is: 16.13.1
+    dev: false
+
   /@mdx-js/mdx/1.6.22:
     resolution: {integrity: sha512-AMxuLxPz2j5/6TpF/XSdKpQP1NlG0z11dFOlq+2IP/lSgl11GY8ji6S/rgsViN/L0BDvHvUMruRb7ub+24LUYA==}
     dependencies:
@@ -5107,6 +5123,12 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/loadable__component/5.13.4:
+    resolution: {integrity: sha512-YhoCCxyuvP2XeZNbHbi8Wb9EMaUJuA2VGHxJffcQYrJKIKSkymJrhbzsf9y4zpTmr5pExAAEh5hbF628PAZ8Dg==}
+    dependencies:
+      '@types/react': 18.0.9
     dev: true
 
   /@types/lodash/4.14.182:
@@ -9874,6 +9896,12 @@ packages:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
     dev: true
+
+  /hoist-non-react-statics/3.3.2:
+    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
+    dependencies:
+      react-is: 16.13.1
+    dev: false
 
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}

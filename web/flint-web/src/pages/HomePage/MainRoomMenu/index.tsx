@@ -1,6 +1,6 @@
 import "./MainRoomMenu.less";
 
-import React, { useContext } from "react";
+import React from "react";
 import { Row, Col } from "antd";
 
 import { JoinRoomBox } from "./JoinRoomBox";
