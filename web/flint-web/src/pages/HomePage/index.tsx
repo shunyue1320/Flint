@@ -1,3 +1,5 @@
+import "./style.less";
+
 import React, { useContext, useEffect } from "react";
 
 import { MainRoomMenu } from "./MainRoomMenu";

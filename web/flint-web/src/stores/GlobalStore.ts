@@ -12,6 +12,10 @@ export class GlobalStore {
   public lastLoginCheck: number | null = null;
   public isTurnOffDeviceTest = false;
 
+  public get userName(): string | undefined {
+    return this.userInfo?.name;
+  }
+
   public constructor() {
     autoPersistStore({ storeLSName: "GlobalStore", store: this, version: LS_VERSION });
   }

@@ -22,3 +22,5 @@ export const GOOGLE = Object.freeze({
 export const AGORA_OAUTH = Object.freeze({
   CLIENT_ID: process.env.AGORA_OAUTH_CLIENT_ID,
 });
+
+export const FLAT_DOWNLOAD_URL = process.env.FLAT_DOWNLOAD_URL;
