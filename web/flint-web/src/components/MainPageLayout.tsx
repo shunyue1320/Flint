@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { routePages } from "../AppRoutes/route-pages";
+import { observer } from "mobx-react-lite";
 
+import { routePages } from "../AppRoutes/route-pages";
 import { PageStoreContext } from "./StoreProvider";
 import { MainPageLayoutHorizontalContainer } from "./MainPageLayoutHorizontalContainer";
 
@@ -8,10 +9,10 @@ interface MainPageLayoutProps {
   children: React.ReactNode;
 }
 
-export const MainPageLayout: React.FC<MainPageLayoutProps> = ({ children }) => {
+export const MainPageLayout = observer(function MainPageLayout({ children }: MainPageLayoutProps) {
   const pageStore = useContext(PageStoreContext);
   const hasHeader = pageStore.name && routePages[pageStore.name].hasHeader;
-  console.log("hasHeader", hasHeader, pageStore.name);
+
   return hasHeader ? (
     <MainPageLayoutHorizontalContainer
       activeKeys={pageStore.activeKeys}
@@ -25,4 +26,4 @@ export const MainPageLayout: React.FC<MainPageLayoutProps> = ({ children }) => {
   ) : (
     <>{children}</>
   );
-};
+});

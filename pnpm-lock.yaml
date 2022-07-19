@@ -130,6 +130,7 @@ importers:
       i18next: ^21.8.11
       i18next-browser-languagedetector: ^6.1.4
       mobx: ^6.6.0
+      mobx-react-lite: ^3.4.0
       react: ^18.0.0
       react-dom: ^18.0.0
       react-i18next: ^11.18.1
@@ -150,6 +151,7 @@ importers:
       i18next: 21.8.11
       i18next-browser-languagedetector: 6.1.4
       mobx: 6.6.0
+      mobx-react-lite: 3.4.0_zjzbed4ey2pl6an3m4umzh4gbq
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-i18next: 11.18.1_3adr43nwh4baw2bkwpzkfldo3e
@@ -11496,6 +11498,24 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dev: true
+
+  /mobx-react-lite/3.4.0_zjzbed4ey2pl6an3m4umzh4gbq:
+    resolution: {integrity: sha512-bRuZp3C0itgLKHu/VNxi66DN/XVkQG7xtoBVWxpvC5FhAqbOCP21+nPhULjnzEqd7xBMybp6KwytdUpZKEgpIQ==}
+    peerDependencies:
+      mobx: ^6.1.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.6.0
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    dev: false
 
   /mobx/6.6.0:
     resolution: {integrity: sha512-MNTKevLH/6DShLZcmSL351+JgiJPO56A4GUpoiDQ3/yZ0mAtclNLdHK9q4BcQhibx8/JSDupfTpbX2NZPemlRg==}

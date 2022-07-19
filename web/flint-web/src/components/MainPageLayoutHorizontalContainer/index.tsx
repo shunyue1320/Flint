@@ -1,19 +1,20 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 import {
   MainPageLayoutHorizontal,
   MainPageLayoutItem,
-  MainPageLayoutProps,
-  SVGCloudFilled,
-  SVGCloudOutlined,
+  // MainPageLayoutProps,
+  // SVGCloudFilled,
+  // SVGCloudOutlined,
   SVGDownload,
-  SVGFeedback,
-  SVGGithub,
+  // SVGFeedback,
+  // SVGGithub,
   SVGHomeFilled,
   SVGHomeOutlined,
   SVGLogout,
-  SVGSetting,
+  // SVGSetting,
 } from "flint-components";
 import { routeConfig, RouteNameType } from "../../route-config";
 import { FLAT_DOWNLOAD_URL } from "../../constants/process";
@@ -24,7 +25,7 @@ export interface MainPageLayoutHorizontalContainerProps {
   subMenu?: MainPageLayoutItem[];
   children: React.ReactNode;
   activeKeys?: string[];
-  onRouteChange?: MainPageLayoutProps["onClick"];
+  onRouteChange?: () => void;
   title?: React.ReactNode;
   onBackPreviousPage?: () => void;
 }
@@ -62,6 +63,9 @@ export const MainPageLayoutHorizontalContainer: React.FC<
       route: routeConfig[RouteNameType.LoginPage].path,
     },
   ];
+
+  const location = useLocation();
+  activeKeys ??= [location.pathname];
 
   const globalStore = useContext(GlobalStoreContext);
 
