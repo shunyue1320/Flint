@@ -1,6 +1,10 @@
 @import "./variables/antd.mod.less";
 @import "~antd/dist/antd.less";
 
+.ant-popover-inner-content {
+  padding: 0;
+}
+
 .btn-color(@name: false) {
   // @name 是字符串 ant-btn-xxx    否则 ant-btn
   @className: if((isstring(@name)), ~"ant-btn-@{name}", ant-btn);
