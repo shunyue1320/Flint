@@ -1,14 +1,9 @@
 import { makeAutoObservable } from "mobx";
 
 import { RouteNameType } from "../route-config";
+import { MainPageLayoutHorizontalContainerProps } from "../components/MainPageLayoutHorizontalContainer";
 
-export interface DelegateProps {
-  subMenu?: [];
-  activeKeys?: string[];
-  onRouteChange?: () => {};
-  title?: React.ReactNode;
-  onBackPreviousPage?: () => void;
-}
+type DelegateProps = MainPageLayoutHorizontalContainerProps;
 
 export class PageStore {
   public name?: RouteNameType = undefined;

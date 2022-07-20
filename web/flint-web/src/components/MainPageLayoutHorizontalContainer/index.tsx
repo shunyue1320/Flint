@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   MainPageLayoutHorizontal,
   MainPageLayoutItem,
-  // MainPageLayoutProps,
+  MainPageLayoutProps,
   // SVGCloudFilled,
   // SVGCloudOutlined,
   SVGDownload,
@@ -25,7 +25,7 @@ export interface MainPageLayoutHorizontalContainerProps {
   subMenu?: MainPageLayoutItem[];
   children: React.ReactNode;
   activeKeys?: string[];
-  onRouteChange?: () => void;
+  onRouteChange?: MainPageLayoutProps["onClick"];
   title?: React.ReactNode;
   onBackPreviousPage?: () => void;
 }
@@ -67,9 +67,20 @@ export const MainPageLayoutHorizontalContainer: React.FC<
   const location = useLocation();
   activeKeys ??= [location.pathname];
 
+  const navigate = useNavigate();
+
   const globalStore = useContext(GlobalStoreContext);
 
-  const onMenuItemClick = (): void => {
+  const onMenuItemClick = (mainPageLayoutItem: MainPageLayoutItem): void => {
+    if (mainPageLayoutItem.key === "logout") {
+      globalStore.logout();
+    }
+
+    if (mainPageLayoutItem.route.startsWith("/")) {
+      onRouteChange ? onRouteChange(mainPageLayoutItem) : navigate(mainPageLayoutItem.route);
+    } else {
+      void window.open(mainPageLayoutItem.route);
+    }
     console.log("onMenuItemClick");
   };
 

@@ -31,6 +31,11 @@ export class GlobalStore {
   public toggleDeviceTest = (): void => {
     this.isTurnOffDeviceTest = !this.isTurnOffDeviceTest;
   };
+
+  public logout = (): void => {
+    this.userInfo = null;
+    this.lastLoginCheck = null;
+  };
 }
 
 export const globalStore = new GlobalStore();
