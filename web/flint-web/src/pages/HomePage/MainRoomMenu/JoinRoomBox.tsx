@@ -1,10 +1,12 @@
 import "./JoinRoomBox.less";
 
-import React, { useState } from "react";
-import { Form, Modal } from "antd";
+import React, { useState, useContext, useRef } from "react";
+import { Form, Input, Modal, Button, InputRef, Checkbox } from "antd";
 import { validate, version } from "uuid";
 import { useTranslation } from "react-i18next";
 import { HomePageHeroButton } from "flint-components";
+
+import { ConfigStoreContext } from "../../../components/StoreProvider";
 
 interface JoinRoomFormValues {
   roomUUID: string;
@@ -21,16 +23,39 @@ export interface JoinRoomBoxProps {
 
 export const JoinRoomBox: React.FC<JoinRoomBoxProps> = () => {
   const { t } = useTranslation();
+  const configStore = useContext(ConfigStoreContext);
 
   const [form] = Form.useForm<JoinRoomFormValues>();
   const [isFormValidated, setIsFormValidated] = useState(false);
   const [isShowModal, showModal] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const roomTitleInputRef = useRef<InputRef>(null);
+
+  const defaultValues: JoinRoomFormValues = {
+    roomUUID: "",
+    autoCameraOn: configStore.autoCameraOn,
+    autoMicOn: configStore.autoMicOn,
+  };
 
   return (
     <>
       <HomePageHeroButton type="join" onClick={handleShowModal} />
       <Modal
         cancelText={t("cancel")}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            {t("cancel")}
+          </Button>,
+          <Button
+            key="submit"
+            disabled={!isFormValidated}
+            loading={isLoading}
+            type="primary"
+            onClick={handleOk}
+          >
+            {t("join")}
+          </Button>,
+        ]}
         okText={t("join")}
         title={t("home-page-hero-button-type.join")}
         visible={isShowModal}
@@ -38,12 +63,37 @@ export const JoinRoomBox: React.FC<JoinRoomBoxProps> = () => {
         wrapClassName="join-room-box-container"
         onCancel={handleCancel}
         onOk={handleOk}
-      ></Modal>
+      >
+        <Form
+          className="main-room-menu-form"
+          form={form}
+          initialValues={defaultValues}
+          layout="vertical"
+          name="createRoom"
+          onFieldsChange={formValidateStatus}
+        >
+          <Form.Item
+            label={t("room-uuid")}
+            name="roomUUID"
+            rules={[{ required: true, message: t("enter-room-uuid") }]}
+          >
+            <Input ref={roomTitleInputRef} placeholder={t("enter-room-uuid")} />
+          </Form.Item>
+
+          <Form.Item label={t("join-options")}>
+            <Form.Item noStyle name="autoMicOn" valuePropName="checked">
+              <Checkbox>{t("turn-on-the-microphone")}</Checkbox>
+            </Form.Item>
+            <Form.Item noStyle name="autoCameraOn" valuePropName="checked">
+              <Checkbox>{t("turn-on-the-camera")}</Checkbox>
+            </Form.Item>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 
   async function handleShowModal(): Promise<void> {
-    console.log("1111");
     try {
       const roomUUID = await extractUUIDFromClipboard();
       if (roomUUID && validate(roomUUID) && version(roomUUID) === 4) {
@@ -68,5 +118,9 @@ export const JoinRoomBox: React.FC<JoinRoomBoxProps> = () => {
 
   function handleOk(): void {
     console.log("handleOk =》");
+  }
+
+  function formValidateStatus(): void {
+    setIsFormValidated(form.getFieldsError().every(field => field.errors.length <= 0));
   }
 };
