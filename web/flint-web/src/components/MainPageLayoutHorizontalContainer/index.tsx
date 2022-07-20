@@ -10,7 +10,7 @@ import {
   // SVGCloudOutlined,
   SVGDownload,
   SVGFeedback,
-  // SVGGithub,
+  SVGGithub,
   SVGHomeFilled,
   SVGHomeOutlined,
   SVGLogout,
@@ -52,6 +52,12 @@ export const MainPageLayoutHorizontalContainer: React.FC<
       icon: (): React.ReactNode => <SVGDownload />,
       title: <></>,
       route: FLAT_DOWNLOAD_URL,
+    },
+    {
+      key: "getGitHubCode",
+      icon: (): React.ReactNode => <SVGGithub />,
+      title: <></>,
+      route: "https://github.com/netless-io/flat/",
     },
   ];
 
