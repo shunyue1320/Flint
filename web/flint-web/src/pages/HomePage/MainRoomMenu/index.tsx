@@ -8,11 +8,15 @@ import { CreateRoomBox } from "./CreateRoomBox";
 import { ScheduleRoomBox } from "./ScheduleRoomBox";
 
 export const MainRoomMenu: React.FC = () => {
+  const onJoinRoom = (): void => {
+    console.log("加入房间");
+  };
+
   return (
     <div className="main-room-menu-container">
       <Row gutter={16}>
         <Col span={6}>
-          <JoinRoomBox />
+          <JoinRoomBox onJoinRoom={onJoinRoom} />
         </Col>
         <Col span={6}>
           <CreateRoomBox />
