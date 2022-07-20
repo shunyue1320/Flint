@@ -6,6 +6,7 @@ import { validate, version } from "uuid";
 import { useTranslation } from "react-i18next";
 import { HomePageHeroButton } from "flint-components";
 
+import { useSafePromise } from "../../../utils/hooks/lifecycle";
 import { ConfigStoreContext } from "../../../components/StoreProvider";
 
 interface JoinRoomFormValues {
@@ -21,8 +22,10 @@ export interface JoinRoomBoxProps {
   onJoinRoom: (roomUUID: string) => Promise<void>;
 }
 
-export const JoinRoomBox: React.FC<JoinRoomBoxProps> = () => {
+export const JoinRoomBox: React.FC<JoinRoomBoxProps> = ({ onJoinRoom }) => {
   const { t } = useTranslation();
+  const sp = useSafePromise();
+
   const configStore = useContext(ConfigStoreContext);
 
   const [form] = Form.useForm<JoinRoomFormValues>();
@@ -116,8 +119,28 @@ export const JoinRoomBox: React.FC<JoinRoomBoxProps> = () => {
     showModal(false);
   }
 
-  function handleOk(): void {
-    console.log("handleOk =》");
+  async function handleOk(): Promise<void> {
+    try {
+      await sp(form.validateFields());
+    } catch (e) {
+      // errors are displayed on the form
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // 持久化缓存 麦克风 摄像头 状态个性化设置
+      const values = form.getFieldsValue();
+      configStore.updateAutoMicOn(values.autoMicOn);
+      configStore.updateAutoCameraOn(values.autoCameraOn);
+      await sp(onJoinRoom(values.roomUUID));
+      showModal(false);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function formValidateStatus(): void {

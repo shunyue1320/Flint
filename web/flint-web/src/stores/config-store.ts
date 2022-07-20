@@ -12,6 +12,14 @@ export class ConfigStore {
   public constructor() {
     autoPersistStore({ storeLSName: "ConfigStore", store: this, version: LS_VERSION });
   }
+
+  public updateAutoMicOn = (isOn: boolean): void => {
+    this.autoMicOn = isOn;
+  };
+
+  public updateAutoCameraOn = (isOn: boolean): void => {
+    this.autoCameraOn = isOn;
+  };
 }
 
 export const configStore = new ConfigStore();
