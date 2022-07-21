@@ -1,6 +1,6 @@
 import "./JoinRoomBox.less";
 
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Form, Input, Modal, Button, InputRef, Checkbox } from "antd";
 import { validate, version } from "uuid";
 import { useTranslation } from "react-i18next";
@@ -25,14 +25,29 @@ export interface JoinRoomBoxProps {
 export const JoinRoomBox: React.FC<JoinRoomBoxProps> = ({ onJoinRoom }) => {
   const { t } = useTranslation();
   const sp = useSafePromise();
-
   const configStore = useContext(ConfigStoreContext);
-
   const [form] = Form.useForm<JoinRoomFormValues>();
+  const roomTitleInputRef = useRef<InputRef>(null);
+
   const [isFormValidated, setIsFormValidated] = useState(false);
   const [isShowModal, showModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const roomTitleInputRef = useRef<InputRef>(null);
+
+  useEffect(() => {
+    let ticket = NaN;
+    if (isShowModal) {
+      ticket = window.setTimeout(() => {
+        if (roomTitleInputRef.current) {
+          roomTitleInputRef.current.focus();
+          roomTitleInputRef.current.select();
+        }
+      }, 0);
+    }
+
+    return () => {
+      window.clearTimeout(ticket);
+    };
+  }, [isShowModal]);
 
   const defaultValues: JoinRoomFormValues = {
     roomUUID: "",

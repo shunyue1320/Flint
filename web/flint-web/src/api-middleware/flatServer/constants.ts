@@ -20,3 +20,16 @@ export enum Status {
   Process,
   AuthFailed,
 }
+
+export enum RoomType {
+  OneToOne = "OneToOne",
+  SmallClass = "SmallClass",
+  BigClass = "BigClass",
+}
+
+export enum RoomStatus {
+  Idle = "Idle",
+  Started = "Started",
+  Paused = "Paused",
+  Stopped = "Stopped",
+}
