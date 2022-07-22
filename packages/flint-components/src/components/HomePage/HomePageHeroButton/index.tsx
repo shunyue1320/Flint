@@ -5,11 +5,13 @@ import { Button } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { SVGJoin } from "./icons/SVGJoin";
+import { SVGBegin } from "./icons/SVGBegin";
 
-type HomePageHeroButtonType = "join";
+type HomePageHeroButtonType = "join" | "begin";
 
 const HomePageHeroButtonIcons: Record<HomePageHeroButtonType, React.FC> = {
   join: SVGJoin,
+  begin: SVGBegin,
 };
 
 export interface HomePageHeroButtonProps {
