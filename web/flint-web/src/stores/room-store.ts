@@ -1,6 +1,21 @@
-import { observable } from "mobx";
-import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
+import { makeAutoObservable, observable, runInAction } from "mobx";
 import { globalStore } from "./GlobalStore";
+import {
+  joinRoom,
+  JoinRoomResult,
+  listRooms,
+  ListRoomsType,
+  ListRoomsPayload,
+} from "../api-middleware/flatServer";
+import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
+
+export enum Region {
+  CN_HZ = "cn-hz",
+  US_SV = "us-sv",
+  SG = "sg",
+  IN_MUM = "in-mum",
+  GB_LON = "gb-lon",
+}
 
 export interface RoomItem {
   roomUUID: string;
@@ -29,6 +44,10 @@ export interface RoomItem {
 export class RoomStore {
   public rooms = observable.map<string, RoomItem>();
 
+  // public constructor() {
+  //   makeAutoObservable(this);
+  // }
+
   public async joinRoom(roomUUID: string): Promise<JoinRoomResult> {
     const data = await joinRoom(roomUUID);
     globalStore.updateToken(data);
@@ -39,6 +58,40 @@ export class RoomStore {
     });
 
     return data;
+  }
+
+  /**
+   * @returns a list of room uuids
+   */
+  public async listRooms(type: ListRoomsType, payload: ListRoomsPayload): Promise<string[]> {
+    const rooms = await listRooms(type, payload);
+    const roomUUIDs: string[] = [];
+
+    runInAction(() => {
+      for (const room of rooms) {
+        roomUUIDs.push(room.roomUUID);
+        this.updateRoom(room.roomUUID, room.ownerUUID, {
+          ...room,
+          periodicUUID: room.periodicUUID || void 0,
+        });
+      }
+    });
+
+    return roomUUIDs;
+  }
+
+  public updateRoom(roomUUID: string, ownerUUID: string, roomInfo: Partial<RoomItem>): void {
+    const room = this.rooms.get(roomUUID);
+    if (room) {
+      const keys = Object.keys(roomInfo) as unknown as Array<keyof RoomItem>;
+      for (const key of keys) {
+        if (key !== "roomUUID") {
+          (room[key] as any) = roomInfo[key];
+        }
+      }
+    } else {
+      this.rooms.set(roomUUID, { ...roomInfo, roomUUID, ownerUUID });
+    }
   }
 }
 

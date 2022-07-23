@@ -31,6 +31,10 @@ export class GlobalStore {
   } | null = null;
   public rtmToken: string | null = null;
 
+  public get userUUID(): string | undefined {
+    return this.userInfo?.userUUID;
+  }
+
   public get userName(): string | undefined {
     return this.userInfo?.name;
   }

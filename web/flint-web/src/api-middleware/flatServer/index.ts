@@ -1,4 +1,5 @@
 import { postNotAuth, post } from "./utils";
+import { RoomStatus, RoomType } from "./constants";
 
 export interface bindingPhoneSendCodePayload {
   phone: string; // +86155...
@@ -98,4 +99,63 @@ export async function loginPhone(phone: string, code: number): Promise<LoginProc
     phone,
     code,
   });
+}
+
+export interface JoinRoomResult {
+  roomType: RoomType;
+  roomUUID: string;
+  ownerUUID: string;
+  whiteboardRoomToken: string;
+  whiteboardRoomUUID: string;
+  rtcUID: number;
+  rtcToken: string;
+  rtcShareScreen: {
+    uid: number;
+    token: string;
+  };
+  rtmToken: string;
+  showGuide: boolean;
+}
+
+export interface JoinRoomPayload {
+  uuid: string;
+}
+
+export function joinRoom(uuid: string): Promise<JoinRoomResult> {
+  return post<JoinRoomPayload, JoinRoomResult>("room/join", { uuid });
+}
+
+export enum ListRoomsType {
+  All = "all",
+  Today = "today",
+  Periodic = "periodic",
+  History = "history",
+}
+
+export interface FlatServerRoom {
+  roomUUID: string;
+  periodicUUID: string | null;
+  ownerUUID: string;
+  inviteCode: string;
+  roomType: RoomType;
+  ownerName: string;
+  ownerAvatarURL: string;
+  title: string;
+  beginTime: number;
+  endTime: number;
+  roomStatus: RoomStatus;
+  hasRecord?: boolean;
+}
+
+export type ListRoomsPayload = {
+  page: number;
+};
+
+export type ListRoomsResult = FlatServerRoom[];
+
+export function listRooms(
+  type: ListRoomsType,
+  payload: ListRoomsPayload,
+): Promise<ListRoomsResult> {
+  return post<undefined, ListRoomsResult>(`room/list/${type}`, undefined, payload);
 }

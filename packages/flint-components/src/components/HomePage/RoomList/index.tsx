@@ -4,6 +4,9 @@ import React, { PropsWithChildren, ReactElement, useMemo } from "react";
 import { Dropdown, Menu } from "antd";
 import { SVGDown } from "../../FlatIcons";
 
+export * from "./RoomListItem";
+export * from "./RoomListAllLoaded";
+
 export interface RoomListProps<T extends string> {
   title?: string;
   filters?: Array<{
