@@ -29,7 +29,7 @@ export const MainRoomMenu: React.FC = () => {
           <JoinRoomBox onJoinRoom={onJoinRoom} />
         </Col>
         <Col span={6}>
-          <CreateRoomBox />
+          <CreateRoomBox onCreateRoom={createOrdinaryRoom} />
         </Col>
         <Col span={6}>
           <ScheduleRoomBox />
@@ -37,4 +37,8 @@ export const MainRoomMenu: React.FC = () => {
       </Row>
     </div>
   );
+
+  function createOrdinaryRoom(): void {
+    console.log("创建普通房间");
+  }
 };

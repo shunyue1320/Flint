@@ -6,12 +6,14 @@ import { useTranslation } from "react-i18next";
 
 import { SVGJoin } from "./icons/SVGJoin";
 import { SVGBegin } from "./icons/SVGBegin";
+import { SVGSchedule } from "./icons/SVGSchedule";
 
-type HomePageHeroButtonType = "join" | "begin";
+type HomePageHeroButtonType = "join" | "begin" | "schedule";
 
 const HomePageHeroButtonIcons: Record<HomePageHeroButtonType, React.FC> = {
   join: SVGJoin,
   begin: SVGBegin,
+  schedule: SVGSchedule,
 };
 
 export interface HomePageHeroButtonProps {

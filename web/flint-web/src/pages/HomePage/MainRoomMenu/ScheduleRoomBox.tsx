@@ -1,5 +1,10 @@
 import React from "react";
 
-export const ScheduleRoomBox: React.FC = () => {
-  return <div>预定房间</div>;
-};
+import { HomePageHeroButton } from "flint-components";
+import { usePushNavigate } from "../../../utils/routes";
+
+export const ScheduleRoomBox = React.memo<{}>(function ScheduleRoomBox() {
+  const pushNavigate = usePushNavigate();
+
+  return <HomePageHeroButton type="schedule" onClick={() => {}} />;
+});

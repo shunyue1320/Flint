@@ -6,7 +6,11 @@ import { useTranslation } from "react-i18next";
 
 import { HomePageHeroButton } from "flint-components";
 
-export const CreateRoomBox: React.FC = () => {
+export interface CreateRoomBoxProps {
+  onCreateRoom: () => void;
+}
+
+export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) => {
   const { t } = useTranslation();
   const [isShowModal, showModal] = useState(false);
 
@@ -39,6 +43,7 @@ export const CreateRoomBox: React.FC = () => {
   );
 
   function handleOk(): void {
+    onCreateRoom();
     console.log("handleOk");
   }
 
