@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from "react";
 import { MainRoomMenu } from "./MainRoomMenu";
 import { useLoginCheck } from "../utils/use-login-check";
 import { PageStoreContext } from "../../components/StoreProvider";
+import { MainRoomListPanel } from "./MainRoomListPanel";
 
 export const HomePage: React.FC = () => {
   const pageStore = useContext(PageStoreContext);
@@ -16,7 +17,9 @@ export const HomePage: React.FC = () => {
   return (
     <div className="homepage-layout-horizontal-container">
       <MainRoomMenu />
-      <div className="homepage-layout-horizontal-content">内容</div>
+      <div className="homepage-layout-horizontal-content">
+        <MainRoomListPanel isLogin={isLogin} />
+      </div>
     </div>
   );
 };

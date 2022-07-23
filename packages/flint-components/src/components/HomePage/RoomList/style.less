@@ -1,0 +1,55 @@
+.room-list {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+
+  @media screen and (max-width: 660px) {
+    padding: 0;
+  }
+}
+
+.room-list-header {
+  height: 3.75em;
+  position: relative;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--grey-1);
+}
+
+.room-list-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  color: var(--text-stronger);
+}
+
+.room-list-filters {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.room-list-body {
+  flex: 1;
+  padding: 12px 16px;
+}
+
+.flat-color-scheme-dark {
+  .room-list {
+    background-color: var(--grey-10);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+  }
+
+  .room-list-header {
+    border-bottom-color: var(--grey-8);
+  }
+}
