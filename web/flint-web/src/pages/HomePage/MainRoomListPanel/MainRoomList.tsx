@@ -24,6 +24,7 @@ export const MainRoomList: React.FC<MainRoomListProps> = ({ isLogin, listRoomsTy
   const roomStore = useContext(RoomStoreContext);
   const globalStore = useContext(GlobalStoreContext);
   const [roomUUIDs, setRoomUUIDs] = useState<string[]>();
+  const isHistoryList = listRoomsType === ListRoomsType.History;
 
   const refreshRooms = useCallback(
     async function refreshRooms(): Promise<void> {
@@ -157,6 +158,34 @@ export const MainRoomList: React.FC<MainRoomListProps> = ({ isLogin, listRoomsTy
   function getSubActions(room: RoomItem): SubActions {
     console.log("getSubActions-room", room);
     const result = [{ key: "details", text: t("room-detail") }];
+
+    if (isHistoryList) {
+      if (room.roomUUID) {
+        result.push({ key: "delete-history", text: t("delete-records") });
+      }
+    } else {
+      // 闲置的状态 （isCreator: 房间所有者就是本人） 支持修改，否则支持取消
+      const ownerUUID = room.ownerUUID;
+      const isCreator = ownerUUID === globalStore.userUUID;
+      if (
+        (room.roomUUID || room.periodicUUID) &&
+        isCreator &&
+        room.roomStatus === RoomStatus.Idle
+      ) {
+        result.push({ key: "modify", text: t("modify-room") });
+      }
+      if (!isCreator || room.roomStatus === RoomStatus.Idle) {
+        result.push({
+          key: "cancel",
+          text: isCreator ? t("cancel-room") : t("remove-room"),
+        });
+      }
+      // 所有人都支持邀请
+      if (room.roomUUID) {
+        result.push({ key: "invite", text: t("invitation") });
+      }
+    }
+
     return result as SubActions;
   }
 

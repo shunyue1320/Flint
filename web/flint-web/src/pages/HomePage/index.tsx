@@ -6,6 +6,7 @@ import { MainRoomMenu } from "./MainRoomMenu";
 import { useLoginCheck } from "../utils/use-login-check";
 import { PageStoreContext } from "../../components/StoreProvider";
 import { MainRoomListPanel } from "./MainRoomListPanel";
+import { MainRoomHistoryPanel } from "./MainRoomHistoryPanel";
 
 export const HomePage: React.FC = () => {
   const pageStore = useContext(PageStoreContext);
@@ -19,6 +20,7 @@ export const HomePage: React.FC = () => {
       <MainRoomMenu />
       <div className="homepage-layout-horizontal-content">
         <MainRoomListPanel isLogin={isLogin} />
+        <MainRoomHistoryPanel isLogin={isLogin} />
       </div>
     </div>
   );
