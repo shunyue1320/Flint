@@ -12,9 +12,9 @@ export const DevicesTestPage: React.FC = () => {
   const sp = useSafePromise();
 
   const cameraVideoStreamRef = useRef<HTMLDivElement>(null);
-  // const [cameraDevices, setCameraDevices] = useState<FlatRTCDevice[]>([]);
 
-  // const [volume, setVolume] = useState(0);
+  const [volume, setVolume] = useState(0);
+
   useEffect(() => {
     console.log("rtc====", rtc);
     const avatar = rtc.getTestAvatar();
@@ -26,14 +26,21 @@ export const DevicesTestPage: React.FC = () => {
 
       const ticket = window.setInterval(() => {
         // add noise
-      });
+        setVolume(Math.min(avatar.getVolumeLevel() + Math.random() * 0.05, 1));
+      }, 50);
+
+      return () => {
+        window.clearInterval(ticket);
+        avatar.destroy();
+      };
     }
-  }, [rtc]);
+    return;
+  }, [rtc, cameraVideoStreamRef]);
 
   return (
     <div className="device-test-page-container">
       <div className="device-test-panel-box">
-        <DeviceTestPanel />
+        <DeviceTestPanel microphoneVolume={volume} />
       </div>
     </div>
   );
