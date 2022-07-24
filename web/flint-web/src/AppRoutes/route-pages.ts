@@ -19,4 +19,8 @@ export const routePages: RoutePages = {
     hasHeader: true,
     component: () => import("../pages/HomePage"),
   },
+  [RouteNameType.DevicesTestPage]: {
+    title: "DevicesTestPage",
+    component: () => import("../pages/DevicesTestPage"),
+  },
 };

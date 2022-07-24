@@ -3,23 +3,27 @@ import "./MainRoomMenu.less";
 import React, { useContext } from "react";
 import { Row, Col } from "antd";
 
-import { GlobalStoreContext } from "../../../components/StoreProvider";
+import { Region } from "flint-components";
+import { GlobalStoreContext, RoomStoreContext } from "../../../components/StoreProvider";
 import { JoinRoomBox } from "./JoinRoomBox";
 import { CreateRoomBox } from "./CreateRoomBox";
 import { ScheduleRoomBox } from "./ScheduleRoomBox";
-import { usePushNavigate } from "../../../utils/routes";
+import { RouteNameType, usePushNavigate } from "../../../utils/routes";
 import { joinRoomHandler } from "../../utils/join-room-handler";
+import { errorTips } from "../../../components/Tips/ErrorTips";
+import { RoomType } from "../../../api-middleware/flatServer/constants";
 
 export const MainRoomMenu: React.FC = () => {
   const globalStore = useContext(GlobalStoreContext);
+  const roomStore = useContext(RoomStoreContext);
+  const pushNavigate = usePushNavigate();
 
   const onJoinRoom = async (roomUUID: string): Promise<void> => {
     if (globalStore.isTurnOffDeviceTest) {
       await joinRoomHandler(roomUUID, usePushNavigate);
     } else {
-      // usePushNavigate("进入设备测试页面")
+      pushNavigate(RouteNameType.DevicesTestPage, { roomUUID });
     }
-    console.log("加入房间");
   };
 
   return (
@@ -38,7 +42,20 @@ export const MainRoomMenu: React.FC = () => {
     </div>
   );
 
-  function createOrdinaryRoom(): void {
-    console.log("创建普通房间");
+  async function createOrdinaryRoom(title: string, type: RoomType, region: Region): Promise<void> {
+    try {
+      const roomUUID = await roomStore.createOrdinaryRoom({
+        title,
+        type,
+        beginTime: Date.now(),
+        region,
+      });
+      // 跳转至房间页面
+      await onJoinRoom(roomUUID);
+    } catch (e) {
+      errorTips(e);
+    }
   }
 };
+
+export default MainRoomMenu;

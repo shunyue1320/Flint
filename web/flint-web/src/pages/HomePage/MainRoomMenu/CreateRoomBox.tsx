@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { ClassPicker, HomePageHeroButton, Region, regions, RegionSVG } from "flint-components";
 import { RoomType } from "../../../api-middleware/flatServer/constants";
 import { GlobalStoreContext, ConfigStoreContext } from "../../../components/StoreProvider";
+import { useSafePromise } from "../../../utils/hooks/lifecycle";
 
 interface CreateRoomFormValues {
   roomTitle: string;
@@ -15,11 +16,12 @@ interface CreateRoomFormValues {
 }
 
 export interface CreateRoomBoxProps {
-  onCreateRoom: () => void;
+  onCreateRoom: (title: string, type: RoomType, region: Region) => Promise<void>;
 }
 
 export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) => {
   const { t } = useTranslation();
+  const sp = useSafePromise();
   const globalStore = useContext(GlobalStoreContext);
   const configStore = useContext(ConfigStoreContext);
   const [form] = Form.useForm<CreateRoomFormValues>();
@@ -29,6 +31,7 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
   const roomTitleInputRef = useRef<InputRef>(null);
   const [roomRegion, setRoomRegion] = useState<Region>(configStore.getRegion());
   const [classType, setClassType] = useState<RoomType>(RoomType.BigClass);
+  const [isLoading, setLoading] = useState(false);
 
   const defaultValues: CreateRoomFormValues = {
     roomTitle: globalStore.userInfo?.name
@@ -70,7 +73,13 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
           <Button key="cancel" onClick={handleCancel}>
             {t("cancel")}
           </Button>,
-          <Button key="submit" type="primary" onClick={handleOk}>
+          <Button
+            key="submit"
+            disabled={!isFormValidated}
+            loading={isLoading}
+            type="primary"
+            onClick={handleOk}
+          >
             {t("begin")}
           </Button>,
         ]}
@@ -123,9 +132,25 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
     </>
   );
 
-  function handleOk(): void {
-    onCreateRoom();
-    console.log("handleOk");
+  async function handleOk(): Promise<void> {
+    try {
+      await sp(form.validateFields());
+    } catch (e) {
+      // 表单上会显示错误
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const values = form.getFieldsValue();
+      configStore.updateAutoCameraOn(values.autoCameraOn);
+      await sp(onCreateRoom(values.roomTitle, values.roomType, roomRegion));
+      showModal(false);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleCancel(): void {
@@ -136,3 +161,5 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
     setIsFormValidated(form.getFieldsError().every(field => field.errors.length <= 0));
   }
 };
+
+export default CreateRoomBox;

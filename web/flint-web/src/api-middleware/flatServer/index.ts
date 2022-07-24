@@ -1,3 +1,4 @@
+import { Region } from "flint-components";
 import { postNotAuth, post } from "./utils";
 import { RoomStatus, RoomType } from "./constants";
 
@@ -158,4 +159,25 @@ export function listRooms(
   payload: ListRoomsPayload,
 ): Promise<ListRoomsResult> {
   return post<undefined, ListRoomsResult>(`room/list/${type}`, undefined, payload);
+}
+
+export interface CreateOrdinaryRoomPayload {
+  title: string;
+  type: RoomType;
+  beginTime: number;
+  region: Region;
+  endTime?: number;
+}
+
+export interface CreateOrdinaryRoomResult {
+  roomUUID: string;
+  inviteCode: string;
+}
+
+export async function createOrdinaryRoom(payload: CreateOrdinaryRoomPayload): Promise<string> {
+  const res = await post<CreateOrdinaryRoomPayload, CreateOrdinaryRoomResult>(
+    "room/create/ordinary",
+    payload,
+  );
+  return res.roomUUID;
 }

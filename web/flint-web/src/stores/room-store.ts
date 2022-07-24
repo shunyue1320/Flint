@@ -6,8 +6,11 @@ import {
   listRooms,
   ListRoomsType,
   ListRoomsPayload,
+  createOrdinaryRoom,
+  CreateOrdinaryRoomPayload,
 } from "../api-middleware/flatServer";
 import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
+import { configStore } from "./config-store";
 
 export enum Region {
   CN_HZ = "cn-hz",
@@ -92,6 +95,25 @@ export class RoomStore {
     } else {
       this.rooms.set(roomUUID, { ...roomInfo, roomUUID, ownerUUID });
     }
+  }
+
+  /**
+   * @returns roomUUID
+   */
+  public async createOrdinaryRoom(payload: CreateOrdinaryRoomPayload): Promise<string> {
+    if (!globalStore.userUUID) {
+      throw new Error("cannot create room: user not login.");
+    }
+
+    const roomUUID = await createOrdinaryRoom(payload);
+    configStore.setRegion(payload.region);
+    const { ...restPayload } = payload;
+    this.updateRoom(roomUUID, globalStore.userUUID, {
+      ...restPayload,
+      roomUUID,
+    });
+
+    return roomUUID;
   }
 }
 

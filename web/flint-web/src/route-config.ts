@@ -1,6 +1,7 @@
 export enum RouteNameType {
   LoginPage = "LoginPage",
   HomePage = "HomePage",
+  DevicesTestPage = "DevicesTestPage",
 }
 
 export const routeConfig = {
@@ -9,6 +10,9 @@ export const routeConfig = {
   },
   [RouteNameType.HomePage]: {
     path: "/",
+  },
+  [RouteNameType.DevicesTestPage]: {
+    path: "/devices-test/:roomUUID/",
   },
 };
 

@@ -28,6 +28,10 @@ export class ConfigStore {
   public getRegion = (): Region => {
     return this.region || (i18n.language.startsWith("zh") ? Region.CN_HZ : Region.US_SV);
   };
+
+  public setRegion = (region: Region): void => {
+    this.region = region;
+  };
 }
 
 export const configStore = new ConfigStore();
