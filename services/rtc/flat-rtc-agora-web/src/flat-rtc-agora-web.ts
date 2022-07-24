@@ -54,4 +54,18 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
   public getTestAvatar(): FlatRTCAvatar {
     return this.localAvatar;
   }
+
+  public async getCameraDevices(): Promise<FlatRTCDevice[]> {
+    return (await AgoraRTC.getCameras()).map(device => ({
+      deviceId: device.deviceId,
+      label: device.label,
+    }));
+  }
+
+  public async getMicDevices(): Promise<FlatRTCDevice[]> {
+    return (await AgoraRTC.getMicrophones()).map(device => ({
+      deviceId: device.deviceId,
+      label: device.label,
+    }));
+  }
 }
