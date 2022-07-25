@@ -16,6 +16,7 @@ import {
   FlatRTCRole,
 } from "@netless/flat-rtc";
 import { RTCLocalAvatar } from "./rtc-local-avatar";
+import { SideEffectManager } from "side-effect-manager";
 
 AgoraRTC.enableLogUpload();
 
@@ -42,6 +43,57 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
   private _localAvatar?: RTCLocalAvatar;
 
   private static _instance?: FlatRTCAgoraWeb;
+
+  private readonly _sideEffect = new SideEffectManager();
+
+  private _cameraID?: string;
+  private _micID?: string;
+  private _speakerID?: string;
+
+  private constructor() {
+    super();
+    this._sideEffect.add(() => {
+      // 摄像机更改
+      AgoraRTC.onCameraChanged = deviceInfo => {
+        this.setCameraID(deviceInfo.device.deviceId);
+      };
+      // 麦克风更改
+      AgoraRTC.onMicrophoneChanged = deviceInfo => {
+        this.setMicID(deviceInfo.device.deviceId);
+      };
+      // 扬声器更改
+      AgoraRTC.onPlaybackDeviceChanged = deviceInfo => {
+        this.setSpeakerID(deviceInfo.device.deviceId);
+      };
+
+      return () => {
+        AgoraRTC.onCameraChanged = undefined;
+        AgoraRTC.onMicrophoneChanged = undefined;
+        AgoraRTC.onPlaybackDeviceChanged = undefined;
+      };
+    });
+  }
+
+  public async setCameraID(deviceId: string): Promise<void> {
+    if (this._cameraID !== deviceId) {
+      this._cameraID = deviceId;
+      this.events.emit("camera-changed", deviceId);
+    }
+  }
+
+  public async setMicID(deviceId: string): Promise<void> {
+    if (this._micID !== deviceId) {
+      this._micID = deviceId;
+      this.events.emit("mic-changed", deviceId);
+    }
+  }
+
+  public async setSpeakerID(deviceId: string): Promise<void> {
+    if (this._speakerID !== deviceId) {
+      this._speakerID = deviceId;
+      this.events.emit("speaker-changed", deviceId);
+    }
+  }
 
   public static getInstance(): FlatRTCAgoraWeb {
     return (FlatRTCAgoraWeb._instance ??= new FlatRTCAgoraWeb());

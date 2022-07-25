@@ -70,6 +70,7 @@ export const DevicesTestPage: React.FC = () => {
         .catch(handlerDeviceError);
     };
 
+    // 监听设备改变重新获取所有设备id
     const cameraChangeDisposer = rtc.events.on("camera-changed", refreshCameraDevices);
     const micChangedDisposer = rtc.events.on("mic-changed", refreshMicDevices);
 
