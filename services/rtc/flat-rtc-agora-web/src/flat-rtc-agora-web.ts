@@ -120,4 +120,27 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
       label: device.label,
     }));
   }
+
+  public localCameraTrack?: ICameraVideoTrack;
+  public createLocalCameraTrack = singleRun(async (): Promise<ICameraVideoTrack> => {
+    if (!this.localCameraTrack) {
+      this.localCameraTrack = await AgoraRTC.createCameraVideoTrack({
+        encoderConfig: { width: 288, height: 216 },
+        cameraId: this._cameraID,
+      });
+    }
+    return this.localCameraTrack;
+  });
+}
+
+function singleRun<TFn extends (...args: any[]) => Promise<any>>(fn: TFn): TFn {
+  let p: any;
+  const run = ((...args) => {
+    if (!p) {
+      p = fn(...args);
+      p.then(() => (p = undefined));
+    }
+    return p;
+  }) as TFn;
+  return run;
 }

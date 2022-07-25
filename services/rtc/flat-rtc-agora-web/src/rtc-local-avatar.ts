@@ -22,6 +22,40 @@ export class RTCLocalAvatar implements FlatRTCAvatar {
 
   public constructor(config: RTCAvatarConfig) {
     this._rtc = config.rtc;
+    // 摄像头ref
+    this._el$ = new Val(config.element);
+
+    // 先创建一个 本地摄像机轨迹
+    this._sideEffect.addDisposer(
+      this._shouldCamera$.subscribe(async shouldCamera => {
+        try {
+          let localCameraTrack = this._rtc.localCameraTrack;
+          if (shouldCamera && !localCameraTrack) {
+            localCameraTrack = await this._rtc.createLocalCameraTrack();
+            if (this._el$.value) {
+              localCameraTrack.play(this._el$.value);
+            }
+          } else if (localCameraTrack) {
+            await localCameraTrack.setEnabled(shouldCamera);
+          }
+        } catch (e) {
+          this._rtc.events.emit("err-set-camera", e);
+        }
+      }),
+    );
+
+    // this._sideEffect.addDisposer(
+    //   this._el$.reaction(el => {
+    //     if (el && this._rtc.localCameraTrack) {
+    //       try {
+    //         this._rtc.localCameraTrack.play(el);
+    //         this._rtc.localCameraTrack.setEnabled(this._shouldCamera$.value);
+    //       } catch (e) {
+    //         console.error(e);
+    //       }
+    //     }
+    //   }),
+    // );
   }
 
   public enableCamera(enabled: boolean): void {

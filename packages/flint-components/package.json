@@ -12,6 +12,7 @@
     "build": "build-storybook -s public"
   },
   "dependencies": {
+    "@netless/flat-rtc": "workspace:*",
     "antd": "^4.21.0",
     "i18next": "^21.8.11",
     "i18next-browser-languagedetector": "^6.1.4",

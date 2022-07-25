@@ -50,6 +50,7 @@ importers:
 
   packages/flint-components:
     specifiers:
+      '@netless/flat-rtc': workspace:*
       '@storybook/addon-actions': ^6.5.9
       '@storybook/addon-essentials': ^6.5.9
       '@storybook/addon-interactions': ^6.5.9
@@ -78,6 +79,7 @@ importers:
       tachyons: ^4.12.0
       webpack: ^5.73.0
     dependencies:
+      '@netless/flat-rtc': link:../../services/rtc/flat-rtc
       antd: 4.21.0_biqbaboplfbrettd7655fr4n2y
       i18next: 21.8.11
       i18next-browser-languagedetector: 6.1.4
