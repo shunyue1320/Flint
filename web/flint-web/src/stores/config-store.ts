@@ -2,16 +2,20 @@ import { Region } from "flint-components";
 import { autoPersistStore } from "./utils";
 import { i18n } from "../utils/i18n";
 
-// clear storage if not match
+// 如果不匹配，则清除存储
 const LS_VERSION = 1;
 
 export class ConfigStore {
-  /** Turn on camera when joining room */
+  // 加入房间时打开摄像机
   public autoCameraOn = false;
-  /** Turn on mic when joining room */
+  // 加入房间时打开麦克风
   public autoMicOn = true;
-  /** Region, default by language */
+  // 服务器区域，默认语言
   public region: Region | null = null;
+  // 设备测试页面上的选定摄像机设备id
+  public cameraId?: string;
+  // 设备测试页面上的选定麦克风设备id
+  public microphoneId?: string;
 
   public constructor() {
     autoPersistStore({ storeLSName: "ConfigStore", store: this, version: LS_VERSION });
@@ -23,6 +27,14 @@ export class ConfigStore {
 
   public updateAutoCameraOn = (isOn: boolean): void => {
     this.autoCameraOn = isOn;
+  };
+
+  public updateCameraId = (cameraId: string): void => {
+    this.cameraId = cameraId;
+  };
+
+  public updateMicrophoneId = (microphoneId: string): void => {
+    this.microphoneId = microphoneId;
   };
 
   public getRegion = (): Region => {

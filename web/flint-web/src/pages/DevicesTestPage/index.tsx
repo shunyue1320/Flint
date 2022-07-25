@@ -6,15 +6,22 @@ import { DeviceTestPanel } from "flint-components";
 import { FlatRTCContext } from "../../components/FlatRTCContext";
 import { useSafePromise } from "../../utils/hooks/lifecycle";
 import { DeviceTest } from "../../api-middleware/rtc/device-test";
+import { configStore } from "../../stores/config-store";
+import { joinRoomHandler } from "../utils/join-room-handler";
+import { GlobalStoreContext } from "../../components/StoreProvider";
 
 export const DevicesTestPage: React.FC = () => {
   console.log("FlatRTCContext==", FlatRTCContext);
   const rtc = useContext(FlatRTCContext);
+  const globalStore = useContext(GlobalStoreContext);
   const sp = useSafePromise();
 
   const cameraVideoStreamRef = useRef<HTMLDivElement>(null);
   const [cameraDevices, setCameraDevices] = useState<FlatRTCDevice[]>([]);
   const [microphoneDevices, setMicrophoneDevices] = useState<FlatRTCDevice[]>([]);
+
+  const [cameraDeviceId, setCameraDeviceId] = useState<string>("");
+  const [microphoneDeviceId, setMicrophoneDeviceId] = useState<string>("");
 
   const [isCameraAccessible, setIsCameraAccessible] = useState(true);
   const [isMicrophoneAccessible, setIsMicrophoneAccessible] = useState(true);
@@ -83,13 +90,52 @@ export const DevicesTestPage: React.FC = () => {
     };
   }, [rtc, sp]);
 
+  // 检查摄像头更改时的设备id
+  useEffect(() => {
+    if (cameraDevices.length > 0 && !cameraDeviceId) {
+      const lastCameraId = configStore.cameraId;
+      // 默认设置第一个设备id
+      lastCameraId ? setCameraDeviceId(lastCameraId) : setCameraDeviceId(cameraDevices[0].deviceId);
+    }
+  }, [cameraDeviceId, cameraDevices]);
+
+  // 检查麦克风更改时的设备id
+  useEffect(() => {
+    if (microphoneDevices.length > 0 && !microphoneDeviceId) {
+      const lastMicrophoneId = configStore.microphoneId;
+      lastMicrophoneId
+        ? setMicrophoneDeviceId(lastMicrophoneId)
+        : setMicrophoneDeviceId(microphoneDevices[0].deviceId);
+    }
+  }, [microphoneDeviceId, microphoneDevices]);
+
+  const joinRoom = async (): Promise<void> => {
+    configStore.updateCameraId(cameraDeviceId);
+    configStore.updateMicrophoneId(microphoneDeviceId);
+    // await joinRoomHandler(roomUUID, pushHistory);
+  };
+
   return (
     <div className="device-test-page-container">
       <div className="device-test-panel-box">
         <DeviceTestPanel
           cameraDevices={cameraDevices}
+          cameraVideoStreamRef={cameraVideoStreamRef}
+          currentCameraDeviceID={cameraDeviceId}
+          currentMicrophoneDeviceID={microphoneDeviceId}
+          currentSpeakerDeviceID={"default browser"}
+          isCameraAccessible={isCameraAccessible}
+          isMicrophoneAccessible={isMicrophoneAccessible}
+          isSpeakerAccessible={true}
+          joinRoom={joinRoom}
           microphoneDevices={microphoneDevices}
           microphoneVolume={volume}
+          setCameraDevice={setCameraDeviceId}
+          // 目前，浏览器不支持切换扬声器设备
+          setMicrophoneDevice={setMicrophoneDeviceId}
+          setSpeakerDevice={() => null}
+          speakerTestFileName={"Music"}
+          toggleDeviceTest={() => globalStore.toggleDeviceTest()}
         />
       </div>
     </div>
