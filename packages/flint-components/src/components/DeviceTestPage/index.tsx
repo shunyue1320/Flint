@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Device } from "./constants";
 import { CameraTest } from "./CameraTest";
 import { SpeakerTest } from "./SpeakerTest";
+import { MicrophoneTest } from "./MicrophoneTest";
 
 export type { Device };
 
@@ -73,6 +74,13 @@ export const DeviceTestPanel: React.FC<DeviceTestPanelProps> = ({
             setSpeakerDevice={setSpeakerDevice}
             speakerDevices={speakerDevices}
             speakerTestFileName={speakerTestFileName}
+          />
+          <MicrophoneTest
+            currentMicrophoneDeviceID={currentMicrophoneDeviceID}
+            isMicrophoneAccessible={isMicrophoneAccessible}
+            microphoneDevices={microphoneDevices}
+            microphoneVolume={microphoneVolume}
+            setMicrophoneDevice={setMicrophoneDevice}
           />
         </div>
       </div>
