@@ -1,6 +1,7 @@
 import "./style.less";
 
 import React from "react";
+import { Button, Checkbox } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { Device } from "./constants";
@@ -85,8 +86,14 @@ export const DeviceTestPanel: React.FC<DeviceTestPanelProps> = ({
         </div>
       </div>
       <div className="device-test-panel-tips-box">
-        <div className="device-test-panel-tips-radio"></div>
-        <div className="device-test-panel-join-btn"></div>
+        <div className="device-test-panel-tips-radio">
+          <Checkbox onClick={toggleDeviceTest}>{t("close-tip")}</Checkbox>
+        </div>
+        <div className="device-test-panel-join-btn">
+          <Button type="primary" onClick={joinRoom}>
+            {t("join-room")}
+          </Button>
+        </div>
       </div>
     </div>
   );
