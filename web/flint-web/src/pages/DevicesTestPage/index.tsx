@@ -1,5 +1,6 @@
 import "./style.less";
 import React, { useState, useContext, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { FlatRTCDevice } from "@netless/flat-rtc";
 import { DeviceTestPanel } from "flint-components";
 
@@ -9,12 +10,15 @@ import { DeviceTest } from "../../api-middleware/rtc/device-test";
 import { configStore } from "../../stores/config-store";
 import { joinRoomHandler } from "../utils/join-room-handler";
 import { GlobalStoreContext } from "../../components/StoreProvider";
+import { RouteNameType, RouteParams, usePushNavigate } from "../../utils/routes";
 
 export const DevicesTestPage: React.FC = () => {
-  console.log("FlatRTCContext==", FlatRTCContext);
   const rtc = useContext(FlatRTCContext);
   const globalStore = useContext(GlobalStoreContext);
   const sp = useSafePromise();
+  const pushNavigate = usePushNavigate();
+
+  const { roomUUID } = useParams<RouteParams<RouteNameType.JoinPage>>();
 
   const cameraVideoStreamRef = useRef<HTMLDivElement>(null);
   const [cameraDevices, setCameraDevices] = useState<FlatRTCDevice[]>([]);
@@ -112,7 +116,7 @@ export const DevicesTestPage: React.FC = () => {
   const joinRoom = async (): Promise<void> => {
     configStore.updateCameraId(cameraDeviceId);
     configStore.updateMicrophoneId(microphoneDeviceId);
-    // await joinRoomHandler(roomUUID, pushHistory);
+    await joinRoomHandler(roomUUID, pushNavigate);
   };
 
   return (
@@ -131,8 +135,8 @@ export const DevicesTestPage: React.FC = () => {
           microphoneDevices={microphoneDevices}
           microphoneVolume={volume}
           setCameraDevice={setCameraDeviceId}
-          // 目前，浏览器不支持切换扬声器设备
           setMicrophoneDevice={setMicrophoneDeviceId}
+          // 目前，浏览器不支持切换扬声器设备
           setSpeakerDevice={() => null}
           speakerTestFileName={"Music"}
           toggleDeviceTest={() => globalStore.toggleDeviceTest()}

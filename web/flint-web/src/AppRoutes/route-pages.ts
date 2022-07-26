@@ -23,4 +23,8 @@ export const routePages: RoutePages = {
     title: "DevicesTestPage",
     component: () => import("../pages/DevicesTestPage"),
   },
+  [RouteNameType.JoinPage]: {
+    title: "JoinPage",
+    component: () => import("../pages/JoinPage"),
+  },
 };
