@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { Device } from "./constants";
 import { CameraTest } from "./CameraTest";
+import { SpeakerTest } from "./SpeakerTest";
 
 export type { Device };
 
@@ -62,6 +63,16 @@ export const DeviceTestPanel: React.FC<DeviceTestPanelProps> = ({
             currentCameraDeviceID={currentCameraDeviceID}
             isCameraAccessible={isCameraAccessible}
             setCameraDevice={setCameraDevice}
+          />
+        </div>
+        <div className="device-test-panel-inner-right">
+          <SpeakerTest
+            audioResourceSrc={audioResourceSrc}
+            currentSpeakerDeviceID={currentSpeakerDeviceID}
+            isSpeakerAccessible={isSpeakerAccessible}
+            setSpeakerDevice={setSpeakerDevice}
+            speakerDevices={speakerDevices}
+            speakerTestFileName={speakerTestFileName}
           />
         </div>
       </div>
