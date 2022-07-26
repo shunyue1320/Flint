@@ -16,7 +16,7 @@ export interface CameraTestProps {
   setCameraDevice: (deviceID: string) => void;
 }
 
-export const CameraTest: React.FC = ({
+export const CameraTest: React.FC<CameraTestProps> = ({
   cameraDevices,
   isCameraAccessible,
   currentCameraDeviceID,

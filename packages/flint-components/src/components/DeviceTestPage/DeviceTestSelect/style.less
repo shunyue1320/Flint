@@ -1,0 +1,48 @@
+.device-test-select-container {
+  width: 100%;
+}
+
+.device-test-select-box {
+  > .ant-select {
+    width: 100%;
+  }
+
+  > .ant-select-selector {
+    border-radius: 4px;
+    height: 36px;
+    align-items: center;
+  }
+}
+
+.device-test-select-disabled-btn {
+  > .ant-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    height: 36px;
+    cursor: not-allowed;
+    color: var(--text);
+    background-color: var(--grey-0);
+
+    > img {
+      padding-right: 10px;
+    }
+  }
+
+  > .ant-btn:hover {
+    border-color: var(--grey-0);
+  }
+}
+
+.flat-color-scheme-dark {
+  .device-test-select-disabled-btn {
+    > .ant-btn {
+      background-color: var(--grey-9);
+    }
+
+    > .ant-btn:hover {
+      border-color: var(--grey-7);
+    }
+  }
+}
