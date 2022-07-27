@@ -17,6 +17,7 @@
     "classnames": "^2.3.1",
     "flint-components": "workspace:*",
     "flint-i18n": "workspace:*",
+    "flint-types": "workspace:*",
     "i18next": "^21.8.11",
     "i18next-browser-languagedetector": "^6.1.4",
     "mobx": "^6.6.0",

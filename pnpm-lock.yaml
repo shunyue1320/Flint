@@ -112,6 +112,9 @@ importers:
   packages/flint-i18n:
     specifiers: {}
 
+  packages/flint-types:
+    specifiers: {}
+
   services/rtc/flat-rtc:
     specifiers:
       emittery: ^0.10.2
@@ -160,6 +163,7 @@ importers:
       dotenv-expand: ^8.0.3
       flint-components: workspace:*
       flint-i18n: workspace:*
+      flint-types: workspace:*
       i18next: ^21.8.11
       i18next-browser-languagedetector: ^6.1.4
       mobx: ^6.6.0
@@ -183,6 +187,7 @@ importers:
       classnames: 2.3.1
       flint-components: link:../../packages/flint-components
       flint-i18n: link:../../packages/flint-i18n
+      flint-types: link:../../packages/flint-types
       i18next: 21.8.11
       i18next-browser-languagedetector: 6.1.4
       mobx: 6.6.0

@@ -1,0 +1,11 @@
+{
+  "name": "flint-types",
+  "version": "0.1.0",
+  "description": "Shared TypeScript typings for the Flat app and Flat Server.",
+  "main": "src/index.ts",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  }
+}
