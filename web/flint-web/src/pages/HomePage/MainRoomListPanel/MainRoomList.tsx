@@ -156,7 +156,6 @@ export const MainRoomList: React.FC<MainRoomListProps> = ({ isLogin, listRoomsTy
     | Array<{ key: "details" | "modify" | "cancel" | "invite"; text: string }>;
 
   function getSubActions(room: RoomItem): SubActions {
-    console.log("getSubActions-room", room);
     const result = [{ key: "details", text: t("room-detail") }];
 
     if (isHistoryList) {

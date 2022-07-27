@@ -27,4 +27,8 @@ export const routePages: RoutePages = {
     title: "JoinPage",
     component: () => import("../pages/JoinPage"),
   },
+  [RouteNameType.BigClassPage]: {
+    title: "BigClassPage",
+    component: () => import("../pages/BigClassPage"),
+  },
 };

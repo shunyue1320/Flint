@@ -3,6 +3,7 @@ export enum RouteNameType {
   HomePage = "HomePage",
   DevicesTestPage = "DevicesTestPage",
   JoinPage = "JoinPage",
+  BigClassPage = "BigClassPage",
 }
 
 export const routeConfig = {
@@ -17,6 +18,9 @@ export const routeConfig = {
   },
   [RouteNameType.JoinPage]: {
     path: "/join/:roomUUID/",
+  },
+  [RouteNameType.BigClassPage]: {
+    path: "/classroom/BigClass/:roomUUID/:ownerUUID/",
   },
 };
 
