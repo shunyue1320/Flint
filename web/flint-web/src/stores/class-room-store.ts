@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { i18n } from "i18next";
 import { SideEffectManager } from "side-effect-manager";
 import { FlatRTC, FlatRTCRole, FlatRTCMode } from "@netless/flat-rtc";
-import { action, autorun, observable, makeAutoObservable } from "mobx";
+import { action, autorun, observable, makeAutoObservable, runInAction } from "mobx";
 
 import { RouteNameType, usePushNavigate } from "../utils/routes";
 import { errorTips } from "../components/Tips/ErrorTips";
@@ -27,6 +27,8 @@ export class ClassRoomStore {
   /** 当前用户的用户uuid */
   public readonly userUUID: string;
   public readonly rtc: FlatRTC;
+  /** 云记录是否打开 */
+  public isRecording = false;
   /** RTC UI是否打开 */
   public isCalling = false;
   /** 是否RTC连接教室 */
@@ -99,6 +101,31 @@ export class ClassRoomStore {
     this.toggleCloudStoragePanel(true);
     const cloudStorage = this.whiteboardStore.cloudStorageStore;
   };
+
+  public toggleRecording = async ({ onStop }: { onStop?: () => void } = {}): Promise<void> => {
+    try {
+      if (this.isRecording) {
+        await this.stopRecording();
+        onStop?.();
+      } else {
+        await this.startRecording();
+      }
+    } catch (e) {
+      errorTips(e as Error);
+    }
+  };
+
+  private async stopRecording(): Promise<void> {
+    runInAction(() => {
+      this.isRecording = false;
+    });
+  }
+
+  private async startRecording(): Promise<void> {
+    runInAction(() => {
+      this.isRecording = true;
+    });
+  }
 
   public toggleShareScreen = (force = !this.isScreenSharing): void => {
     // this.rtc.shareScreen.enable(force);

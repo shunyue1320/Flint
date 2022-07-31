@@ -3,8 +3,15 @@ import "./style.less";
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { TopBar, NetworkStatus, TopBarRightBtn, SVGScreenSharing } from "flint-components";
+import {
+  CloudRecordBtn,
+  TopBar,
+  NetworkStatus,
+  TopBarRightBtn,
+  SVGScreenSharing,
+} from "flint-components";
 import { observer } from "mobx-react-lite";
+import { message } from "antd";
 
 import { runtime } from "../../utils/runtime";
 import { RouteNameType, RouteParams } from "../../utils/routes";
@@ -53,6 +60,19 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
             icon={<SVGScreenSharing active={classRoomStore.isScreenSharing} />}
             title={t("share-screen.self")}
             onClick={() => classRoomStore.toggleShareScreen()}
+          />
+        )}
+
+        {classRoomStore.isCreator && (
+          <CloudRecordBtn
+            isRecording={classRoomStore.isRecording}
+            onClick={() => {
+              void classRoomStore.toggleRecording({
+                onStop() {
+                  void message.success(t("recording-completed-tips"));
+                },
+              });
+            }}
           />
         )}
       </>
