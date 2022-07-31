@@ -6,7 +6,6 @@ import signal3SVG from "./icons/signal-3.svg";
 
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { observer } from "mobx-react-lite";
 
 function getSignalIcon(uplink: number, downlink: number): string {
   if (uplink === 5 || downlink === 5 || uplink === 4 || downlink === 4) {
@@ -35,12 +34,10 @@ export interface NetworkStatusProps {
   networkQuality: NetworkQuality;
 }
 
-export const NetworkStatus = observer<NetworkStatusProps>(function NetworkStatus({
-  networkQuality,
-}) {
+export const NetworkStatus: React.FC<NetworkStatusProps> = ({ networkQuality }) => {
   const { t } = useTranslation();
   const { uplink, downlink } = networkQuality;
-  console.log("networkQuality=====", networkQuality);
+  console.log("networkQuality=====22245", networkQuality);
 
   const signalIcon = useMemo(() => getSignalIcon(uplink, downlink), [uplink, downlink]);
 
@@ -58,43 +55,13 @@ export const NetworkStatus = observer<NetworkStatusProps>(function NetworkStatus
       <span className="network-status-delay" title={t("client-to-edge-server-network-latency")}>
         {t("delay")}
         <span className="network-status-delay-ms">{networkQuality.delay}ms</span>
-        <span className="network-status-signal" title={signalText}>
-          {t("network")}
-          <img alt={signalText} src={signalIcon} />
-        </span>
+      </span>
+      <span className="network-status-signal" title={signalText}>
+        {t("network")}
+        <img alt={signalText} src={signalIcon} />
       </span>
     </div>
   );
-});
-
-// export const NetworkStatus: React.FC<NetworkStatusProps> = ({ networkQuality }) => {
-//   const { t } = useTranslation();
-//   const { uplink, downlink } = networkQuality;
-//   console.log("networkQuality=====", networkQuality);
-
-//   const signalIcon = useMemo(() => getSignalIcon(uplink, downlink), [uplink, downlink]);
-
-//   const signalText = useMemo(
-//     () =>
-//       t("network-quality", {
-//         uplink: t(`network-quality${uplink}`),
-//         downlink: t(`network-quality${downlink}`),
-//       }),
-//     [t, uplink, downlink],
-//   );
-
-//   return (
-//     <div className="network-status">
-//       <span className="network-status-delay" title={t("client-to-edge-server-network-latency")}>
-//         {t("delay")}
-//         <span className="network-status-delay-ms">{networkQuality.delay}ms</span>
-//         <span className="network-status-signal" title={signalText}>
-//           {t("network")}
-//           <img alt={signalText} src={signalIcon} />
-//         </span>
-//       </span>
-//     </div>
-//   );
-// };
+};
 
 export default NetworkStatus;
