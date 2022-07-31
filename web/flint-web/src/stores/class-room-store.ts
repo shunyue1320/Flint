@@ -14,6 +14,8 @@ import { globalStore } from "./GlobalStore";
 import { RtcChannelType } from "../api-middleware/rtc/room";
 import { RoomItem, roomStore } from "./room-store";
 import { NODE_ENV } from "../constants/process";
+import { WhiteboardStore } from "./whiteboard-store";
+import { RoomType } from "../api-middleware/flatServer/constants";
 
 export type RecordingConfig = Required<
   CloudRecordStartPayload["agoraData"]["clientRequest"]
@@ -30,11 +32,20 @@ export class ClassRoomStore {
   /** 是否RTC连接教室 */
   public isJoinedRTC = false;
 
+  public isCloudStoragePanelVisible = false;
+
+  /** 是当前用户共享屏幕 */
+  public isScreenSharing = false;
+  /** 其他用户是否共享屏幕 */
+  public isRemoteScreenSharing = false;
+
   public networkQuality = {
     delay: 0,
     uplink: 0,
     downlink: 0,
   };
+
+  public readonly whiteboardStore: WhiteboardStore;
 
   // 此OwnerUID来自不可信任的url参数匹配
   private readonly ownerUUIDFromParams: string;
@@ -75,7 +86,27 @@ export class ClassRoomStore {
       _collectChannelStatusTimeout: false,
       _userDeviceStatePrePause: false,
     });
+
+    this.whiteboardStore = new WhiteboardStore({
+      isCreator: this.isCreator,
+      getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
+      i18n: config.i18n,
+      onDrop: this.onDrop,
+    });
   }
+
+  public onDrop = (file: File): void => {
+    this.toggleCloudStoragePanel(true);
+    const cloudStorage = this.whiteboardStore.cloudStorageStore;
+  };
+
+  public toggleShareScreen = (force = !this.isScreenSharing): void => {
+    // this.rtc.shareScreen.enable(force);
+  };
+
+  public toggleCloudStoragePanel = (visible: boolean): void => {
+    this.isCloudStoragePanelVisible = visible;
+  };
 
   public joinRTC = async (): Promise<void> => {
     if (this.isCalling || globalStore.rtcUID === null || globalStore.rtcUID === void 0) {

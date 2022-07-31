@@ -3,9 +3,8 @@ import "./style.less";
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { TopBar, NetworkStatus } from "flint-components";
+import { TopBar, NetworkStatus, TopBarRightBtn, SVGScreenSharing } from "flint-components";
 import { observer } from "mobx-react-lite";
-import { autorun } from "mobx";
 
 import { runtime } from "../../utils/runtime";
 import { RouteNameType, RouteParams } from "../../utils/routes";
@@ -25,13 +24,15 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
   const { i18n, t } = useTranslation();
   const params = useParams<RouteParams<RouteNameType.BigClassPage>>();
   const classRoomStore = useClassRoomStore({ ...params, recordingConfig, i18n });
+  const whiteboardStore = classRoomStore.whiteboardStore;
+
   const loadingPageRef = useRef(false);
 
   return (
     <div className="big-class-realtime-container">
       {loadingPageRef.current && <div>LoadingPage</div>}
       <div className="big-class-realtime-box">
-        <TopBar isMac={runtime.isMac} left={renderTopBarLeft()} />
+        <TopBar isMac={runtime.isMac} left={renderTopBarLeft()} right={renderTopBarRight()} />
       </div>
     </div>
   );
@@ -43,30 +44,20 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
       </>
     );
   }
+
+  function renderTopBarRight(): React.ReactNode {
+    return (
+      <>
+        {whiteboardStore.isWritable && !classRoomStore.isRemoteScreenSharing && (
+          <TopBarRightBtn
+            icon={<SVGScreenSharing active={classRoomStore.isScreenSharing} />}
+            title={t("share-screen.self")}
+            onClick={() => classRoomStore.toggleShareScreen()}
+          />
+        )}
+      </>
+    );
+  }
 });
-
-// export const BigClassPage: React.FC<BigClassPageProps> = () => {
-//   const { i18n, t } = useTranslation();
-//   const params = useParams<RouteParams<RouteNameType.BigClassPage>>();
-//   const classRoomStore = useClassRoomStore({ ...params, recordingConfig, i18n });
-//   const loadingPageRef = useRef(false);
-
-//   return (
-//     <div className="big-class-realtime-container">
-//       {loadingPageRef.current && <div>LoadingPage</div>}
-//       <div className="big-class-realtime-box">
-//         <TopBar isMac={runtime.isMac} left={renderTopBarLeft()} />
-//       </div>
-//     </div>
-//   );
-
-//   function renderTopBarLeft(): React.ReactNode {
-//     return (
-//       <>
-//         <NetworkStatus networkQuality={classRoomStore.networkQuality} />
-//       </>
-//     );
-//   }
-// };
 
 export default BigClassPage;

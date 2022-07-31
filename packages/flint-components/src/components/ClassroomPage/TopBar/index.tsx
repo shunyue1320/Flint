@@ -3,6 +3,12 @@ import "./style.less";
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 
+export * from "./TopBarRightBtn";
+
+export const TopBarDivider: React.FC = () => {
+  return <div className="topbar-divider"></div>;
+};
+
 export interface TopBarProps {
   left?: ReactNode;
   center?: ReactNode;
