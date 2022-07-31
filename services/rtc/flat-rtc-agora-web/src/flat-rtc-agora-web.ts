@@ -18,6 +18,7 @@ import {
 import Emittery from "emittery";
 import { SideEffectManager } from "side-effect-manager";
 import { RTCLocalAvatar } from "./rtc-local-avatar";
+import { RTCShareScreen } from "./rtc-share-screen";
 
 AgoraRTC.enableLogUpload();
 
@@ -47,6 +48,8 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
 
   public client?: IAgoraRTCClient;
 
+  public readonly shareScreen = new RTCShareScreen();
+
   private readonly _sideEffect = new SideEffectManager();
   private readonly _roomSideEffect = new SideEffectManager();
 
@@ -55,6 +58,10 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
   private _cameraID?: string;
   private _micID?: string;
   private _speakerID?: string;
+
+  private uid?: FlatRTCAgoraWebUIDType;
+  private roomUUID?: string;
+  private shareScreenUID?: FlatRTCAgoraWebUIDType;
 
   private constructor() {
     super();
@@ -116,8 +123,17 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
       await client.setClientRole(role === FlatRTCRole.Host ? "host" : "audience");
     }
 
-    if (process.env.DEV) {
-      (window as any).rtc_client = client;
+    if (refreshToken) {
+      this._roomSideEffect.add(() => {
+        const handler = async (): Promise<void> => {
+          const token = await refreshToken(roomUUID);
+          // 重新申请 token 后更新
+          await client.renewToken(token);
+        };
+        // 在 token 过期前 30 秒，会收到该回调。
+        client.on("token-privilege-will-expire", handler);
+        return () => client.off("token-privilege-will-expire", handler);
+      });
     }
 
     this._roomSideEffect.addDisposer(
@@ -126,11 +142,6 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
           uplinkNetworkQuality,
           downlinkNetworkQuality,
         }: NetworkQuality): void => {
-          console.log(
-            "network-quality ==== |||||||||||||======000",
-            uplinkNetworkQuality,
-            downlinkNetworkQuality,
-          );
           this.events.emit("network", {
             uplink: uplinkNetworkQuality,
             downlink: downlinkNetworkQuality,
@@ -142,6 +153,22 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
         return () => client.off("network-quality", handler);
       }),
     );
+
+    await client.join(
+      FlatRTCAgoraWeb.APP_ID,
+      roomUUID,
+      token || (await refreshToken?.(roomUUID)) || null,
+      uid,
+    );
+
+    this.uid = uid;
+    this.roomUUID = roomUUID;
+    this.shareScreenUID = shareScreenUID;
+    // this.shareScreen.setParams({
+    //   roomUUID,
+    //   token: shareScreenToken,
+    //   uid: shareScreenUID,
+    // });
   }
 
   public async setCameraID(deviceId: string): Promise<void> {

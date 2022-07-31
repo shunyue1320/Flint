@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { i18n } from "i18next";
 import { SideEffectManager } from "side-effect-manager";
 import { FlatRTC, FlatRTCRole, FlatRTCMode } from "@netless/flat-rtc";
-import { action } from "mobx";
+import { action, autorun, observable, makeAutoObservable } from "mobx";
 
 import { RouteNameType, usePushNavigate } from "../utils/routes";
 import { errorTips } from "../components/Tips/ErrorTips";
@@ -41,6 +41,13 @@ export class ClassRoomStore {
 
   private readonly recordingConfig: RecordingConfig;
 
+  private _noMoreRemoteMessages = false;
+
+  private _collectChannelStatusTimeout?: number;
+
+  /** 暂停类之前保留创建者状态 */
+  private _userDeviceStatePrePause?: { mic: boolean; camera: boolean } | null;
+
   public constructor(config: {
     roomUUID: string;
     ownerUUID: string;
@@ -58,6 +65,16 @@ export class ClassRoomStore {
     this.recordingConfig = config.recordingConfig;
 
     this.rtc = getFlatRTC();
+
+    makeAutoObservable<
+      this,
+      "_noMoreRemoteMessages" | "_collectChannelStatusTimeout" | "_userDeviceStatePrePause"
+    >(this, {
+      rtc: observable.ref,
+      _noMoreRemoteMessages: false,
+      _collectChannelStatusTimeout: false,
+      _userDeviceStatePrePause: false,
+    });
   }
 
   public joinRTC = async (): Promise<void> => {
