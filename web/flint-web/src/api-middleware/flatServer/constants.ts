@@ -33,3 +33,10 @@ export enum RoomStatus {
   Paused = "Paused",
   Stopped = "Stopped",
 }
+
+export enum FileConvertStep {
+  None = "None",
+  Converting = "Converting",
+  Done = "Done",
+  Failed = "Failed",
+}

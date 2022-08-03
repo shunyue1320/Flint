@@ -9,3 +9,5 @@ export * from "./components/HomePage";
 export * from "./components/EditRoomPage";
 export * from "./components/DeviceTestPage";
 export * from "./components/ClassroomPage";
+export * from "./components/CloudStorage";
+export * from "./containers/CloudStorageContainer";

@@ -4,6 +4,8 @@ import { Room } from "white-web-sdk";
 import { FastboardApp } from "@netless/fastboard-react";
 
 import { RoomType } from "../api-middleware/flatServer/constants";
+import { CloudStorageFile, CloudStorageStore } from "../pages/CloudStoragePage/store";
+import { message } from "antd";
 
 export class WhiteboardStore {
   // 白板app插件
@@ -16,7 +18,7 @@ export class WhiteboardStore {
   public readonly getRoomType: () => RoomType;
   public readonly onDrop: (file: File) => void;
 
-  public readonly cloudStorageStore: void;
+  public readonly cloudStorageStore: CloudStorageStore;
 
   public constructor(config: {
     isCreator: boolean;
@@ -35,9 +37,24 @@ export class WhiteboardStore {
       preloadPPTResource: false,
       fastboardAPP: false,
     });
+
+    this.cloudStorageStore = new CloudStorageStore({
+      compact: true,
+      i18n: this.i18n,
+      insertCourseware: this.insertCourseware,
+    });
   }
 
   public updateFastboardAPP = (whiteboardApp: FastboardApp): void => {
     this.fastboardAPP = whiteboardApp;
+  };
+
+  public insertCourseware = async (file: CloudStorageFile): Promise<void> => {
+    if (file.convert === "converting") {
+      void message.warn(this.i18n.t("in-the-process-of-transcoding-tips"));
+      return;
+    }
+
+    void message.info(this.i18n.t("inserting-courseware-tips"));
   };
 }
