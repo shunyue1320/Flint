@@ -18,6 +18,7 @@ import { RouteNameType, RouteParams } from "../../utils/routes";
 import { RecordingConfig, useClassRoomStore } from "../../stores/class-room-store";
 import { RtcChannelType } from "../../api-middleware/rtc/room";
 import { CloudStorageButton } from "../../components/CloudStorageButton";
+import InviteButton from "../../components/InviteButton";
 
 const recordingConfig: RecordingConfig = Object.freeze({
   channelType: RtcChannelType.Broadcast, // 广播
@@ -79,6 +80,7 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
 
         {/* TODO：打开云存储子窗口 */}
         <CloudStorageButton classroom={classRoomStore} />
+        <InviteButton roomInfo={classRoomStore.roomInfo} />
       </>
     );
   }
