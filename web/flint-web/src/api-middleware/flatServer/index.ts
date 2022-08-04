@@ -1,6 +1,6 @@
 import { Region } from "flint-components";
 import { postNotAuth, post } from "./utils";
-import { RoomStatus, RoomType } from "./constants";
+import { RoomStatus, RoomType, Week } from "./constants";
 
 export interface bindingPhoneSendCodePayload {
   phone: string; // +86155...
@@ -181,3 +181,23 @@ export async function createOrdinaryRoom(payload: CreateOrdinaryRoomPayload): Pr
   );
   return res.roomUUID;
 }
+
+export type PeriodicRoomInfoResult = {
+  periodic: {
+    ownerUUID: string;
+    ownerName: string;
+    endTime: number;
+    rate: number | null;
+    title: string;
+    weeks: Week[];
+    roomType: RoomType;
+    region: Region;
+    inviteCode: string;
+  };
+  rooms: Array<{
+    roomUUID: string;
+    beginTime: number;
+    endTime: number;
+    roomStatus: RoomStatus;
+  }>;
+};

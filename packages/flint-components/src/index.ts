@@ -10,4 +10,5 @@ export * from "./components/EditRoomPage";
 export * from "./components/DeviceTestPage";
 export * from "./components/ClassroomPage";
 export * from "./components/CloudStorage";
+export * from "./components/InviteModal";
 export * from "./containers/CloudStorageContainer";

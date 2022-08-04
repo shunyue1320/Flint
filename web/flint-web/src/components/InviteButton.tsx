@@ -8,7 +8,7 @@ export interface InviteButtonProps {
   roomInfo?: RoomItem;
 }
 
-export const InviteButton: React.FC<InviteButtonProps> = () => {
+export const InviteButton: React.FC<InviteButtonProps> = ({ roomInfo }) => {
   const { t } = useTranslation();
   const [isShowInviteModal, showInviteModal] = useState(false);
   const hideInviteModal = (): void => showInviteModal(false);
@@ -20,9 +20,17 @@ export const InviteButton: React.FC<InviteButtonProps> = () => {
         title={t("invitation")}
         onClick={() => showInviteModal(true)}
       />
+      {/* 点击邀请按钮的弹窗 */}
       {roomInfo && (
-        <InviteModal room={roomInfo} visible={isShowInviteModal} onCancel={hideInviteModal} />
+        <InviteModal
+          room={roomInfo}
+          visible={isShowInviteModal}
+          onCancel={hideInviteModal}
+          onCopied={hideInviteModal}
+        />
       )}
     </div>
   );
 };
+
+export default InviteButton;

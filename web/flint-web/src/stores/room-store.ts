@@ -8,6 +8,7 @@ import {
   ListRoomsPayload,
   createOrdinaryRoom,
   CreateOrdinaryRoomPayload,
+  PeriodicRoomInfoResult,
 } from "../api-middleware/flatServer";
 import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
 import { configStore } from "./config-store";
@@ -44,8 +45,16 @@ export interface RoomItem {
   }>;
 }
 
+export interface PeriodicRoomItem {
+  periodicUUID: string;
+  periodic: PeriodicRoomInfoResult["periodic"];
+  rooms: string[];
+  inviteCode: string;
+}
+
 export class RoomStore {
   public rooms = observable.map<string, RoomItem>();
+  public periodicRooms = observable.map<string, PeriodicRoomItem>();
 
   // public constructor() {
   //   makeAutoObservable(this);

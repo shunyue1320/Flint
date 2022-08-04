@@ -1,4 +1,4 @@
-import "./index.less";
+import "./style.less";
 
 import React, { useMemo } from "react";
 import { Modal } from "antd";
