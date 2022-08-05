@@ -9,6 +9,7 @@ import {
   NetworkStatus,
   TopBarRightBtn,
   SVGScreenSharing,
+  SVGExit,
 } from "flint-components";
 import { observer } from "mobx-react-lite";
 import { message } from "antd";
@@ -19,6 +20,7 @@ import { RecordingConfig, useClassRoomStore } from "../../stores/class-room-stor
 import { RtcChannelType } from "../../api-middleware/rtc/room";
 import { CloudStorageButton } from "../../components/CloudStorageButton";
 import InviteButton from "../../components/InviteButton";
+import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../../components/ExitRoomConfirm";
 
 const recordingConfig: RecordingConfig = Object.freeze({
   channelType: RtcChannelType.Broadcast, // 广播
@@ -34,6 +36,8 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
   const params = useParams<RouteParams<RouteNameType.BigClassPage>>();
   const classRoomStore = useClassRoomStore({ ...params, recordingConfig, i18n });
   const whiteboardStore = classRoomStore.whiteboardStore;
+
+  const { confirm } = useExitRoomConfirmModal(classRoomStore);
 
   const loadingPageRef = useRef(false);
 
@@ -81,6 +85,11 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
         {/* TODO：打开云存储子窗口 */}
         <CloudStorageButton classroom={classRoomStore} />
         <InviteButton roomInfo={classRoomStore.roomInfo} />
+        <TopBarRightBtn
+          icon={<SVGExit />}
+          title={t("exit")}
+          onClick={() => confirm(ExitRoomConfirmType.ExitButton)}
+        />
       </>
     );
   }
