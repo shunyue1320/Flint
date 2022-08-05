@@ -1,6 +1,6 @@
 import "./style.less";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -10,6 +10,9 @@ import {
   TopBarRightBtn,
   SVGScreenSharing,
   SVGExit,
+  TopBarDivider,
+  SVGMenuUnfold,
+  SVGMenuFold,
 } from "flint-components";
 import { observer } from "mobx-react-lite";
 import { message } from "antd";
@@ -38,6 +41,8 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
   const whiteboardStore = classRoomStore.whiteboardStore;
 
   const { confirm } = useExitRoomConfirmModal(classRoomStore);
+
+  const [isRealtimeSideOpen, openRealtimeSide] = useState(true);
 
   const loadingPageRef = useRef(false);
 
@@ -90,8 +95,18 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
           title={t("exit")}
           onClick={() => confirm(ExitRoomConfirmType.ExitButton)}
         />
+        <TopBarDivider />
+        <TopBarRightBtn
+          icon={isRealtimeSideOpen ? <SVGMenuUnfold /> : <SVGMenuFold />}
+          title={isRealtimeSideOpen ? t("side-panel.hide") : t("side-panel.show")}
+          onClick={handleSideOpenerSwitch}
+        />
       </>
     );
+  }
+
+  function handleSideOpenerSwitch(): void {
+    openRealtimeSide(isRealtimeSideOpen => !isRealtimeSideOpen);
   }
 });
 
