@@ -7,6 +7,9 @@ import { useSafePromise } from "../../../utils/hooks/lifecycle";
 import { ListRoomsType } from "../../../api-middleware/flatServer";
 import { RoomItem } from "src/stores/room-store";
 import { RoomStatus } from "../../../api-middleware/flatServer/constants";
+import { RouteNameType, usePushNavigate } from "../../../utils/routes";
+import { joinRoomHandler } from "../../utils/join-room-handler";
+
 import {
   RoomListItemPrimaryAction,
   RoomListItem,
@@ -20,6 +23,7 @@ export interface MainRoomListProps {
 
 export const MainRoomList: React.FC<MainRoomListProps> = ({ isLogin, listRoomsType }) => {
   const { t } = useTranslation();
+  const pushNavigate = usePushNavigate();
   const sp = useSafePromise();
   const roomStore = useContext(RoomStoreContext);
   const globalStore = useContext(GlobalStoreContext);
@@ -52,6 +56,14 @@ export const MainRoomList: React.FC<MainRoomListProps> = ({ isLogin, listRoomsTy
 
   if (!roomUUIDs) {
     return null;
+  }
+
+  async function joinRoom(roomUUID: string): Promise<void> {
+    if (globalStore.isTurnOffDeviceTest) {
+      await joinRoomHandler(roomUUID, pushNavigate);
+    } else {
+      pushNavigate(RouteNameType.DevicesTestPage, { roomUUID });
+    }
   }
 
   // 通过 roomUUID 去 roomStore 内拿数据
@@ -133,6 +145,14 @@ export const MainRoomList: React.FC<MainRoomListProps> = ({ isLogin, listRoomsTy
               status={getRoomStatus(room.roomStatus)}
               title={room.title!}
               onAction={key => {
+                switch (key) {
+                  case "join":
+                  case "begin": {
+                    void joinRoom(room.roomUUID);
+                    break;
+                  }
+                  default: // not default
+                }
                 console.log(`执行 ${key} 对应的功能`);
               }}
             ></RoomListItem>
