@@ -1,6 +1,6 @@
 import "./style.less";
 
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
@@ -32,15 +32,24 @@ export const Whiteboard = observer<WhiteboardProps>(function Whiteboard({
   const { room, fastboardAPP } = whiteboardStore;
   const isDark = useContext(DarkModeContext);
 
+  const [whiteboardEl, setWhiteboardEl] = useState<HTMLElement | null>(null);
+
   const onDragOver = useCallback(() => {}, []);
   const onDrop = useCallback(() => {}, []);
   const bindCollector = useCallback(() => {}, []);
 
   const bindWhiteboard = useCallback((ref: HTMLDivElement | null) => {
     if (ref) {
-      // setWhiteboardEl(ref);
+      setWhiteboardEl(ref);
+      console.log("ref==========", ref);
     }
   }, []);
+
+  const whiteboardOnResize = useCallback(() => {
+    if (!whiteboardEl) {
+      return;
+    }
+  }, [whiteboardEl, whiteboardStore]);
 
   return (
     <>
@@ -68,6 +77,7 @@ export const Whiteboard = observer<WhiteboardProps>(function Whiteboard({
           <Fastboard
             app={fastboardAPP}
             config={config}
+            // 容器ref引用
             containerRef={bindWhiteboard}
             language={i18n.language as Language}
             theme={isDark ? "dark" : "light"}

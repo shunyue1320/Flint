@@ -24,6 +24,7 @@ import { RtcChannelType } from "../../api-middleware/rtc/room";
 import { CloudStorageButton } from "../../components/CloudStorageButton";
 import InviteButton from "../../components/InviteButton";
 import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../../components/ExitRoomConfirm";
+import { Whiteboard } from "../../components/Whiteboard";
 
 const recordingConfig: RecordingConfig = Object.freeze({
   channelType: RtcChannelType.Broadcast, // 广播
@@ -51,6 +52,11 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
       {loadingPageRef.current && <div>LoadingPage</div>}
       <div className="big-class-realtime-box">
         <TopBar isMac={runtime.isMac} left={renderTopBarLeft()} right={renderTopBarRight()} />
+        <div className="big-class-realtime-content">
+          <div className="big-class-realtime-content-container">
+            <Whiteboard classRoomStore={classRoomStore} whiteboardStore={whiteboardStore} />
+          </div>
+        </div>
       </div>
     </div>
   );

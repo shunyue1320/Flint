@@ -1,5 +1,9 @@
 export const NODE_ENV = process.env.NODE_ENV;
 
+export const NETLESS = Object.freeze({
+  APP_IDENTIFIER: process.env.NETLESS_APP_IDENTIFIER,
+});
+
 export const FLAT_WEB_DOMAIN = process.env.FLAT_WEB_DOMAIN;
 export const FLAT_WEB_BASE_URL = `https://${FLAT_WEB_DOMAIN}`;
 

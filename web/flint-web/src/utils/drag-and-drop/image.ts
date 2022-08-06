@@ -11,7 +11,6 @@ const ImageFileTypes = [
   "image/tiff",
 ];
 
-
 export function isSupportedImageType(file: File): boolean {
   return ImageFileTypes.includes(file.type);
 }

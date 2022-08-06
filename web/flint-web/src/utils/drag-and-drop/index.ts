@@ -17,5 +17,3 @@ const SupportedFileExts = [
 export function isSupportedFileExt(file: File): boolean {
   return SupportedFileExts.some(ext => file.name.endsWith(ext));
 }
-
-

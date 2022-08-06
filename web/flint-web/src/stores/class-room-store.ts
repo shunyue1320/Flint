@@ -104,6 +104,8 @@ export class ClassRoomStore {
       i18n: config.i18n,
       onDrop: this.onDrop,
     });
+
+    console.log("this.whiteboardStore=======", this.whiteboardStore);
   }
 
   public onDrop = (file: File): void => {
@@ -211,6 +213,8 @@ export class ClassRoomStore {
 
   public async init(): Promise<void> {
     await this.joinRTC();
+
+    await this.whiteboardStore.joinWhiteboardRoom();
 
     this.sideEffect.addDisposer(
       this.rtc.events.on(
