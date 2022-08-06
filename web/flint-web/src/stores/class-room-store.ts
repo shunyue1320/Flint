@@ -16,6 +16,7 @@ import { RoomItem, roomStore } from "./room-store";
 import { NODE_ENV } from "../constants/process";
 import { WhiteboardStore } from "./whiteboard-store";
 import { RoomType } from "../api-middleware/flatServer/constants";
+import { UserStore } from "./user-store";
 
 export type RecordingConfig = Required<
   CloudRecordStartPayload["agoraData"]["clientRequest"]
@@ -46,6 +47,8 @@ export class ClassRoomStore {
     uplink: 0,
     downlink: 0,
   };
+
+  public readonly users: UserStore;
 
   public readonly whiteboardStore: WhiteboardStore;
 
@@ -87,6 +90,12 @@ export class ClassRoomStore {
       _noMoreRemoteMessages: false,
       _collectChannelStatusTimeout: false,
       _userDeviceStatePrePause: false,
+    });
+
+    this.users = new UserStore({
+      roomUUID: this.roomUUID,
+      ownerUUID: this.ownerUUID,
+      userUUID: this.userUUID,
     });
 
     this.whiteboardStore = new WhiteboardStore({
@@ -212,6 +221,11 @@ export class ClassRoomStore {
       ),
     );
   }
+
+  /** 当当、前用户（加入者）举手时 */
+  public onToggleHandRaising = (): void => {
+    return;
+  };
 
   public async destroy(): Promise<void> { }
 }
