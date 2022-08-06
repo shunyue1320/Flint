@@ -12,6 +12,7 @@ import { ClassModeType } from "../api-middleware/Rtm";
 import { getFlatRTC } from "../services/flat-rtc";
 import { globalStore } from "./GlobalStore";
 import { RtcChannelType } from "../api-middleware/rtc/room";
+import { Rtm as RTMAPI } from "../api-middleware/Rtm";
 import { RoomItem, roomStore } from "./room-store";
 import { NODE_ENV } from "../constants/process";
 import { WhiteboardStore } from "./whiteboard-store";
@@ -28,6 +29,7 @@ export class ClassRoomStore {
   /** 当前用户的用户uuid */
   public readonly userUUID: string;
   public readonly rtc: FlatRTC;
+  public readonly rtm: RTMAPI;
   /** 云记录是否打开 */
   public isRecording = false;
   /** RTC UI是否打开 */
@@ -81,6 +83,7 @@ export class ClassRoomStore {
     this.recordingConfig = config.recordingConfig;
 
     this.rtc = getFlatRTC();
+    this.rtm = new RTMAPI();
 
     makeAutoObservable<
       this,
@@ -212,6 +215,9 @@ export class ClassRoomStore {
   }
 
   public async init(): Promise<void> {
+    const channel = await this.rtm.init(this.userUUID, this.roomUUID);
+    const members = await channel.getMembers();
+    await this.users.initUsers(members);
     await this.joinRTC();
 
     await this.whiteboardStore.joinWhiteboardRoom();

@@ -56,6 +56,8 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
           <div className="big-class-realtime-content-container">
             <Whiteboard classRoomStore={classRoomStore} whiteboardStore={whiteboardStore} />
           </div>
+
+          {renderRealtimePanel()}
         </div>
       </div>
     </div>
@@ -108,6 +110,46 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
           onClick={handleSideOpenerSwitch}
         />
       </>
+    );
+  }
+
+  function renderRealtimePanel(): React.ReactNode {
+    const { creator } = classRoomStore.users;
+
+    return (
+      <RealtimePanel
+        chatSlot={
+          <ChatPanel
+            classRoomStore={classRoomStore}
+            disableMultipleSpeakers={true}
+            isShowAllOfStage={classRoomStore.isCreator}
+          ></ChatPanel>
+        }
+        isShow={isRealtimeSideOpen}
+        isVideoOn={classRoomStore.isJoinedRTC}
+        videoSlot={
+          <div className="big-class-realtime-rtc-box">
+            <RTCAvatar
+              avatarUser={creator}
+              isAvatarUserCreator={true}
+              isCreator={classRoomStore.isCreator}
+              rtcAvatar={creator && classRoomStore.rtc.getAvatar(creator.rtcUID)}
+              updateDeviceState={classRoomStore.updateDeviceState}
+              userUUID={classRoomStore.userUUID}
+            />
+            {speakingJoiner && (
+              <RTCAvatar
+                avatarUser={speakingJoiner}
+                isAvatarUserCreator={false}
+                isCreator={classRoomStore.isCreator}
+                rtcAvatar={classRoomStore.rtc.getAvatar(speakingJoiner.rtcUID)}
+                updateDeviceState={classRoomStore.updateDeviceState}
+                userUUID={classRoomStore.userUUID}
+              />
+            )}
+          </div>
+        }
+      />
     );
   }
 

@@ -201,3 +201,20 @@ export type PeriodicRoomInfoResult = {
     roomStatus: RoomStatus;
   }>;
 };
+
+export interface UsersInfoPayload {
+  roomUUID: string;
+  usersUUID: string[];
+}
+
+export type UsersInfoResult = {
+  [key in string]: {
+    name: string;
+    rtcUID: number;
+    avatarURL: string;
+  };
+};
+
+export function usersInfo(payload: UsersInfoPayload): Promise<UsersInfoResult> {
+  return post<UsersInfoPayload, UsersInfoResult>("room/info/users", payload);
+}
