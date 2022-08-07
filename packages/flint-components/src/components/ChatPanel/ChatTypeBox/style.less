@@ -1,0 +1,73 @@
+.chat-typebox {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 45px;
+    padding: 0 6px 2px;
+    border-top: 0.5px solid var(--grey-1);
+}
+
+.chat-typebox-icon {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.2;
+    }
+
+    .active .flat-icon-fill {
+        fill: var(--primary);
+    }
+
+    .active .flat-icon-stroke {
+        stroke: var(--primary);
+    }
+}
+
+.chat-typebox-input {
+    flex: 1;
+    margin: 0 5px;
+    border: none;
+    outline: none;
+    color: var(--text);
+    background-color: transparent;
+
+    &::placeholder {
+        color: var(--text-weak);
+    }
+}
+
+.chat-typebox-ban-input {
+    flex: 1;
+    text-align: center;
+    color: var(--text);
+    user-select: none;
+}
+
+.chat-typebox-send {
+    width: 22px;
+    height: 22px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.2;
+        cursor: default;
+    }
+}
+
+.flat-color-scheme-dark {
+    .chat-typebox {
+        border-top-color: var(--grey-8);
+    }
+}
