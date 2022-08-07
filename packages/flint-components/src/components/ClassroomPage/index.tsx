@@ -4,3 +4,4 @@ export * from "./TopBar";
 export * from "./CloudRecordBtn";
 export * from "./ExitRoomConfirmModal";
 export * from "./RaiseHand";
+export * from "./VideoAvatar";

@@ -1,4 +1,5 @@
-import { RefObject, useCallback, useEffect, useRef } from "react";
+import { DependencyList, RefObject, useCallback, useEffect, useRef, useMemo } from "react";
+import { computed, IComputedValueOptions, IComputedValue } from "mobx";
 
 export function useIsUnMounted(): RefObject<boolean> {
   const isUnMountRef = useRef(false);
@@ -63,4 +64,21 @@ export function useSafePromise(): <T, E = unknown>(
   }
 
   return useCallback(safePromise, [isUnMountRef]);
+}
+
+/**
+ * 计算出的值可用于从其他可观测值中获得信息。
+ * @see {@link https://mobx.js.org/computeds.html}
+ *
+ * @param func 从其他可观测数据中获取信息
+ * @param extraDeps 如果使用了不可观测值，则提供额外的相关性以重新计算
+ */
+export function useComputed<T>(
+  func: () => T,
+  extraDeps: DependencyList = [],
+  opts?: IComputedValueOptions<T>,
+): IComputedValue<T> {
+  // MobX takes care of the deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useMemo(() => computed(func, opts), extraDeps);
 }

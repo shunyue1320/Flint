@@ -1,5 +1,6 @@
 import "./theme/index.less";
 
+export * from "./utils/hooks";
 export * from "./components/LoginPage";
 export * from "./components/FlintThemeProvider";
 export * from "./components/MainPageLayout";
@@ -11,4 +12,5 @@ export * from "./components/DeviceTestPage";
 export * from "./components/ClassroomPage";
 export * from "./components/CloudStorage";
 export * from "./components/InviteModal";
+export * from "./components/ChatPanel";
 export * from "./containers/CloudStorageContainer";
