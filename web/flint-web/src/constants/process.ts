@@ -31,3 +31,7 @@ export const AGORA_OAUTH = Object.freeze({
 });
 
 export const FLAT_DOWNLOAD_URL = process.env.FLAT_DOWNLOAD_URL;
+
+export const AGORA = Object.freeze({
+  APP_ID: process.env.AGORA_APP_ID,
+});

@@ -32,6 +32,7 @@
     "react-router-dom": "^6.3.0",
     "react-transition-group": "^4.4.2",
     "react-use": "^17.4.0",
+    "react-virtualized": "^9.22.3",
     "uuid": "^8.3.2",
     "video.js": "^7.20.1",
     "white-web-sdk": "^2.16.28"

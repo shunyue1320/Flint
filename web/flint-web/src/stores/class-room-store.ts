@@ -19,6 +19,8 @@ import { WhiteboardStore } from "./whiteboard-store";
 import { RoomType } from "../api-middleware/flatServer/constants";
 import { UserStore } from "./user-store";
 
+export type { User } from "./user-store";
+
 export type RecordingConfig = Required<
   CloudRecordStartPayload["agoraData"]["clientRequest"]
 >["recordingConfig"];
@@ -217,7 +219,9 @@ export class ClassRoomStore {
   public async init(): Promise<void> {
     const channel = await this.rtm.init(this.userUUID, this.roomUUID);
     const members = await channel.getMembers();
+    console.log("用户s ==========>>>>>", members);
     await this.users.initUsers(members);
+
     await this.joinRTC();
 
     await this.whiteboardStore.joinWhiteboardRoom();

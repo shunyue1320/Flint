@@ -19,12 +19,15 @@ import { message } from "antd";
 
 import { runtime } from "../../utils/runtime";
 import { RouteNameType, RouteParams } from "../../utils/routes";
-import { RecordingConfig, useClassRoomStore } from "../../stores/class-room-store";
+import { RecordingConfig, useClassRoomStore, User } from "../../stores/class-room-store";
 import { RtcChannelType } from "../../api-middleware/rtc/room";
 import { CloudStorageButton } from "../../components/CloudStorageButton";
 import InviteButton from "../../components/InviteButton";
 import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../../components/ExitRoomConfirm";
 import { Whiteboard } from "../../components/Whiteboard";
+import { RealtimePanel } from "../../components/RealtimePanel";
+import { RTCAvatar } from "../../components/RTCAvatar";
+import { ChatPanel } from "../../components/ChatPanel";
 
 const recordingConfig: RecordingConfig = Object.freeze({
   channelType: RtcChannelType.Broadcast, // 广播
@@ -42,6 +45,13 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
   const whiteboardStore = classRoomStore.whiteboardStore;
 
   const { confirm } = useExitRoomConfirmModal(classRoomStore);
+
+  // 正在参与说话的
+  const [speakingJoiner, setSpeakingJoiner] = useState<User | undefined>(() =>
+    classRoomStore.users.speakingJoiners.length > 0
+      ? classRoomStore.users.speakingJoiners[0]
+      : void 0,
+  );
 
   const [isRealtimeSideOpen, openRealtimeSide] = useState(true);
 
@@ -119,6 +129,7 @@ export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() 
     return (
       <RealtimePanel
         chatSlot={
+          // 聊天列表
           <ChatPanel
             classRoomStore={classRoomStore}
             disableMultipleSpeakers={true}
