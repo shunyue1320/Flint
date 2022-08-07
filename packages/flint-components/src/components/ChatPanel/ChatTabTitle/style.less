@@ -1,0 +1,37 @@
+.chat-tab-title {
+  position: relative;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-tab-red-dot {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: translate(-5px, -6px);
+  font-size: 12px;
+  border: 1px solid var(--grey-0);
+  border-radius: 22px;
+  color: var(--grey-0);
+  background: var(--danger);
+
+  &.is-large {
+    width: auto;
+    height: auto;
+    padding: 0 5px;
+  }
+}
+
+.flat-color-scheme-dark {
+  .chat-tab-red-dot {
+    border-color: var(--grey-11);
+  }
+}
