@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useUpdate } from "react-use";
+import { Observer, observer } from "mobx-react-lite";
 import {
   AutoSizer,
   CellMeasurer,
@@ -10,11 +11,10 @@ import {
   List,
   ListRowRenderer,
 } from "react-virtualized";
-import { Observer } from "mobx-react-lite";
-
+import { User } from "../../../types/user";
+// import { useReaction } from "../../../utils/hooks";
 import { ChatMessage } from "../ChatMessage";
 import { ChatMsg } from "../types";
-import { User } from "../../../types/user";
 
 export interface ChatMessageListProps {
   visible: boolean;
@@ -25,27 +25,17 @@ export interface ChatMessageListProps {
   openCloudStorage: () => void;
 }
 
-export const ChatMessageList: React.FC<ChatMessageListProps> = ({
+export const ChatMessageList = observer<ChatMessageListProps>(function ChatMessageList({
   visible,
   userUUID,
   messages,
   getUserByUUID,
   loadMoreRows,
   openCloudStorage,
-}) => {
+}) {
   const forceUpdate = useUpdate();
-  // 列表的长度
-  const [scrollToIndex, setScrollToIndex] = useState<number | undefined>(messages.length - 1);
 
-  useEffect(() => {
-    // 当选项卡面板可见时，滚动条到最底下
-    if (visible) {
-      cellCache.clearAll();
-      forceUpdate();
-      setScrollToIndex(messages.length - 1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  const [scrollToIndex, setScrollToIndex] = useState<number | undefined>(messages.length - 1);
 
   const [cellCache] = useState(
     () =>
@@ -56,13 +46,62 @@ export const ChatMessageList: React.FC<ChatMessageListProps> = ({
       }),
   );
 
+  useEffect(() => {
+    // re-measure cell when tab panel is visible
+    if (visible) {
+      cellCache.clearAll();
+      forceUpdate();
+      setScrollToIndex(messages.length - 1);
+    }
+    // only listen to visible
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
+
+  /**
+   * The scrollToIndex is causing scroll jumping in random situation.
+   * Clear it after it is applied.
+   */
+  useEffect(() => {
+    if (scrollToIndex !== void 0) {
+      // wait one loop after rendering complete
+      const ticket = window.setTimeout(() => {
+        setScrollToIndex(void 0);
+      }, 0);
+      return () => {
+        window.clearTimeout(ticket);
+      };
+    }
+    return;
+  }, [scrollToIndex]);
+
+  // useReaction(
+  //   () => ({
+  //     messageCount: messages.length,
+  //     latestMessage: messages.length > 0 ? messages[messages.length - 1] : null,
+  //   }),
+  //   ({ messageCount, latestMessage }, prev) => {
+  //     if (messageCount > prev.messageCount) {
+  //       // more messages are loaded
+  //       if (!prev.latestMessage || latestMessage!.timestamp > prev.latestMessage.timestamp) {
+  //         // user sent a new message
+  //         // scroll to the bottom
+  //         setScrollToIndex(messageCount - 1);
+  //       } else {
+  //         // history messages loaded
+  //         // stay at the last position
+  //         setScrollToIndex(messageCount - prev.messageCount);
+  //       }
+  //     }
+  //   },
+  // );
+
   const isFirstLoadRef = useRef(true);
 
   const isRowLoaded = ({ index }: Index): boolean => {
-    // 滚动到顶部时加载更多
+    // load more when scroll to top
     const loaded = index > 0;
     if (isFirstLoadRef.current) {
-      // 跳过额外的第一次加载
+      // skip extra first loading
       isFirstLoadRef.current = false;
       return true;
     }
@@ -128,4 +167,4 @@ export const ChatMessageList: React.FC<ChatMessageListProps> = ({
       )}
     </InfiniteLoader>
   );
-};
+});

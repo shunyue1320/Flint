@@ -12,7 +12,7 @@ import { ClassModeType } from "../api-middleware/Rtm";
 import { getFlatRTC } from "../services/flat-rtc";
 import { globalStore } from "./GlobalStore";
 import { RtcChannelType } from "../api-middleware/rtc/room";
-import { Rtm as RTMAPI } from "../api-middleware/Rtm";
+import { Rtm as RTMAPI, RTMessage, RTMessageType } from "../api-middleware/Rtm";
 import { RoomItem, roomStore } from "./room-store";
 import { NODE_ENV } from "../constants/process";
 import { WhiteboardStore } from "./whiteboard-store";
@@ -20,6 +20,13 @@ import { RoomType } from "../api-middleware/flatServer/constants";
 import { UserStore } from "./user-store";
 
 export type { User } from "./user-store";
+
+export type RTMChannelMessage = RTMessage<
+  | RTMessageType.ChannelMessage
+  | RTMessageType.Notice
+  | RTMessageType.BanText
+  | RTMessageType.UserGuide
+>;
 
 export type RecordingConfig = Required<
   CloudRecordStartPayload["agoraData"]["clientRequest"]
@@ -30,6 +37,8 @@ export class ClassRoomStore {
   public readonly roomUUID: string;
   /** 当前用户的用户uuid */
   public readonly userUUID: string;
+  /** RTM 消息列表 */
+  public messages = observable.array<RTMChannelMessage>([]);
   public readonly rtc: FlatRTC;
   public readonly rtm: RTMAPI;
   /** 云记录是否打开 */

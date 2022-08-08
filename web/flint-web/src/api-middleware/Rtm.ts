@@ -12,9 +12,18 @@ export enum ClassModeType {
 export enum RTMessageType {
   /** 组消息 */
   ChannelMessage = "ChannelMessage",
+  /** 通知消息 */
+  Notice = "Notice",
+  /** 创建者禁止所有rtm */
+  BanText = "BanText",
+  /** 首次创建教室时显示用户指南消息信息 */
+  UserGuide = "UserGuide",
 }
 export type RTMEvents = {
   [RTMessageType.ChannelMessage]: string;
+  [RTMessageType.Notice]: string;
+  [RTMessageType.BanText]: boolean;
+  [RTMessageType.UserGuide]: string;
 };
 
 export declare interface Rtm {
@@ -111,4 +120,12 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
 
     return this.channel;
   }
+}
+
+export interface RTMessage<U extends keyof RTMEvents = keyof RTMEvents> {
+  type: U;
+  value: RTMEvents[U];
+  uuid: string;
+  timestamp: number;
+  userUUID: string;
 }
