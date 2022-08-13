@@ -4,7 +4,7 @@ import { Room } from "white-web-sdk";
 import { makeAutoObservable, observable, runInAction } from "mobx";
 import { FastboardApp, createFastboard } from "@netless/fastboard-react";
 import { WindowManager } from "@netless/window-manager";
-import { DeviceType, RoomState, ViewMode } from "white-web-sdk";
+import { DeviceType, RoomPhase, RoomState, ViewMode } from "white-web-sdk";
 import { isMobile, isWindows } from "react-device-detect";
 
 import { RoomType } from "../api-middleware/flatServer/constants";
@@ -16,6 +16,7 @@ export class WhiteboardStore {
   // 白板app插件
   public fastboardAPP: FastboardApp | null = null;
   public room: Room | null = null;
+  public phase: RoomPhase = RoomPhase.Connecting;
   public isWritable: boolean;
   public viewMode: ViewMode | null = null;
   // 被踢
@@ -25,6 +26,10 @@ export class WhiteboardStore {
   // 白板比例
   public smallClassRatio = 8.3 / 16;
   public otherClassRatio = 10.46 / 16;
+  // 左边间距
+  public isRightSideClose = false;
+  // 小班头像包裹最大宽度
+  public smallClassAvatarWrapMaxWidth = 0;
 
   // 是房间创建者
   public readonly isCreator: boolean;
@@ -203,5 +208,9 @@ export class WhiteboardStore {
     }
 
     void message.info(this.i18n.t("inserting-courseware-tips"));
+  };
+
+  public updateSmallClassAvatarWrapMaxWidth = (smallClassAvatarWrapMaxWidth: number): void => {
+    this.smallClassAvatarWrapMaxWidth = smallClassAvatarWrapMaxWidth;
   };
 }
