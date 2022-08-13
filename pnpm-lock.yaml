@@ -6,6 +6,7 @@ importers:
     specifiers:
       '@commitlint/cli': ^17.0.0
       '@commitlint/config-angular': ^17.0.0
+      '@types/lodash-es': ^4.17.6
       '@types/node': ^17.0.33
       '@types/react-virtualized': ^9.21.21
       '@typescript-eslint/eslint-plugin': ^5.25.0
@@ -29,6 +30,7 @@ importers:
     devDependencies:
       '@commitlint/cli': 17.0.0
       '@commitlint/config-angular': 17.0.0
+      '@types/lodash-es': 4.17.6
       '@types/node': 17.0.33
       '@types/react-virtualized': 9.21.21
       '@typescript-eslint/eslint-plugin': 5.25.0_qo2hgs5jt7x2a3p77h2rutcdae
@@ -175,6 +177,7 @@ importers:
       flint-types: workspace:*
       i18next: ^21.8.11
       i18next-browser-languagedetector: ^6.1.4
+      lodash-es: ^4.17.21
       mobx: ^6.6.0
       mobx-react-lite: ^3.4.0
       polly-js: ^1.8.3
@@ -207,6 +210,7 @@ importers:
       flint-types: link:../../packages/flint-types
       i18next: 21.8.11
       i18next-browser-languagedetector: 6.1.4
+      lodash-es: 4.17.21
       mobx: 6.6.0
       mobx-react-lite: 3.4.0_zjzbed4ey2pl6an3m4umzh4gbq
       polly-js: 1.8.3
@@ -5347,6 +5351,12 @@ packages:
     resolution: {integrity: sha512-YhoCCxyuvP2XeZNbHbi8Wb9EMaUJuA2VGHxJffcQYrJKIKSkymJrhbzsf9y4zpTmr5pExAAEh5hbF628PAZ8Dg==}
     dependencies:
       '@types/react': 18.0.9
+    dev: true
+
+  /@types/lodash-es/4.17.6:
+    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
+    dependencies:
+      '@types/lodash': 4.14.182
     dev: true
 
   /@types/lodash/4.14.182:

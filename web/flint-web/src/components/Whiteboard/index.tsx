@@ -1,3 +1,4 @@
+import "@netless/window-manager/dist/style.css";
 import "./style.less";
 
 import React, { useCallback, useContext, useState, useEffect } from "react";
@@ -7,14 +8,12 @@ import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 import { RaiseHand, DarkModeContext } from "flint-components";
 import { RoomPhase } from "white-web-sdk";
+import { noop } from "lodash-es";
 
 import { WhiteboardStore } from "../../stores/whiteboard-store";
 import { ClassRoomStore } from "../../stores/class-room-store";
 import { Fastboard, Language, FastboardUIConfig } from "@netless/fastboard-react";
-
-const noop = (): void => {
-  // noop
-};
+import { refreshApps } from "../../utils/toolbar-apps";
 
 const config: FastboardUIConfig = {
   // 不显示小程序收纳盒
@@ -58,6 +57,18 @@ export const Whiteboard = observer<WhiteboardProps>(function Whiteboard({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [whiteboardEl]);
+
+  useEffect(() => {
+    refreshApps({
+      t,
+      onSaveAnnotation: () => {
+        // showSaveAnnotation(true);
+      },
+      onPresets: () => {
+        // showPresets(true);
+      },
+    });
+  }, [t]);
 
   // 设置白板实例
   const bindWhiteboard = useCallback((ref: HTMLDivElement | null) => {

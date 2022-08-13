@@ -23,6 +23,7 @@
     "flint-types": "workspace:*",
     "i18next": "^21.8.11",
     "i18next-browser-languagedetector": "^6.1.4",
+    "lodash-es": "^4.17.21",
     "mobx": "^6.6.0",
     "mobx-react-lite": "^3.4.0",
     "polly-js": "^1.8.3",
