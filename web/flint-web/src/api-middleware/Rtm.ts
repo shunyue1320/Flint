@@ -1,3 +1,4 @@
+import polly from "polly-js";
 import { EventEmitter } from "eventemitter3";
 import AgoraRTM, { RtmChannel, RtmClient } from "agora-rtm-sdk";
 import { AGORA, NODE_ENV } from "../constants/process";
@@ -59,7 +60,9 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
       logFilter: AgoraRTM.LOG_FILTER_WARNING,
     });
 
-    this.client.on("TokenExpired", async () => { });
+    this.client.on("TokenExpired", async () => {
+      console.log("trm token 过期===================");
+    });
 
     this.client.on("ConnectionStateChanged", (newState, reason) => {
       console.log("RTM客户端状态: ", newState, reason);
@@ -86,8 +89,10 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
 
     this.token = globalStore.rtmToken; // (await generateRTMToken());
 
-    // 由于实时重新加载，在开发中登录可能失败
-    // await polly()
+    // 由于实时重新加载，在开发中登录可能失败 所以在此登录
+    await polly()
+      .waitAndRetry(3)
+      .executeForPromise(() => this.client.login({ uid: userUUID, token: this.token }));
 
     this.channel = this.client.createChannel(channelID);
     await this.channel.join();

@@ -37,7 +37,6 @@ export interface NetworkStatusProps {
 export const NetworkStatus: React.FC<NetworkStatusProps> = ({ networkQuality }) => {
   const { t } = useTranslation();
   const { uplink, downlink } = networkQuality;
-  console.log("networkQuality=====22245", networkQuality);
 
   const signalIcon = useMemo(() => getSignalIcon(uplink, downlink), [uplink, downlink]);
 

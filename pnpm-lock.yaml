@@ -177,6 +177,7 @@ importers:
       i18next-browser-languagedetector: ^6.1.4
       mobx: ^6.6.0
       mobx-react-lite: ^3.4.0
+      polly-js: ^1.8.3
       react: ^18.0.0
       react-device-detect: ^2.2.2
       react-dom: ^18.0.0
@@ -208,6 +209,7 @@ importers:
       i18next-browser-languagedetector: 6.1.4
       mobx: 6.6.0
       mobx-react-lite: 3.4.0_zjzbed4ey2pl6an3m4umzh4gbq
+      polly-js: 1.8.3
       react: 18.1.0
       react-device-detect: 2.2.2_ef5jwxihqo6n7gxfmzogljlgcm
       react-dom: 18.1.0_react@18.1.0
@@ -12720,6 +12722,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.18.3
     dev: true
+
+  /polly-js/1.8.3:
+    resolution: {integrity: sha512-pFgSsipKs5bxtXMM+Vfw2p8kOEZhJ+Z9xDZLbiMjjw57WZdlg+6eTZdSIHDycNii+4+7xmzCfryQVIqwgeYX4g==}
+    dev: false
 
   /posix-character-classes/0.1.1:
     resolution: {integrity: sha512-xTgYBc3fuo7Yt7JbiuFxSYGToMoz8fLoE6TC9Wx1P/u+LfeThMOAqmuyECnlBaaJb+u1m9hHiXUEtwW4OzfUJg==}

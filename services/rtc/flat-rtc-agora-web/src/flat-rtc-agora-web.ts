@@ -17,6 +17,7 @@ import {
 } from "@netless/flat-rtc";
 import Emittery from "emittery";
 import { SideEffectManager } from "side-effect-manager";
+import { RTCRemoteAvatar } from "./rtc-remote-avatar";
 import { RTCLocalAvatar } from "./rtc-local-avatar";
 import { RTCShareScreen } from "./rtc-share-screen";
 
@@ -62,6 +63,9 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
   private uid?: FlatRTCAgoraWebUIDType;
   private roomUUID?: string;
   private shareScreenUID?: FlatRTCAgoraWebUIDType;
+
+  // 远程人物缓存
+  private _remoteAvatars = new Map<FlatRTCAgoraWebUIDType, RTCRemoteAvatar>();
 
   private constructor() {
     super();
@@ -228,6 +232,24 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
     }
     return this.localCameraTrack;
   });
+
+  public getAvatar(uid?: FlatRTCAgoraWebUIDType): FlatRTCAvatar | undefined {
+    if (!uid || this.uid === uid) {
+      return this.localAvatar;
+    }
+    if (this.shareScreenUID === uid) {
+      throw new Error("getAvatar(shareScreenUID) is not supported.");
+    }
+    let remoteAvatar = this._remoteAvatars.get(uid);
+
+    // 如果远程人物缓存map内没有就去 client 远程用户里找，并把找到的远程人物缓存起来
+    if (!remoteAvatar) {
+      const rtcRemoteUser = this.client?.remoteUsers.find(user => user.uid === uid);
+      remoteAvatar = new RTCRemoteAvatar({ rtcRemoteUser });
+      this._remoteAvatars.set(uid, remoteAvatar);
+    }
+    return remoteAvatar;
+  }
 }
 
 function singleRun<TFn extends (...args: any[]) => Promise<any>>(fn: TFn): TFn {

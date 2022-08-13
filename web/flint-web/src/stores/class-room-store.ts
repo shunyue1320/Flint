@@ -268,6 +268,7 @@ export function useClassRoomStore({
   classMode,
   i18n,
 }: ClassRoomStoreConfig): ClassRoomStore {
+  // 使用 useState 保留状态，组件刷新就不会再次 new ClassRoomStore
   const [classRoomStore] = useState(
     () =>
       new ClassRoomStore({
