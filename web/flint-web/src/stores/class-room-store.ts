@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { i18n } from "i18next";
+import dateSub from "date-fns/sub";
 import { SideEffectManager } from "side-effect-manager";
 import { FlatRTC, FlatRTCRole, FlatRTCMode } from "@netless/flat-rtc";
 import { action, autorun, observable, makeAutoObservable, runInAction } from "mobx";
@@ -232,6 +233,8 @@ export class ClassRoomStore {
     await this.users.initUsers(members);
 
     await this.joinRTC();
+    // 更新房间历史消息
+    await this.updateHistory();
 
     await this.whiteboardStore.joinWhiteboardRoom();
 
@@ -244,6 +247,38 @@ export class ClassRoomStore {
       ),
     );
   }
+
+  public updateHistory = async (): Promise<void> => {
+    let messages: RTMessage[] = [];
+
+    try {
+      // 取第一条条消息的时间戳，没有就取当前时间
+      const oldestTimestamp = this.messages.length > 0 ? this.messages[0].timestamp : Date.now();
+      // 获取当前时间往前一年前的消息
+      messages = await this.rtm.fetchTextHistory(
+        dateSub(oldestTimestamp, { years: 1 }).valueOf(),
+        oldestTimestamp - 1,
+      );
+    } catch (e) {
+      console.warn(e);
+    }
+
+    if (messages.length <= 0) {
+      this._noMoreRemoteMessages = true;
+      return;
+    }
+
+    const textMessages = messages.filter(
+      (message): message is RTMChannelMessage =>
+        message.type === RTMessageType.ChannelMessage || message.type === RTMessageType.Notice,
+    );
+
+    // 触发响应式
+    runInAction(() => {
+      this.messages.unshift(...textMessages);
+      console.log("messages ======", this.messages);
+    });
+  };
 
   /** 当当、前用户（加入者）举手时 */
   public onToggleHandRaising = (): void => {

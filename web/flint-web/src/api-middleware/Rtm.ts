@@ -1,9 +1,42 @@
 import polly from "polly-js";
+import { v4 as uuidv4 } from "uuid";
 import { EventEmitter } from "eventemitter3";
 import AgoraRTM, { RtmChannel, RtmClient } from "agora-rtm-sdk";
 import { AGORA, NODE_ENV } from "../constants/process";
 // import { generateRTMToken } from "./flatServer/agora";
 import { globalStore } from "../stores/GlobalStore";
+
+export interface RtmRESTfulQueryPayload {
+  filter: {
+    source?: string;
+    destination?: string;
+    start_time: string;
+    end_time: string;
+  };
+  offset?: number;
+  limit?: number;
+  order?: string;
+}
+
+export interface RtmRESTfulQueryResponse {
+  result: string;
+  offset: number;
+  limit: number;
+  order: string;
+  location: string;
+}
+export interface RtmRESTfulQueryResourceResponse {
+  code: string;
+  messages: Array<{
+    dst: string;
+    message_type: string;
+    ms: number;
+    payload: string;
+    src: string;
+  }>;
+  request_id: string;
+  result: string;
+}
 
 export enum ClassModeType {
   Lecture = "Lecture",
@@ -124,6 +157,83 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
     }
 
     return this.channel;
+  }
+
+  public async fetchTextHistory(startTime: number, endTime: number): Promise<RTMessage[]> {
+    return (await this.fetchHistory(this.channelID, startTime, endTime)).map(message => ({
+      type: RTMessageType.ChannelMessage,
+      value: message.payload,
+      uuid: uuidv4(),
+      timestamp: message.ms,
+      userUUID: message.src,
+    }));
+  }
+
+  public async fetchHistory(
+    channel: string | null,
+    startTime: number,
+    endTime: number,
+  ): Promise<RtmRESTfulQueryResourceResponse["messages"]> {
+    if (!channel) {
+      throw new Error("RTM is not initiated. Call `rtm.init` first.");
+    }
+
+    // Rtm查询响应
+    const { location } = await this.request<RtmRESTfulQueryPayload, RtmRESTfulQueryResponse>(
+      "query",
+      {
+        filter: {
+          destination: channel,
+          start_time: new Date(startTime).toISOString(),
+          end_time: new Date(endTime).toISOString(),
+        },
+        offset: 0,
+        limit: 100,
+        order: "desc",
+      },
+    );
+
+    const handle = location.replace(/^.*\/query\//, "");
+    const result = await polly()
+      .waitAndRetry([500, 800, 800])
+      .executeForPromise(() => {
+        // Rtm资源查询响应
+        return this.request<null, RtmRESTfulQueryResourceResponse>(`query/${handle}`, null, {
+          method: "GET",
+        }).then(response => (response.code === "ok" ? response : Promise.reject(response)));
+      });
+
+    return result.messages.reverse();
+  }
+
+  private async request<P = any, R = any>(
+    action: string,
+    payload?: P,
+    config: RequestInit = {},
+  ): Promise<R> {
+    if (!this.token) {
+      // this.token = await generateRTMToken();
+    }
+
+    const response = await fetch(
+      `https://api.agora.io/dev/v2/project/${AGORA.APP_ID}/rtm/message/history/${action}`,
+      {
+        method: "POST",
+        headers: {
+          "x-agora-token": this.token,
+          "x-agora-uid": globalStore.userUUID || "",
+          "Content-Type": "application/json",
+          ...(config.headers || {}),
+        },
+        body: payload === null || payload === undefined ? void 0 : JSON.stringify(payload),
+        ...config,
+      },
+    );
+
+    if (!response.ok) {
+      throw response;
+    }
+    return response.json();
   }
 }
 

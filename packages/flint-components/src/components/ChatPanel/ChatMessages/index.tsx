@@ -1,6 +1,7 @@
 import "./style.less";
 
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 
 import { ChatTypeBox, ChatTypeBoxProps } from "../ChatTypeBox";
@@ -8,9 +9,13 @@ import { ChatMessageList, ChatMessageListProps } from "../ChatMessageList";
 
 export type ChatMessagesProps = ChatTypeBoxProps & ChatMessageListProps;
 
-export const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, ...restProps }) => {
+export const ChatMessages = observer<ChatMessagesProps>(function ChatMessages({
+  messages,
+  ...restProps
+}) {
   const { t } = useTranslation();
 
+  console.log("messages===", messages);
   return (
     <div className="chat-messages-wrap">
       <div className="chat-messages">
@@ -26,4 +31,4 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, ...restPro
       <ChatTypeBox {...restProps} />
     </div>
   );
-};
+});
