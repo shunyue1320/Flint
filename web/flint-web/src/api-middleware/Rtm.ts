@@ -52,12 +52,15 @@ export enum RTMessageType {
   BanText = "BanText",
   /** 首次创建教室时显示用户指南消息信息 */
   UserGuide = "UserGuide",
+  /** 更新自己的摄像头和麦克风状态 创造者可以关闭的相机和麦克风，但不能打开 */
+  DeviceState = "DeviceState",
 }
 export type RTMEvents = {
   [RTMessageType.ChannelMessage]: string;
   [RTMessageType.Notice]: string;
   [RTMessageType.BanText]: boolean;
   [RTMessageType.UserGuide]: string;
+  [RTMessageType.DeviceState]: { userUUID: string; camera: boolean; mic: boolean };
 };
 
 export declare interface Rtm {
@@ -239,6 +242,68 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
       if (NODE_ENV === "development") {
         console.log("[RTM] send group message: ", text);
       }
+    }
+  }
+
+  public async sendCommand<U extends keyof RTMEvents>(command: {
+    type: U;
+    value: RTMEvents[U];
+    keepHistory: boolean;
+  }): Promise<void>;
+  public async sendCommand<U extends keyof RTMEvents>(command: {
+    type: U;
+    value: RTMEvents[U];
+    keepHistory: boolean;
+    peerId: string;
+    retry?: number;
+  }): Promise<void>;
+  public async sendCommand<U extends keyof RTMEvents>({
+    type,
+    value,
+    keepHistory = false,
+    peerId,
+    retry = 0,
+  }: {
+    type: U;
+    value: RTMEvents[U];
+    keepHistory: boolean;
+    peerId: string;
+    retry?: number;
+  }): Promise<void> {
+    if (!this.commands || !this.commandsID) {
+      if (NODE_ENV === "development") {
+        console.warn("RTM command channel closed", type, JSON.stringify(value, null, " "));
+      }
+      return;
+    }
+
+    if (peerId === void 0) {
+      await this.commands.sendMessage({
+        messageType: AgoraRTM.MessageType.TEXT,
+        text: JSON.stringify({ t: type, v: value }),
+      });
+
+      if (NODE_ENV === "development") {
+        console.log("[RTM] send group command: ", type, value);
+      }
+    } else {
+      await polly()
+        .waitAndRetry(retry)
+        .executeForPromise(async (): Promise<void> => {
+          const { hasPeerReceived } = await this.client.sendMessageToPeer(
+            {
+              messageType: AgoraRTM.MessageType.TEXT,
+              text: JSON.stringify({ r: this.commandsID, t: type, v: value }),
+            },
+            peerId,
+          );
+          if (NODE_ENV === "development") {
+            console.log(`[RTM] send p2p command to ${peerId}: `, type, value);
+          }
+          if (!hasPeerReceived) {
+            return Promise.reject("peer not received");
+          }
+        });
     }
   }
 

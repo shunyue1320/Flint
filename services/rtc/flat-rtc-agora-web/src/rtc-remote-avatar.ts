@@ -50,6 +50,7 @@ export class RTCRemoteAvatar implements FlatRTCAvatar {
     this._sideEffect.addDisposer(
       // 当录音轨迹和麦克风改变时触发
       combine([this._audioTrack$, this._shouldMic$]).subscribe(([audioTrack, shouldMic]) => {
+        console.log("audioTrack, shouldMic", audioTrack, shouldMic);
         this._sideEffect.add(() => {
           let disposer = (): void => void 0;
           if (audioTrack) {

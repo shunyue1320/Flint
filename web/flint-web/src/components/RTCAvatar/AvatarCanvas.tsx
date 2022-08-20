@@ -1,6 +1,6 @@
 import "./AvatarCanvas.less";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { FlatRTCAvatar } from "@netless/flat-rtc";
 
@@ -25,6 +25,39 @@ export const AvatarCanvas = observer<
   const getVolumeLevel = useCallback((): number => {
     return rtcAvatar?.getVolumeLevel() || 0;
   }, [rtcAvatar]);
+
+  // 为新 rtcAvatar 设置画布
+  useEffect(() => {
+    if (rtcAvatar) {
+      rtcAvatar.setElement(canvasEl);
+    }
+  }, [canvasEl, rtcAvatar]);
+
+  // rtcAvatar 改变重置状态
+  useEffect(
+    () => () => {
+      if (rtcAvatar) {
+        rtcAvatar.setElement(null);
+        rtcAvatar.enableCamera(false);
+        rtcAvatar.enableMic(false);
+      }
+    },
+    [rtcAvatar],
+  );
+
+  useEffect(() => {
+    console.log("启用摄像机", rtcAvatar);
+    if (rtcAvatar) {
+      rtcAvatar.enableCamera(Boolean(camera));
+    }
+  }, [camera, rtcAvatar]);
+
+  useEffect(() => {
+    console.log("启用麦克风", rtcAvatar);
+    if (rtcAvatar) {
+      rtcAvatar.enableMic(Boolean(mic));
+    }
+  }, [mic, rtcAvatar]);
 
   const canvas = <div ref={setCanvasEl} className="video-avatar-canvas" />;
 

@@ -328,7 +328,41 @@ export class ClassRoomStore {
     });
   };
 
-  /** 当当、前用户（加入者）举手时 */
+  /** 更新自己的摄像头和麦克风状态 */
+  public updateDeviceState = (userUUID: string, camera: boolean, mic: boolean): void => {
+    if (this.userUUID === userUUID || this.isCreator) {
+      this.users.updateUsers(user => {
+        if (user.userUUID === userUUID) {
+          // 创建者可以关闭用户的相机和麦克风，不能擅自打开
+          if (this.userUUID !== userUUID) {
+            if (camera && !user.camera) {
+              camera = user.camera;
+            }
+
+            if (mic && !user.mic) {
+              mic = user.mic;
+            }
+          }
+
+          if (camera !== user.camera || mic !== user.mic) {
+            user.isRaiseHand = false;
+            user.camera = camera;
+            user.mic = mic;
+            return false;
+          }
+        }
+
+        return true;
+      });
+      void this.rtm.sendCommand({
+        type: RTMessageType.DeviceState,
+        value: { userUUID, camera, mic },
+        keepHistory: true,
+      });
+    }
+  };
+
+  /** 当前用户（加入者）举手时 */
   public onToggleHandRaising = (): void => {
     return;
   };

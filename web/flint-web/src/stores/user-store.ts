@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable, observable, action } from "mobx";
 
 import { usersInfo } from "../api-middleware/flatServer";
 import { configStore } from "./config-store";
@@ -88,6 +88,45 @@ export class UserStore {
       shouldMoveOut: (user: User): boolean => user.isRaiseHand || user.isSpeak,
     },
   ] as const;
+
+  /**
+   * 更新用户状态并自动排序到不同的组中。
+   * @param editUser 更新用户状态。此回调将应用于所有用户。
+   * 返回“false”以停止遍历。
+   */
+  public updateUsers = (editUser: (user: User) => boolean | void): void => {
+    const editUserAction = action("editUser", editUser);
+    const unSortedUsers: User[] = [];
+
+    let shouldStopEditUser = false;
+
+    if (this.creator) {
+      shouldStopEditUser = editUserAction(this.creator) === false;
+    }
+
+    for (const { group, shouldMoveOut } of this.joinerGroups) {
+      if (shouldStopEditUser) {
+        break;
+      }
+
+      for (let i = 0; i < this[group].length; i++) {
+        if (shouldStopEditUser) {
+          break;
+        }
+
+        const user = this[group][i];
+        shouldStopEditUser = editUserAction(user) === false;
+        if (shouldMoveOut(user)) {
+          this[group].splice(i, 1);
+          i--;
+          unSortedUsers.push(user);
+        }
+      }
+    }
+
+    // 将每个未排序的用户排序到不同的组中
+    unSortedUsers.forEach(this.sortUser);
+  };
 
   /**
    * 将用户分组。

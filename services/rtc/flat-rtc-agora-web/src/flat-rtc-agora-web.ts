@@ -241,7 +241,6 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
       throw new Error("getAvatar(shareScreenUID) is not supported.");
     }
     let remoteAvatar = this._remoteAvatars.get(uid);
-
     // 如果远程人物缓存map内没有就去 client 远程用户里找，并把找到的远程人物缓存起来
     if (!remoteAvatar) {
       const rtcRemoteUser = this.client?.remoteUsers.find(user => user.uid === uid);
@@ -250,6 +249,30 @@ export class FlatRTCAgoraWeb extends FlatRTC<FlatRTCAgoraWebUIDType> {
     }
     return remoteAvatar;
   }
+
+  /** 本地麦克风轨道 */
+  public localMicTrack?: IMicrophoneAudioTrack;
+  public createLocalMicTrack = singleRun(async (): Promise<IMicrophoneAudioTrack> => {
+    if (!this.localMicTrack) {
+      this.localMicTrack = await AgoraRTC.createMicrophoneAudioTrack({
+        microphoneId: this._micID,
+        // AEC：声回波消除
+        AEC: true,
+        // ANS：自动噪声抑制
+        ANS: true,
+      });
+
+      if (this._pJoiningRoom) {
+        await this._pJoiningRoom;
+      }
+
+      if (this.client && this.roomUUID) {
+        await this.client.publish(this.localMicTrack);
+      }
+    }
+
+    return this.localMicTrack;
+  });
 }
 
 function singleRun<TFn extends (...args: any[]) => Promise<any>>(fn: TFn): TFn {
