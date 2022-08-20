@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { i18n } from "i18next";
 import dateSub from "date-fns/sub";
+import { v4 as uuidv4 } from "uuid";
 import { SideEffectManager } from "side-effect-manager";
 import { FlatRTC, FlatRTCRole, FlatRTCMode } from "@netless/flat-rtc";
 import { action, autorun, observable, makeAutoObservable, runInAction } from "mobx";
@@ -42,6 +43,8 @@ export class ClassRoomStore {
   public messages = observable.array<RTMChannelMessage>([]);
   public readonly rtc: FlatRTC;
   public readonly rtm: RTMAPI;
+  /** 创造者是否禁止发言 */
+  public isBan = false;
   /** 云记录是否打开 */
   public isRecording = false;
   /** RTC UI是否打开 */
@@ -228,8 +231,10 @@ export class ClassRoomStore {
 
   public async init(): Promise<void> {
     const channel = await this.rtm.init(this.userUUID, this.roomUUID);
+    // 监听消息
+    this.startListenCommands();
+
     const members = await channel.getMembers();
-    console.log("用户s ==========>>>>>", members);
     await this.users.initUsers(members);
 
     await this.joinRTC();
@@ -247,6 +252,44 @@ export class ClassRoomStore {
       ),
     );
   }
+
+  public startListenCommands = (): void => {
+    this.rtm.on(RTMessageType.ChannelMessage, (text, senderId) => {
+      // 没有禁止发言 或者 是老师发言
+      if (!this.isBan || senderId === this.ownerUUID) {
+        this.addMessage(RTMessageType.ChannelMessage, text, senderId);
+        // 缓存里没有该用户
+        if (!this.users.cachedUsers.has(senderId)) {
+          // this.users.syncExtraUsersInfo([senderId]).catch(console.warn);
+        }
+      }
+    });
+  };
+
+  private addMessage = (
+    type: RTMessageType.ChannelMessage | RTMessageType.Notice | RTMessageType.BanText,
+    value: string | boolean,
+    senderID: string,
+  ): void => {
+    const timestamp = Date.now();
+    let insertPoint = 0;
+
+    // 将获取的消息插入到消息列表对应的位置
+    while (
+      insertPoint < this.messages.length &&
+      this.messages[insertPoint].timestamp <= timestamp
+    ) {
+      insertPoint++;
+    }
+
+    this.messages.splice(insertPoint, 0, {
+      type,
+      uuid: uuidv4(),
+      timestamp,
+      value,
+      userUUID: senderID,
+    });
+  };
 
   public updateHistory = async (): Promise<void> => {
     let messages: RTMessage[] = [];

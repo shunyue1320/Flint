@@ -133,6 +133,9 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
       console.log("监听频道消息 =======", msg, senderId);
       if (msg.messageType === AgoraRTM.MessageType.TEXT) {
         this.emit(RTMessageType.ChannelMessage, msg.text, senderId);
+        if (NODE_ENV === "development") {
+          console.log(`[RTM] Received message from ${senderId}: `, msg.text);
+        }
       }
     });
 

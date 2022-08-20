@@ -56,17 +56,69 @@ export class UserStore {
     });
   };
 
+  public addUser = async (userUUID: string): Promise<void> => {
+    if (this.cachedUsers.has(userUUID)) {
+      this.removeUser(userUUID);
+    }
+    const users = await this.createUsers([userUUID]);
+    users.forEach(user => {
+      this.cacheUser(user);
+      this.sortUser(user);
+    });
+  };
+
+  public removeUser = (userUUID: string): void => {
+    if (this.creator && this.creator.userUUID === userUUID) {
+      this.creator = null;
+    } else {
+      for (const { group } of this.joinerGroups) {
+        for (let i = 0; i < this[group].length; i++) {
+          this[group].splice(i, 1);
+          break;
+        }
+      }
+    }
+  };
+
+  private readonly joinerGroups = [
+    { group: "speakingJoiners", shouldMoveOut: (user: User): boolean => !user.isSpeak },
+    { group: "handRaisingJoiners", shouldMoveOut: (user: User): boolean => !user.isRaiseHand },
+    {
+      group: "otherJoiners",
+      shouldMoveOut: (user: User): boolean => user.isRaiseHand || user.isSpeak,
+    },
+  ] as const;
+
   /**
    * 将用户分组。
    * 用户对象应该是可观察的。
    */
   private sortUser = (user: User): void => {
+    // 获取当前用户信息
     if (user.userUUID === this.userUUID) {
       this.currentUser = user;
     }
 
+    // 获取老师信息
     if (user.userUUID === this.ownerUUID) {
       this.creator = user;
+    } else if (user.isSpeak) {
+      // 正在连麦的用户
+      const index = this.speakingJoiners.findIndex(({ userUUID }) => userUUID === user.userUUID);
+      if (index >= 0) {
+        this.speakingJoiners.splice(index, 1);
+      }
+      this.speakingJoiners.push(user);
+    } else if (user.isRaiseHand) {
+      // 正在举手的用户
+      const index = this.handRaisingJoiners.findIndex(({ userUUID }) => userUUID === user.userUUID);
+      if (index >= 0) {
+        this.handRaisingJoiners.splice(index, 1);
+      }
+      this.handRaisingJoiners.push(user);
+    } else {
+      // 其他用户信息
+      this.otherJoiners.push(user);
     }
   };
 
