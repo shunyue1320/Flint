@@ -9,7 +9,11 @@ import { action, autorun, observable, makeAutoObservable, runInAction } from "mo
 import { RouteNameType, usePushNavigate } from "../utils/routes";
 import { errorTips } from "../components/Tips/ErrorTips";
 import { useSafePromise } from "../utils/hooks/lifecycle";
-import { CloudRecordStartPayload, generateRTCToken } from "../api-middleware/flatServer/agora";
+import {
+  CloudRecordStartPayload,
+  generateRTCToken,
+  checkRTMCensor,
+} from "../api-middleware/flatServer/agora";
 import { ClassModeType } from "../api-middleware/Rtm";
 import { getFlatRTC } from "../services/flat-rtc";
 import { globalStore } from "./GlobalStore";
@@ -19,6 +23,7 @@ import { RoomItem, roomStore } from "./room-store";
 import { NODE_ENV } from "../constants/process";
 import { WhiteboardStore } from "./whiteboard-store";
 import { RoomType } from "../api-middleware/flatServer/constants";
+import { NEED_CHECK_CENSOR } from "../constants/config";
 import { UserStore } from "./user-store";
 
 export type { User } from "./user-store";
@@ -326,6 +331,20 @@ export class ClassRoomStore {
   /** 当当、前用户（加入者）举手时 */
   public onToggleHandRaising = (): void => {
     return;
+  };
+
+  public onMessageSend = async (text: string): Promise<void> => {
+    if (this.isBan && !this.isCreator) {
+      return;
+    }
+
+    if (NEED_CHECK_CENSOR && !(await checkRTMCensor({ text })).valid) {
+      return;
+    }
+
+    await this.rtm.sendMessage(text);
+    // 自己发言不会推送给自己
+    this.addMessage(RTMessageType.ChannelMessage, text, this.userUUID);
   };
 
   public async destroy(): Promise<void> { }

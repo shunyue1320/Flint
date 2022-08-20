@@ -209,6 +209,39 @@ export class Rtm extends EventEmitter<keyof RTMEvents> {
     return result.messages.reverse();
   }
 
+  public async sendMessage(text: string): Promise<void>;
+  public async sendMessage(text: string, peerId: string): Promise<{ hasPeerReceived: boolean }>;
+  public async sendMessage(
+    text: string,
+    peerId?: string,
+  ): Promise<{ hasPeerReceived: boolean } | void> {
+    // 指定给某人发信息
+    if (peerId !== void 0) {
+      const result = await this.client.sendMessageToPeer(
+        {
+          messageType: AgoraRTM.MessageType.TEXT,
+          text,
+        },
+        peerId,
+      );
+
+      if (NODE_ENV === "development") {
+        console.log(`[RTM] send p2p message to ${peerId}: `, text);
+      }
+
+      return result;
+    } else if (this.channel) {
+      await this.channel.sendMessage({
+        messageType: AgoraRTM.MessageType.TEXT,
+        text,
+      });
+
+      if (NODE_ENV === "development") {
+        console.log("[RTM] send group message: ", text);
+      }
+    }
+  }
+
   private async request<P = any, R = any>(
     action: string,
     payload?: P,
