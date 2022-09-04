@@ -1,16 +1,12 @@
 import "flint-components/theme/index.less";
 import "../theme.less";
 
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { useUpdate } from "react-use";
 
-import { ConfigProvider } from "antd";
-import zhCN from "antd/es/locale/zh_CN";
-import enUS from "antd/es/locale/en_US";
+import { useLanguage } from "@netless/flat-i18n";
+import { AntdProvider } from "flint-components";
 
-import { I18nextProvider } from "react-i18next";
-import { i18n } from "../utils/i18n";
 import { AppRoutes } from "../AppRoutes";
 import { StoreProvider } from "../components/StoreProvider";
 import { FlatRTCContext } from "../components/FlatRTCContext";
@@ -23,45 +19,18 @@ configure({
 });
 
 const App: React.FC = () => {
-  const forceUpdate = useUpdate();
-  const antdLocale = useMemo(
-    () => (i18n.language.startsWith("zh") ? zhCN : enUS),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [i18n.language],
-  );
+  const language = useLanguage();
 
-  useEffect(() => {
-    const onLangChanged = (): void => {
-      forceUpdate();
-    };
-
-    i18n.on("languageChanged", onLangChanged);
-
-    return () => {
-      i18n.off("languageChanged", onLangChanged);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
-    <I18nextProvider i18n={i18n}>
-      <ConfigProvider
-        autoInsertSpaceInButton={false}
-        getPopupContainer={getPopupContainer}
-        locale={antdLocale}
-      >
-        <StoreProvider>
-          <FlatRTCContext.Provider value={getFlatRTC()}>
-            <AppRoutes />
-          </FlatRTCContext.Provider>
-        </StoreProvider>
-      </ConfigProvider>
-    </I18nextProvider>
+    <AntdProvider lang={language}>
+      <StoreProvider>
+        <FlatRTCContext.Provider value={getFlatRTC()}>
+          <AppRoutes />
+        </FlatRTCContext.Provider>
+      </StoreProvider>
+    </AntdProvider>
   );
 };
-
-function getPopupContainer(trigger?: HTMLElement): HTMLElement {
-  return trigger?.parentElement || document.body;
-}
 
 export const initUI = (): void => {
   ReactDOM.createRoot(document.getElementById("root")!).render(<App />);

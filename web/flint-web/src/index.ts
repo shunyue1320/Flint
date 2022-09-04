@@ -2,7 +2,7 @@ import "./index.less";
 
 import { tasks } from "./tasks";
 
-(async () => {
+void (async () => {
   for (const task of tasks) {
     await task();
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { ConfigProvider } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
@@ -10,12 +10,14 @@ export interface AntdProviderProps {
 }
 
 export const AntdProvider: React.FC<AntdProviderProps> = ({ lang, children }) => {
+  const antdLocale = useMemo(() => (lang.startsWith("zh") ? zhCN : enUS), [lang]);
+
   return (
     <ConfigProvider
       autoInsertSpaceInButton={false}
       // let popups scrolls with container parent
       getPopupContainer={getPopupContainer}
-      locale={lang.startsWith("zh") ? zhCN : enUS}
+      locale={antdLocale}
     >
       {children}
     </ConfigProvider>
