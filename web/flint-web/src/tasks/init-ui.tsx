@@ -4,7 +4,7 @@ import "../theme.less";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { useLanguage } from "@netless/flat-i18n";
+import { useLanguage } from "@netless/flint-i18n";
 import { AntdProvider } from "flint-components";
 
 import { AppRoutes } from "../AppRoutes";

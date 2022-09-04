@@ -118,7 +118,25 @@ importers:
       webpack: 5.73.0
 
   packages/flint-i18n:
-    specifiers: {}
+    specifiers:
+      i18next: ^21.8.16
+      i18next-browser-languagedetector: ^6.1.4
+      prettier: ^2.3.0
+      react: ^18.0.0
+      side-effect-manager: ^1.2.1
+      typescript: ^4.7.4
+      use-value-enhancer: ^0.1.0
+      value-enhancer: ^1.3.2
+    dependencies:
+      i18next: 21.9.1
+      i18next-browser-languagedetector: 6.1.4
+      side-effect-manager: 1.2.1
+      use-value-enhancer: 0.1.1_h35xdamnu3gwclik4nytw7z6qy
+      value-enhancer: 1.3.2
+    devDependencies:
+      prettier: 2.6.2
+      react: 18.2.0
+      typescript: 4.8.2
 
   packages/flint-types:
     specifiers: {}
@@ -10444,6 +10462,12 @@ packages:
     dependencies:
       '@babel/runtime': 7.18.3
 
+  /i18next/21.9.1:
+    resolution: {integrity: sha512-ITbDrAjbRR73spZAiu6+ex5WNlHRr1mY+acDi2ioTHuUiviJqSz269Le1xHAf0QaQ6GgIHResUhQNcxGwa/PhA==}
+    dependencies:
+      '@babel/runtime': 7.18.9
+    dev: false
+
   /iconv-lite/0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -15377,6 +15401,10 @@ packages:
     resolution: {integrity: sha512-ppUBbzOXLydre40Yz553eIIlTdf2WCJcqMI4n06sTRCA2o5AwG5WQ2qq6fHp5C8RK3TAfgtZKrhllNG2F1jzCA==}
     dev: false
 
+  /side-effect-manager/1.2.1:
+    resolution: {integrity: sha512-RBosCqit8LYMfrEXBt+4klzwWi3faGy4vfXNmUFZhgJY/oY6ZqF7RyUxWOJb0EUfA3jsY3juvFBJHYTk1q/3RQ==}
+    dev: false
+
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
@@ -16363,6 +16391,12 @@ packages:
     hasBin: true
     dev: true
 
+  /typescript/4.8.2:
+    resolution: {integrity: sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
   /ua-parser-js/1.0.2:
     resolution: {integrity: sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==}
     dev: false
@@ -16585,6 +16619,16 @@ packages:
       punycode: 1.3.2
       querystring: 0.2.0
     dev: true
+
+  /use-value-enhancer/0.1.1_h35xdamnu3gwclik4nytw7z6qy:
+    resolution: {integrity: sha512-qilIc7FFC592FDEqcOo1mYuF1HfeNu1/bwPChSr3mRU4QyimPcwwUmSXzt9dVnO1V70gdK+fNkkLqxeV/9VN6g==}
+    peerDependencies:
+      react: '>=16'
+      value-enhancer: 1.x
+    dependencies:
+      react: 18.2.0
+      value-enhancer: 1.3.2
+    dev: false
 
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}

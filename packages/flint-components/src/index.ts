@@ -14,3 +14,4 @@ export * from "./components/CloudStorage";
 export * from "./components/InviteModal";
 export * from "./components/ChatPanel";
 export * from "./containers/CloudStorageContainer";
+export * from "./theme/antd.mod";

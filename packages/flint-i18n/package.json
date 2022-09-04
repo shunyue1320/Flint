@@ -1,5 +1,20 @@
 {
   "name": "@netless/flint-i18n",
+  "description": "flint应用程序的区域设置。",
   "version": "0.1.0",
-  "private": true
+  "private": true,
+  "license": "MIT",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "prettier": "^2.3.0",
+    "react": "^18.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "i18next": "^21.8.16",
+    "i18next-browser-languagedetector": "^6.1.4",
+    "side-effect-manager": "^1.2.1",
+    "use-value-enhancer": "^0.1.0",
+    "value-enhancer": "^1.3.2"
+  }
 }

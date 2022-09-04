@@ -1,2 +1,2 @@
-export * from "./flat-i18n";
+export * from "./flint-i18n";
 export * from "./hooks";
