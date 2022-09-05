@@ -1,0 +1,10 @@
+{
+  "name": "@netless/flint-pages",
+  "version": "0.1.0",
+  "description": "flint pages.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  }
+}
