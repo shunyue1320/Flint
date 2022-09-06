@@ -7,7 +7,7 @@ import { useSafePromise } from "flat-components";
 export const FlintServicesContext = createContext<FlintServices>(null as unknown as FlintServices);
 
 export const FlintServicesContextProvider: React.FC = props => (
-  <FlintServicesContext.Provider value={FlatServices.getInstance()}>
+  <FlintServicesContext.Provider value={FlintServices.getInstance()}>
     {props.children}
   </FlintServicesContext.Provider>
 );

@@ -1,4 +1,7 @@
-export type FlatServicesCatalog = {
+import { IServiceFile, IServiceFileCatalog } from "./services/file";
+import { IService } from "./services/typing";
+
+export type FlintServicesCatalog = IServiceFileCatalog & {
   file: IServiceFile;
   videoChat: IServiceVideoChat;
   textChat: IServiceTextChat;
@@ -6,12 +9,18 @@ export type FlatServicesCatalog = {
   recording: IServiceRecording;
 };
 
-export type FlatServiceID = Extract<keyof FlatServicesCatalog, string>;
+declare global {
+  interface Window {
+    __FlAtSeRvIcEs?: FlintServices;
+  }
+}
 
-export class FlatServices {
+export type FlatServiceID = Extract<keyof FlintServicesCatalog, string>;
+
+export class FlintServices {
   // 单例模式
-  public static getInstance(): FlatServices {
-    return (window.__FlAtSeRvIcEs ||= new FlatServices());
+  public static getInstance(): FlintServices {
+    return (window.__FlAtSeRvIcEs ||= new FlintServices());
   }
 
   private registry = new Map<FlatServiceID, () => Promise<IService | null>>();
