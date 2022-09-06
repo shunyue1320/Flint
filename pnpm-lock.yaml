@@ -138,6 +138,20 @@ importers:
       react: 18.2.0
       typescript: 4.8.2
 
+  packages/flint-pages:
+    specifiers:
+      '@netless/flint-services': workspace:*
+    dependencies:
+      '@netless/flint-services': link:../flint-services
+
+  packages/flint-services:
+    specifiers:
+      prettier: ^2.3.0
+      typescript: ^4.7.4
+    devDependencies:
+      prettier: 2.6.2
+      typescript: 4.8.2
+
   packages/flint-types:
     specifiers: {}
 
@@ -178,6 +192,8 @@ importers:
       '@netless/flat-rtc': workspace:*
       '@netless/flat-rtc-agora-web': workspace:*
       '@netless/flint-i18n': workspace:*
+      '@netless/flint-pages': workspace:*
+      '@netless/flint-services': workspace:*
       '@netless/window-manager': ^0.4.37
       '@types/loadable__component': ^5.13.4
       '@types/react': ^18.0.0
@@ -219,6 +235,8 @@ importers:
       '@netless/flat-rtc': link:../../services/rtc/flat-rtc
       '@netless/flat-rtc-agora-web': link:../../services/rtc/flat-rtc-agora-web
       '@netless/flint-i18n': link:../../packages/flint-i18n
+      '@netless/flint-pages': link:../../packages/flint-pages
+      '@netless/flint-services': link:../../packages/flint-services
       '@netless/window-manager': 0.4.37_white-web-sdk@2.16.28
       agora-rtm-sdk: 1.5.0
       antd: 4.21.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -2891,10 +2909,10 @@ packages:
       '@types/node': 17.0.33
       chalk: 4.1.2
       cosmiconfig: 7.0.1
-      cosmiconfig-typescript-loader: 2.0.0_2e3zkt3gzqz6r43dj4x46rot3i
+      cosmiconfig-typescript-loader: 2.0.0_du44tuum4yuntkyjk7a4vvub3y
       lodash: 4.17.21
       resolve-from: 5.0.0
-      typescript: 4.6.4
+      typescript: 4.8.2
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
@@ -7740,7 +7758,7 @@ packages:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: true
 
-  /cosmiconfig-typescript-loader/2.0.0_2e3zkt3gzqz6r43dj4x46rot3i:
+  /cosmiconfig-typescript-loader/2.0.0_du44tuum4yuntkyjk7a4vvub3y:
     resolution: {integrity: sha512-2NlGul/E3vTQEANqPziqkA01vfiuUU8vT0jZAuUIjEW8u3eCcnCQWLggapCjhbF76s7KQF0fM0kXSKmzaDaG1g==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -7749,8 +7767,8 @@ packages:
     dependencies:
       '@types/node': 17.0.33
       cosmiconfig: 7.0.1
-      ts-node: 10.7.0_2e3zkt3gzqz6r43dj4x46rot3i
-      typescript: 4.6.4
+      ts-node: 10.7.0_du44tuum4yuntkyjk7a4vvub3y
+      typescript: 4.8.2
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
@@ -16253,7 +16271,7 @@ packages:
     resolution: {integrity: sha512-Z86EW+fFFh/IFB1fqQ3/+7Zpf9t2ebOAxNI/V6Wo7r5gqiqtxmgTlQ1qbqQcjLKYeSHPTsEmvlJUDg/EuL0uHQ==}
     dev: false
 
-  /ts-node/10.7.0_2e3zkt3gzqz6r43dj4x46rot3i:
+  /ts-node/10.7.0_du44tuum4yuntkyjk7a4vvub3y:
     resolution: {integrity: sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==}
     hasBin: true
     peerDependencies:
@@ -16279,7 +16297,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 4.6.4
+      typescript: 4.8.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true

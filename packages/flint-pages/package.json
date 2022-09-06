@@ -4,6 +4,9 @@
   "description": "flint pages.",
   "private": true,
   "license": "MIT",
+  "dependencies": {
+    "@netless/flint-services": "workspace:*"
+  },
   "scripts": {
     "build": "tsc"
   }

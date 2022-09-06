@@ -1,11 +1,18 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "target": "ESNext",
+    "jsx": "react",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext"
   },
-  "include": ["./src"]
+  "exclude": ["node_modules", "dist", "public"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "typings/*.d.ts",
+    "scripts/*.ts",
+    "vite.config.ts",
+    "src/stores/class-room-store.tsx"
+  ]
 }
