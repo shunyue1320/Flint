@@ -5,6 +5,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@netless/flint-components": "workspace:*",
     "@netless/flint-services": "workspace:*"
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import { Region } from "flint-components";
+import { Region } from "@netless/flint-components";
 import { FileConvertStep } from "./constants";
 
 enum FileResourceType {

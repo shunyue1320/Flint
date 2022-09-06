@@ -1,4 +1,4 @@
-import { Region } from "flint-components";
+import { Region } from "@netless/flint-components";
 import { postNotAuth, post } from "./utils";
 import { RoomStatus, RoomType, Week } from "./constants";
 

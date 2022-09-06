@@ -140,8 +140,10 @@ importers:
 
   packages/flint-pages:
     specifiers:
+      '@netless/flint-components': workspace:*
       '@netless/flint-services': workspace:*
     dependencies:
+      '@netless/flint-components': link:../flint-components
       '@netless/flint-services': link:../flint-services
 
   packages/flint-services:
@@ -191,6 +193,7 @@ importers:
       '@netless/fastboard-react': ^0.3.6
       '@netless/flat-rtc': workspace:*
       '@netless/flat-rtc-agora-web': workspace:*
+      '@netless/flint-components': workspace:*
       '@netless/flint-i18n': workspace:*
       '@netless/flint-pages': workspace:*
       '@netless/flint-services': workspace:*
@@ -207,7 +210,6 @@ importers:
       classnames: ^2.3.1
       dotenv: ^16.0.1
       dotenv-expand: ^8.0.3
-      flint-components: workspace:*
       flint-types: workspace:*
       i18next: ^21.8.11
       i18next-browser-languagedetector: ^6.1.4
@@ -234,6 +236,7 @@ importers:
       '@netless/fastboard-react': 0.3.6_wyhgxia5woqzjzoysgz2bcj5fe
       '@netless/flat-rtc': link:../../services/rtc/flat-rtc
       '@netless/flat-rtc-agora-web': link:../../services/rtc/flat-rtc-agora-web
+      '@netless/flint-components': link:../../packages/flint-components
       '@netless/flint-i18n': link:../../packages/flint-i18n
       '@netless/flint-pages': link:../../packages/flint-pages
       '@netless/flint-services': link:../../packages/flint-services
@@ -242,7 +245,6 @@ importers:
       antd: 4.21.0_ef5jwxihqo6n7gxfmzogljlgcm
       axios: 0.27.2
       classnames: 2.3.1
-      flint-components: link:../../packages/flint-components
       flint-types: link:../../packages/flint-types
       i18next: 21.8.11
       i18next-browser-languagedetector: 6.1.4

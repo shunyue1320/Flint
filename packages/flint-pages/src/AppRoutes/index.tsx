@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { FlintThemeBodyProvider } from "flint-components";
+import { FlintThemeBodyProvider } from "@netless/flint-components";
 
 import { RouteConfig, routeConfig } from "../route-config";
 import { routePages } from "./route-pages";

@@ -1,4 +1,4 @@
-import { Region } from "flint-components";
+import { Region } from "@netless/flint-components";
 import { autoPersistStore } from "./utils";
 import { i18n } from "../utils/i18n";
 
