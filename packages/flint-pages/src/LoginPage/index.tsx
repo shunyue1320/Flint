@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useCallback, useState, useRef, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-components";
+import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "@netless/flint-components";
 
 import {
   bindingPhone,
@@ -17,12 +17,12 @@ import { WeChatLogin } from "./WeChatLogin";
 import { githubLogin } from "./githubLogin";
 import { googleLogin } from "./googleLogin";
 import { agoraLogin } from "./agoraLogin";
-import { NEED_BINDING_PHONE } from "../../constants/config";
-import { PRIVACY_URL_CN, PRIVACY_URL, SERVICE_URL_CN, SERVICE_URL } from "../../constants/process";
-import { errorTips } from "../../components/Tips/ErrorTips";
-import { GlobalStoreContext } from "../../components/StoreProvider";
-import { usePushNavigate, RouteNameType, useURLParams } from "../../utils/routes";
-import { useSafePromise } from "../../utils/hooks/lifecycle";
+import { NEED_BINDING_PHONE } from "../constants/config";
+import { PRIVACY_URL_CN, PRIVACY_URL, SERVICE_URL_CN, SERVICE_URL } from "../constants/process";
+import { errorTips } from "../components/Tips/ErrorTips";
+import { GlobalStoreContext } from "../components/StoreProvider";
+import { usePushNavigate, RouteNameType, useURLParams } from "../utils/routes";
+import { useSafePromise } from "../utils/hooks/lifecycle";
 
 export const LoginPage: React.FC = () => {
   const { i18n } = useTranslation();

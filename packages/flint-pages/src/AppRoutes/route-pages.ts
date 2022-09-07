@@ -12,23 +12,23 @@ export type RoutePages = {
 export const routePages: RoutePages = {
   [RouteNameType.LoginPage]: {
     title: "LoginPage",
-    component: () => import("../pages/LoginPage"),
+    component: () => import("../LoginPage"),
   },
   [RouteNameType.HomePage]: {
     title: "HomePage",
     hasHeader: true,
-    component: () => import("../pages/HomePage"),
+    component: () => import("../HomePage"),
   },
   [RouteNameType.DevicesTestPage]: {
     title: "DevicesTestPage",
-    component: () => import("../pages/DevicesTestPage"),
+    component: () => import("../DevicesTestPage"),
   },
   [RouteNameType.JoinPage]: {
     title: "JoinPage",
-    component: () => import("../pages/JoinPage"),
+    component: () => import("../JoinPage"),
   },
   [RouteNameType.BigClassPage]: {
     title: "BigClassPage",
-    component: () => import("../pages/BigClassPage"),
+    component: () => import("../BigClassPage"),
   },
 };

@@ -5,7 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { useLanguage } from "@netless/flint-i18n";
-import { AntdProvider } from "flint-components";
+import { AntdProvider } from "@netless/flint-components";
 import { AppRoutes } from "@netless/flint-pages/src/AppRoutes";
 import { StoreProvider } from "@netless/flint-pages/src/components/StoreProvider";
 // import { FlatRTCContext } from "@netless/flat-pages/src/components/FlatRTCContext";

@@ -1,6 +1,7 @@
 import React, { ComponentType, useContext, useEffect } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
+import { useTranslate } from "@netless/flat-i18n";
 import loadable from "@loadable/component";
 
 import { RouteNameType } from "../route-config";
@@ -31,7 +32,7 @@ window.setTimeout(preloadComponents, 5000);
 
 export const AppRouteContainer: React.FC<AppRouteContainerProps> = ({ name, Comp, title }) => {
   const pageStore = useContext(PageStoreContext);
-  const { t } = useTranslation();
+  const t = useTranslate();
 
   useIsomorphicLayoutEffect(() => {
     pageStore.setName(name);
