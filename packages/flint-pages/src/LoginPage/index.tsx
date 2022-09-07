@@ -4,14 +4,6 @@ import React, { useCallback, useState, useRef, useContext, useEffect } from "rea
 import { useTranslation } from "react-i18next";
 import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "@netless/flint-components";
 
-import {
-  bindingPhone,
-  bindingPhoneSendCode,
-  loginPhone,
-  loginPhoneSendCode,
-  LoginProcessResult,
-  loginCheck,
-} from "../../api-middleware/flatServer";
 import { LoginDisposer } from "./utils";
 import { WeChatLogin } from "./WeChatLogin";
 import { githubLogin } from "./githubLogin";
@@ -23,6 +15,15 @@ import { errorTips } from "../components/Tips/ErrorTips";
 import { GlobalStoreContext } from "../components/StoreProvider";
 import { usePushNavigate, RouteNameType, useURLParams } from "../utils/routes";
 import { useSafePromise } from "../utils/hooks/lifecycle";
+
+import {
+  bindingPhone,
+  bindingPhoneSendCode,
+  loginPhone,
+  loginPhoneSendCode,
+  LoginProcessResult,
+  loginCheck,
+} from "@netless/flint-server-api";
 
 export const LoginPage: React.FC = () => {
   const { i18n } = useTranslation();
