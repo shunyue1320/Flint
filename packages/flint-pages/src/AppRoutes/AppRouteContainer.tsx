@@ -1,13 +1,13 @@
 import React, { ComponentType, useContext, useEffect } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
-// import { useTranslation } from "react-i18next";
-import { useTranslate } from "@netless/flat-i18n";
+import { useTranslate } from "@netless/flint-i18n";
 import loadable from "@loadable/component";
+import { FlintThemeBodyProvider } from "@netless/flint-components";
 
 import { RouteNameType } from "../route-config";
 import { AppRouteErrorBoundary } from "./AppRouteErrorBoundary";
 import { routePages } from "./route-pages";
-import { PageStoreContext } from "../components/StoreProvider";
+import { PageStoreContext, PreferencesStoreContext } from "../components/StoreProvider";
 
 export interface AppRouteContainerProps {
   name: RouteNameType;
@@ -32,6 +32,7 @@ window.setTimeout(preloadComponents, 5000);
 
 export const AppRouteContainer: React.FC<AppRouteContainerProps> = ({ name, Comp, title }) => {
   const pageStore = useContext(PageStoreContext);
+  const preferencesStore = useContext(PreferencesStoreContext);
   const t = useTranslate();
 
   useIsomorphicLayoutEffect(() => {
@@ -52,6 +53,8 @@ export const AppRouteContainer: React.FC<AppRouteContainerProps> = ({ name, Comp
   }, [Comp, name]);
 
   return (
-    <AppRouteErrorBoundary Comp={componentCache.get(name) || loadable(Comp, {})} title={title} />
+    <FlintThemeBodyProvider prefersColorScheme={preferencesStore.prefersColorScheme}>
+      <AppRouteErrorBoundary Comp={componentCache.get(name) || loadable(Comp, {})} title={title} />
+    </FlintThemeBodyProvider>
   );
 };
