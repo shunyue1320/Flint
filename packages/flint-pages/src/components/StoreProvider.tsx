@@ -1,5 +1,5 @@
 import React, { createContext, FC } from "react";
-import { preferencesStore, globalStore, roomStore } from "@netless/flat-stores";
+import { preferencesStore, globalStore, roomStore } from "@netless/flint-stores";
 import { pageStore } from "../stores/page-store";
 
 // import { globalStore } from "../stores/GlobalStore";
