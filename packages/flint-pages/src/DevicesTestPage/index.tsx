@@ -1,19 +1,17 @@
 import "./style.less";
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { FlatRTCDevice } from "@netless/flat-rtc";
 import { DeviceTestPanel } from "@netless/flint-components";
+import { IServiceVideoChatDevice } from "@netless/flint-services";
 
-import { FlatRTCContext } from "../../components/FlatRTCContext";
-import { useSafePromise } from "../../utils/hooks/lifecycle";
-import { DeviceTest } from "../../api-middleware/rtc/device-test";
-import { configStore } from "../../stores/config-store";
+import { useSafePromise } from "../utils/hooks/lifecycle";
+import { GlobalStoreContext, PreferencesStoreContext } from "../components/StoreProvider";
 import { joinRoomHandler } from "../utils/join-room-handler";
-import { GlobalStoreContext } from "../../components/StoreProvider";
-import { RouteNameType, RouteParams, usePushNavigate } from "../../utils/routes";
+import { RouteNameType, RouteParams, usePushNavigate } from "../utils/routes";
+import { useFlintService } from "../components/FlintServicesContext";
 
 export const DevicesTestPage: React.FC = () => {
-  const rtc = useContext(FlatRTCContext);
+  const rtc = useFlintService("videoChat");
   const globalStore = useContext(GlobalStoreContext);
   const sp = useSafePromise();
   const pushNavigate = usePushNavigate();
@@ -21,8 +19,8 @@ export const DevicesTestPage: React.FC = () => {
   const { roomUUID } = useParams<RouteParams<RouteNameType.JoinPage>>();
 
   const cameraVideoStreamRef = useRef<HTMLDivElement>(null);
-  const [cameraDevices, setCameraDevices] = useState<FlatRTCDevice[]>([]);
-  const [microphoneDevices, setMicrophoneDevices] = useState<FlatRTCDevice[]>([]);
+  const [cameraDevices, setCameraDevices] = useState<IServiceVideoChatDevice[]>([]);
+  const [microphoneDevices, setMicrophoneDevices] = useState<IServiceVideoChatDevice[]>([]);
 
   const [cameraDeviceId, setCameraDeviceId] = useState<string>("");
   const [microphoneDeviceId, setMicrophoneDeviceId] = useState<string>("");
@@ -53,10 +51,12 @@ export const DevicesTestPage: React.FC = () => {
   }, [rtc, cameraVideoStreamRef]);
 
   useEffect(() => {
+    if (!rtc) {
+      return;
+    }
+
     const handlerDeviceError = (error: any): void => {
-      if (DeviceTest.isPermissionError(error)) {
-        setIsCameraAccessible(false);
-      }
+      setIsCameraAccessible(false);
     };
 
     // 获取所有摄像头设备的 deviceId
@@ -97,7 +97,7 @@ export const DevicesTestPage: React.FC = () => {
   // 检查摄像头更改时的设备id
   useEffect(() => {
     if (cameraDevices.length > 0 && !cameraDeviceId) {
-      const lastCameraId = configStore.cameraId;
+      const lastCameraId = PreferencesStoreContext.cameraId;
       // 默认设置第一个设备id
       lastCameraId ? setCameraDeviceId(lastCameraId) : setCameraDeviceId(cameraDevices[0].deviceId);
     }
@@ -106,7 +106,7 @@ export const DevicesTestPage: React.FC = () => {
   // 检查麦克风更改时的设备id
   useEffect(() => {
     if (microphoneDevices.length > 0 && !microphoneDeviceId) {
-      const lastMicrophoneId = configStore.microphoneId;
+      const lastMicrophoneId = PreferencesStoreContext.microphoneId;
       lastMicrophoneId
         ? setMicrophoneDeviceId(lastMicrophoneId)
         : setMicrophoneDeviceId(microphoneDevices[0].deviceId);
@@ -114,8 +114,8 @@ export const DevicesTestPage: React.FC = () => {
   }, [microphoneDeviceId, microphoneDevices]);
 
   const joinRoom = async (): Promise<void> => {
-    configStore.updateCameraId(cameraDeviceId);
-    configStore.updateMicrophoneId(microphoneDeviceId);
+    PreferencesStoreContext.updateCameraId(cameraDeviceId);
+    PreferencesStoreContext.updateMicrophoneId(microphoneDeviceId);
     await joinRoomHandler(roomUUID, pushNavigate);
   };
 

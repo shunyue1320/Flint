@@ -17,7 +17,7 @@ import {
 import { observer } from "mobx-react-lite";
 import { message } from "antd";
 
-import { runtime } from "../../utils/runtime";
+import { runtime } from "../utils/runtime";
 import { RouteNameType, RouteParams } from "../../utils/routes";
 import { RecordingConfig, useClassRoomStore, User } from "../../stores/class-room-store";
 import { RtcChannelType } from "../../api-middleware/rtc/room";
