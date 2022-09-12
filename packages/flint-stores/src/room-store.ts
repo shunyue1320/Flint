@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable, runInAction } from "mobx";
-import { globalStore } from "./GlobalStore";
+import { globalStore } from "./global-store";
 import {
   joinRoom,
   JoinRoomResult,

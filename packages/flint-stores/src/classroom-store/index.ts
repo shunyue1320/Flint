@@ -16,17 +16,17 @@ import {
 } from "../api-middleware/flatServer/agora";
 import { ClassModeType } from "../api-middleware/Rtm";
 import { getFlatRTC } from "../services/flat-rtc";
-import { globalStore } from "./GlobalStore";
+import { globalStore } from "../global-store";
 import { RtcChannelType } from "../api-middleware/rtc/room";
 import { Rtm as RTMAPI, RTMessage, RTMessageType } from "../api-middleware/Rtm";
-import { RoomItem, roomStore } from "./room-store";
+import { RoomItem, roomStore } from "../room-store";
 import { NODE_ENV } from "../constants/process";
-import { WhiteboardStore } from "./whiteboard-store";
+import { WhiteboardStore } from "../whiteboard-store";
 import { RoomType } from "../api-middleware/flatServer/constants";
 import { NEED_CHECK_CENSOR } from "../constants/config";
-import { UserStore } from "./user-store";
+import { UserStore } from "../user-store";
 
-export type { User } from "./user-store";
+export type { User } from "../user-store";
 
 export type RTMChannelMessage = RTMessage<
   | RTMessageType.ChannelMessage
