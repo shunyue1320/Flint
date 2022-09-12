@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from "react";
 
 import { MainRoomMenu } from "./MainRoomMenu";
 import { useLoginCheck } from "../utils/use-login-check";
-import { PageStoreContext } from "../../components/StoreProvider";
+import { PageStoreContext } from "../components/StoreProvider";
 import { MainRoomListPanel } from "./MainRoomListPanel";
 import { MainRoomHistoryPanel } from "./MainRoomHistoryPanel";
 

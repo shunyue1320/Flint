@@ -13,7 +13,7 @@ import {
   TopBarDivider,
   SVGMenuUnfold,
   SVGMenuFold,
-} from "flint-components";
+} from "@netless/flint-components";
 import { observer } from "mobx-react-lite";
 import { message } from "antd";
 

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RoomList } from "flint-components";
+import { RoomList } from "@netless/flint-components";
 import { MainRoomList } from "./MainRoomList";
 import { ListRoomsType } from "../../../api-middleware/flatServer";
 

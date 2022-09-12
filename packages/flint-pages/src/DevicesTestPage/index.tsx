@@ -2,7 +2,7 @@ import "./style.less";
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { FlatRTCDevice } from "@netless/flat-rtc";
-import { DeviceTestPanel } from "flint-components";
+import { DeviceTestPanel } from "@netless/flint-components";
 
 import { FlatRTCContext } from "../../components/FlatRTCContext";
 import { useSafePromise } from "../../utils/hooks/lifecycle";

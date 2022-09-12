@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { RoomStatus } from "../api-middleware/flatServer/constants";
 import { useSafePromise } from "../utils/hooks/lifecycle";
 import { RouteNameType, usePushNavigate } from "../utils/routes";
-import { errorTips } from "./Tips/ErrorTips";
+import { errorTips } from "@netless/flint-components";
 
 export enum ExitRoomConfirmType {
   StopClassButton,

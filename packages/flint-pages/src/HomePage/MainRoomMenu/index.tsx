@@ -3,15 +3,15 @@ import "./MainRoomMenu.less";
 import React, { useContext } from "react";
 import { Row, Col } from "antd";
 
-import { Region } from "flint-components";
-import { GlobalStoreContext, RoomStoreContext } from "../../../components/StoreProvider";
+import { Region } from "@netless/flint-components";
+import { GlobalStoreContext, RoomStoreContext } from "../../components/StoreProvider";
 import { JoinRoomBox } from "./JoinRoomBox";
 import { CreateRoomBox } from "./CreateRoomBox";
 import { ScheduleRoomBox } from "./ScheduleRoomBox";
-import { RouteNameType, usePushNavigate } from "../../../utils/routes";
+import { RouteNameType, usePushNavigate } from "../../utils/routes";
 import { joinRoomHandler } from "../../utils/join-room-handler";
-import { errorTips } from "../../../components/Tips/ErrorTips";
-import { RoomType } from "../../../api-middleware/flatServer/constants";
+import { errorTips } from "@netless/flint-components";
+import { RoomType } from "@netless/flint-server-api";
 
 export const MainRoomMenu: React.FC = () => {
   const globalStore = useContext(GlobalStoreContext);

@@ -1,10 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { LoginExecutor } from "./utils";
-import { GITHUB } from "../../constants/process";
-import { errorTips } from "../../components/Tips/ErrorTips";
-
-import { loginProcess, setAuthUUID } from "../../api-middleware/flatServer";
-import { FLAT_SERVER_LOGIN } from "../../api-middleware/flatServer/constants";
+import { GITHUB } from "../constants/process";
+import { errorTips } from "@netless/flint-components";
+import { FLAT_SERVER_LOGIN, setAuthUUID, loginProcess } from "@netless/flint-server-api";
 
 export const githubLogin: LoginExecutor = onSuccess => {
   let timer = NaN;

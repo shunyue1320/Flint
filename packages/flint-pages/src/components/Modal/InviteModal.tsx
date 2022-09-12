@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import { InviteModal as InviteModalImpl } from "flint-components";
+import { InviteModal as InviteModalImpl } from "@netless/flint-components";
 
 import { RoomItem } from "../../stores/room-store";
 import { FLAT_WEB_BASE_URL } from "../../constants/process";

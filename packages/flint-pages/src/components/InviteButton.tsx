@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SVGUserInvite, TopBarRightBtn } from "flint-components";
+import { SVGUserInvite, TopBarRightBtn } from "@netless/flint-components";
 import { RoomItem } from "../stores/room-store";
 import { InviteModal } from "./Modal/InviteModal";
 

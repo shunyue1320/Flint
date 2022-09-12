@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { v4 as uuidv4 } from "uuid";
 
-import { LoginProcessResult, setAuthUUID, loginProcess } from "../../api-middleware/flatServer";
-import { useSafePromise } from "../../utils/hooks/lifecycle";
-import { FLAT_SERVER_LOGIN } from "../../api-middleware/flatServer/constants";
-import { WECHAT } from "../../constants/process";
-import { errorTips } from "../../components/Tips/ErrorTips";
+import { loginProcess, LoginProcessResult, setAuthUUID } from "@netless/flint-server-api";
+import { useSafePromise } from "../utils/hooks/lifecycle";
+import { FLAT_SERVER_LOGIN } from "@netless/flint-server-api";
+import { WECHAT } from "../constants/process";
+import { errorTips } from "@netless/flint-components";
 
 export interface WeChatLoginProps {
   setLoginResult: (result: LoginProcessResult) => void;

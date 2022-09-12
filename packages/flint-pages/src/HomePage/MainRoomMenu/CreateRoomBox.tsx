@@ -4,10 +4,16 @@ import React, { useState, useContext, useRef } from "react";
 import { Button, Modal, Form, Input, InputRef, Dropdown, Menu, Checkbox } from "antd";
 import { useTranslation } from "react-i18next";
 
-import { ClassPicker, HomePageHeroButton, Region, regions, RegionSVG } from "flint-components";
-import { RoomType } from "../../../api-middleware/flatServer/constants";
-import { GlobalStoreContext, ConfigStoreContext } from "../../../components/StoreProvider";
-import { useSafePromise } from "../../../utils/hooks/lifecycle";
+import {
+  ClassPicker,
+  HomePageHeroButton,
+  Region,
+  regions,
+  RegionSVG,
+} from "@netless/flint-components";
+import { RoomType } from "@netless/flint-server-api";
+import { PreferencesStoreContext, GlobalStoreContext } from "../../components/StoreProvider";
+import { useSafePromise } from "../../utils/hooks/lifecycle";
 
 interface CreateRoomFormValues {
   roomTitle: string;
@@ -23,13 +29,13 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
   const { t } = useTranslation();
   const sp = useSafePromise();
   const globalStore = useContext(GlobalStoreContext);
-  const configStore = useContext(ConfigStoreContext);
+  const preferencesStore = useContext(PreferencesStoreContext);
   const [form] = Form.useForm<CreateRoomFormValues>();
 
   const [isFormValidated, setIsFormValidated] = useState(false);
   const [isShowModal, showModal] = useState(false);
   const roomTitleInputRef = useRef<InputRef>(null);
-  const [roomRegion, setRoomRegion] = useState<Region>(configStore.getRegion());
+  const [roomRegion, setRoomRegion] = useState<Region>(preferencesStore.getRegion());
   const [classType, setClassType] = useState<RoomType>(RoomType.BigClass);
   const [isLoading, setLoading] = useState(false);
 
@@ -38,7 +44,7 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
       ? t("create-room-default-title", { name: globalStore.userInfo.name })
       : "",
     roomType: RoomType.BigClass,
-    autoCameraOn: configStore.autoCameraOn,
+    autoCameraOn: preferencesStore.autoCameraOn,
   };
 
   const regionMenu = (
@@ -143,7 +149,7 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
     setLoading(true);
     try {
       const values = form.getFieldsValue();
-      configStore.updateAutoCameraOn(values.autoCameraOn);
+      preferencesStore.updateAutoCameraOn(values.autoCameraOn);
       await sp(onCreateRoom(values.roomTitle, values.roomType, roomRegion));
       showModal(false);
     } catch (e) {

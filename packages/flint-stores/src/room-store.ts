@@ -9,9 +9,11 @@ import {
   createOrdinaryRoom,
   CreateOrdinaryRoomPayload,
   PeriodicRoomInfoResult,
-} from "../api-middleware/flatServer";
-import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
-import { configStore } from "./config-store";
+  RoomType,
+  RoomStatus,
+} from "@netless/flint-server-api";
+// import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
+import { preferencesStore } from "./preferences-store";
 
 export enum Region {
   CN_HZ = "cn-hz",
@@ -21,6 +23,16 @@ export enum Region {
   GB_LON = "gb-lon",
 }
 
+export interface RoomRecording {
+  beginTime: number;
+  endTime: number;
+  videoURL?: string;
+}
+
+/**
+ * 有时，我们可能只有部分房间信息
+ * 普通房间 + 定期子房间
+ */
 export interface RoomItem {
   roomUUID: string;
   ownerUUID: string;
@@ -38,11 +50,7 @@ export interface RoomItem {
   nextPeriodicRoomEndTime?: number;
   count?: number;
   hasRecord?: boolean;
-  recordings?: Array<{
-    beginTime: number;
-    endTime: number;
-    videoURL?: string;
-  }>;
+  recordings?: RoomRecording[];
 }
 
 export interface PeriodicRoomItem {
@@ -52,13 +60,17 @@ export interface PeriodicRoomItem {
   inviteCode: string;
 }
 
+/**
+ * 缓存所有访问的房间。
+ * 这应该是所有房间信息的唯一中央存储。
+ */
 export class RoomStore {
   public rooms = observable.map<string, RoomItem>();
   public periodicRooms = observable.map<string, PeriodicRoomItem>();
 
-  // public constructor() {
-  //   makeAutoObservable(this);
-  // }
+  public constructor() {
+    makeAutoObservable(this);
+  }
 
   public async joinRoom(roomUUID: string): Promise<JoinRoomResult> {
     const data = await joinRoom(roomUUID);
@@ -73,7 +85,7 @@ export class RoomStore {
   }
 
   /**
-   * @returns a list of room uuids
+   * @returns 房间 UUID 列表
    */
   public async listRooms(type: ListRoomsType, payload: ListRoomsPayload): Promise<string[]> {
     const rooms = await listRooms(type, payload);
@@ -115,7 +127,7 @@ export class RoomStore {
     }
 
     const roomUUID = await createOrdinaryRoom(payload);
-    configStore.setRegion(payload.region);
+    preferencesStore.setRegion(payload.region);
     const { ...restPayload } = payload;
     this.updateRoom(roomUUID, globalStore.userUUID, {
       ...restPayload,

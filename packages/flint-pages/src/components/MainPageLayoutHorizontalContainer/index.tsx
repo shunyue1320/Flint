@@ -15,7 +15,7 @@ import {
   SVGHomeOutlined,
   SVGLogout,
   // SVGSetting,
-} from "flint-components";
+} from "@netless/flint-components";
 import { routeConfig, RouteNameType } from "../../route-config";
 import { FLAT_DOWNLOAD_URL } from "../../constants/process";
 import { GlobalStoreContext } from "../StoreProvider";

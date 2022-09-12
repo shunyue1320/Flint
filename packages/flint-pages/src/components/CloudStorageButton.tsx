@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import { SVGCloudOutlined, TopBarRightBtn } from "flint-components";
+import { SVGCloudOutlined, TopBarRightBtn } from "@netless/flint-components";
 import { Modal } from "antd";
 
 import { ClassRoomStore } from "../stores/class-room-store";

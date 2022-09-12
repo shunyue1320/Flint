@@ -1,13 +1,12 @@
 import React, { useState, useCallback, useContext, useEffect, Fragment } from "react";
 
 import { useTranslation } from "react-i18next";
-import { errorTips } from "../../../components/Tips/ErrorTips";
-import { RoomStoreContext, GlobalStoreContext } from "../../../components/StoreProvider";
-import { useSafePromise } from "../../../utils/hooks/lifecycle";
-import { ListRoomsType } from "../../../api-middleware/flatServer";
-import { RoomItem } from "src/stores/room-store";
-import { RoomStatus } from "../../../api-middleware/flatServer/constants";
-import { RouteNameType, usePushNavigate } from "../../../utils/routes";
+import { errorTips } from "@netless/flint-components";
+import { RoomStoreContext, GlobalStoreContext } from "../../components/StoreProvider";
+import { useSafePromise } from "../../utils/hooks/lifecycle";
+import { RoomItem } from "@netless/flint-stores";
+import { ListRoomsType, RoomStatus } from "@netless/flint-server-api";
+import { RouteNameType, usePushNavigate } from "../../utils/routes";
 import { joinRoomHandler } from "../../utils/join-room-handler";
 
 import {
@@ -15,7 +14,7 @@ import {
   RoomListItem,
   RoomListAllLoaded,
   RoomStatusType,
-} from "flint-components";
+} from "@netless/flint-components";
 export interface MainRoomListProps {
   isLogin: boolean;
   listRoomsType: ListRoomsType;

@@ -11,7 +11,7 @@ import { googleLogin } from "./googleLogin";
 import { agoraLogin } from "./agoraLogin";
 import { NEED_BINDING_PHONE } from "../constants/config";
 import { PRIVACY_URL_CN, PRIVACY_URL, SERVICE_URL_CN, SERVICE_URL } from "../constants/process";
-import { errorTips } from "../components/Tips/ErrorTips";
+import { errorTips } from "@netless/flint-components";
 import { GlobalStoreContext } from "../components/StoreProvider";
 import { usePushNavigate, RouteNameType, useURLParams } from "../utils/routes";
 import { useSafePromise } from "../utils/hooks/lifecycle";

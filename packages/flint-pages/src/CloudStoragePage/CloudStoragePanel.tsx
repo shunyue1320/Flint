@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CloudStorageContainer } from "flint-components";
+import { CloudStorageContainer } from "@netless/flint-components";
 
 import { CloudStorageStore } from "./store";
 

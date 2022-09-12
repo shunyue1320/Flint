@@ -1,7 +1,7 @@
-import { usePushNavigate, RouteNameType } from "../../utils/routes";
-import { errorTips } from "../../components/Tips/ErrorTips";
-import { roomStore } from "../../stores/room-store";
-import { RoomType } from "../../api-middleware/flatServer/constants";
+import { usePushNavigate, RouteNameType } from "../utils/routes";
+import { errorTips } from "@netless/flint-components";
+import { roomStore } from "@netless/flint-stores";
+import { RoomType } from "@netless/flint-server-api";
 
 export const joinRoomHandler = async (
   roomUUID: string,

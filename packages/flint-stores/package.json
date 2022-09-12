@@ -1,5 +1,5 @@
 {
-  "name": "flint-stores",
+  "name": "@netless/flint-stores",
   "version": "0.1.0",
   "description": "Shared TypeScript typings for the Flat app and Flat Server.",
   "main": "src/index.ts",
@@ -7,5 +7,16 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc"
+  },
+  "peerDependencies": {
+    "@netless/fastboard": ">=0",
+    "mobx": "6.x",
+    "white-web-sdk": ">=2.16"
+  },
+  "dependencies": {
+    "@netless/flint-components": "workspace:*",
+    "@netless/flint-i18n": "workspace:*",
+    "@netless/flint-server-api": "workspace:*",
+    "@netless/flint-services": "workspace:*"
   }
 }

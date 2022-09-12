@@ -20,6 +20,14 @@ export enum Status {
   AuthFailed,
 }
 
+export enum Region {
+  CN_HZ = "cn-hz",
+  US_SV = "us-sv",
+  SG = "sg",
+  IN_MUM = "in-mum",
+  GB_LON = "gb-lon",
+}
+
 export enum RoomType {
   OneToOne = "OneToOne",
   SmallClass = "SmallClass",

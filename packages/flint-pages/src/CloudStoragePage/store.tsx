@@ -1,7 +1,7 @@
 import {
   CloudStorageFile as CloudStorageFileUI,
   CloudStorageStore as CloudStorageStoreBase,
-} from "flint-components";
+} from "@netless/flint-components";
 import { i18n } from "i18next";
 
 import { CloudFile } from "../../api-middleware/flatServer/storage";

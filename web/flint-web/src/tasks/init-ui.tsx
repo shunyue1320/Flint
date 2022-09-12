@@ -1,4 +1,4 @@
-import "flint-components/theme/index.less";
+import "@netless/flint-components/theme/index.less";
 import "../theme.less";
 
 import React from "react";

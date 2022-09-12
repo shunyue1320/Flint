@@ -7,5 +7,5 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["./src"]
+  "include": ["./src", "../flint-server-api/src/room.ts"]
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-import { ChatPanel as ChatPanelImpl, useComputed } from "flint-components";
+import { ChatPanel as ChatPanelImpl, useComputed } from "@netless/flint-components";
 import { ClassRoomStore } from "../../stores/class-room-store";
 import { generateAvatar } from "../../utils/generate-avatar";
 

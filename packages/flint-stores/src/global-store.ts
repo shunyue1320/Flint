@@ -1,5 +1,5 @@
-import { autoPersistStore } from "./utils";
-import { LoginProcessResult } from "../api-middleware/flatServer";
+import { autoPersistStore } from "./utils/auto-persist-store";
+import { LoginProcessResult } from "@netless/flint-server-api";
 
 export enum Region {
   CN_HZ = "cn-hz",
@@ -12,7 +12,7 @@ export enum Region {
 // 存储版本不匹配，则清除存储
 const LS_VERSION = 1;
 
-export type UserInfo = Omit<LoginProcessResult, "agoraSSOLoginID">;
+export type UserInfo = LoginProcessResult;
 
 // 全局存储中的属性是全局持久化和共享的。
 export class GlobalStore {

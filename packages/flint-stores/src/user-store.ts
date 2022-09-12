@@ -1,7 +1,7 @@
 import { makeAutoObservable, observable, action } from "mobx";
 
-import { usersInfo } from "../api-middleware/flatServer";
-import { configStore } from "./config-store";
+import { usersInfo } from "@netless/flint-server-api";
+import { preferencesStore } from "./preferences-store";
 
 export interface User {
   userUUID: string;
@@ -184,8 +184,8 @@ export class UserStore {
         rtcUID: users[userUUID].rtcUID,
         avatar: users[userUUID].avatarURL,
         name: users[userUUID].name,
-        camera: userUUID === this.userUUID ? configStore.autoCameraOn : false,
-        mic: userUUID === this.userUUID ? configStore.autoMicOn : false,
+        camera: userUUID === this.userUUID ? preferencesStore.autoCameraOn : false,
+        mic: userUUID === this.userUUID ? preferencesStore.autoMicOn : false,
         isSpeak: userUUID === this.userUUID && this.isCreator,
         isRaiseHand: false,
       }),

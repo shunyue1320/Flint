@@ -4,10 +4,10 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { Form, Input, Modal, Button, InputRef, Checkbox } from "antd";
 import { validate, version } from "uuid";
 import { useTranslation } from "react-i18next";
-import { HomePageHeroButton } from "flint-components";
+import { HomePageHeroButton } from "@netless/flint-components";
 
-import { useSafePromise } from "../../../utils/hooks/lifecycle";
-import { ConfigStoreContext } from "../../../components/StoreProvider";
+import { useSafePromise } from "../../utils/hooks/lifecycle";
+import { PreferencesStoreContext } from "../../components/StoreProvider";
 
 interface JoinRoomFormValues {
   roomUUID: string;
@@ -25,7 +25,7 @@ export interface JoinRoomBoxProps {
 export const JoinRoomBox: React.FC<JoinRoomBoxProps> = ({ onJoinRoom }) => {
   const { t } = useTranslation();
   const sp = useSafePromise();
-  const configStore = useContext(ConfigStoreContext);
+  const configStore = useContext(PreferencesStoreContext);
   const [form] = Form.useForm<JoinRoomFormValues>();
   const roomTitleInputRef = useRef<InputRef>(null);
 

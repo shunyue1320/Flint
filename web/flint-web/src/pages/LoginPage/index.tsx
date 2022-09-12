@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useCallback, useState, useRef, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "flint-components";
+import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "/flint-components";
 
 import {
   bindingPhone,

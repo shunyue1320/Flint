@@ -13,6 +13,9 @@
   },
   "dependencies": {
     "@netless/flat-rtc": "workspace:*",
+    "@netless/flint-i18n": "workspace:*",
+    "@netless/flint-server-api": "workspace:*",
+    "@netless/flint-services": "workspace:*",
     "antd": "^4.21.0",
     "date-fns": "^2.29.1",
     "i18next": "^21.8.11",

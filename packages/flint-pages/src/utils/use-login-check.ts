@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 
 import { GlobalStoreContext } from "../components/StoreProvider";
 import { NEED_BINDING_PHONE } from "../constants/config";
-import { errorTips } from "../../components/Tips/ErrorTips";
-import { useReplaceNavigate, RouteNameType } from "../../utils/routes";
-import { loginCheck } from "../../api-middleware/flatServer";
+import { errorTips } from "@netless/flint-components";
+import { useReplaceNavigate, RouteNameType } from "./routes";
+import { loginCheck } from "@netless/flint-server-api";
 
 export function useLoginCheck(): boolean {
   const replaceNavigate = useReplaceNavigate();
