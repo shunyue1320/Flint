@@ -2,7 +2,7 @@ import "./style.less";
 
 import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslate } from "@netless/flint-i18n";
 import {
   CloudRecordBtn,
   TopBar,
@@ -17,17 +17,18 @@ import {
 import { observer } from "mobx-react-lite";
 import { message } from "antd";
 
-import { runtime } from "../utils/runtime";
-import { RouteNameType, RouteParams } from "../../utils/routes";
-import { RecordingConfig, useClassRoomStore, User } from "../../stores/class-room-store";
-import { RtcChannelType } from "../../api-middleware/rtc/room";
-import { CloudStorageButton } from "../../components/CloudStorageButton";
-import InviteButton from "../../components/InviteButton";
-import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../../components/ExitRoomConfirm";
-import { Whiteboard } from "../../components/Whiteboard";
-import { RealtimePanel } from "../../components/RealtimePanel";
-import { RTCAvatar } from "../../components/RTCAvatar";
-import { ChatPanel } from "../../components/ChatPanel";
+// import { runtime } from "../utils/runtime";
+// import { RouteNameType, RouteParams } from "../../utils/routes";
+// import { RecordingConfig, useClassRoomStore, User } from "../../stores/class-room-store";
+// import { RtcChannelType } from "../../api-middleware/rtc/room";
+import { CloudStorageButton } from "../components/CloudStorageButton";
+import InviteButton from "../components/InviteButton";
+import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../components/ExitRoomConfirm";
+import { Whiteboard } from "../components/Whiteboard";
+import { RealtimePanel } from "../components/RealtimePanel";
+import { RTCAvatar } from "../components/RTCAvatar";
+import { ChatPanel } from "../components/ChatPanel";
+import { withClassroomStore, WithClassroomStoreProps } from "../utils/with-classroom-store";
 
 const recordingConfig: RecordingConfig = Object.freeze({
   channelType: RtcChannelType.Broadcast, // 广播
@@ -38,8 +39,20 @@ const recordingConfig: RecordingConfig = Object.freeze({
 
 export type BigClassPageProps = {};
 
-export const BigClassPage = observer<BigClassPageProps>(function BigClassPage() {
-  const { i18n, t } = useTranslation();
+export const BigClassPage = withClassroomStore<BigClassPageProps>(
+  observer<WithClassroomStoreProps<BigClassPageProps>>(function BigClassPage({ classroomStore }) {
+    useLoginCheck();
+
+    const t = useTranslate();
+    const whiteboardStore = classroomStore.whiteboardStore;
+    const windowsBtn = useContext(WindowsSystemBtnContext);
+  }),
+);
+
+export const BigClassPage2 = observer<BigClassPageProps>(function BigClassPage({ classroomStore }) {
+  const t = useTranslate();
+
+  // const { i18n, t } = useTranslation();
   const params = useParams<RouteParams<RouteNameType.BigClassPage>>();
   const classRoomStore = useClassRoomStore({ ...params, recordingConfig, i18n });
   const whiteboardStore = classRoomStore.whiteboardStore;
