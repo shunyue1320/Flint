@@ -1,6 +1,8 @@
 import { IServiceFile, IServiceFileCatalog } from "./services/file";
 import { IService } from "./services/typing";
 
+import { IServiceVideoChat } from "./services/video-chat";
+
 export type FlintServicesCatalog = IServiceFileCatalog & {
   file: IServiceFile;
   videoChat: IServiceVideoChat;
@@ -33,6 +35,19 @@ export class FlintServices {
     // 保密
   }
 
+  public register<T extends FlintServiceID>(
+    name: T | T[],
+    serviceCreator: FlintServicesCreatorCatalog[T],
+  ): void {
+    const names = Array.isArray(name) ? name : [name];
+    names.forEach(name => {
+      if (this.isRegistered(name)) {
+        throw new Error(`${name} 已注册`);
+      }
+      this.registry.set(name, serviceCreator);
+    });
+  }
+
   public async requestService<T extends FlintServiceID>(
     name: T,
     keepReference = true,
@@ -48,5 +63,9 @@ export class FlintServices {
       }
     }
     return service as Promise<FlintServicesCatalog[T] | null>;
+  }
+
+  public isRegistered(name: FlintServiceID): boolean {
+    return this.registry.has(name);
   }
 }

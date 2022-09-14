@@ -64,6 +64,8 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
       flintServices.shutdownService("whiteboard");
       flintServices.shutdownService("recording");
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return classroomStore;

@@ -14,12 +14,8 @@ export const withClassroomStore = <P extends {}>(
   Component: React.ComponentType<WithClassroomStoreProps<P>>,
 ): React.FC<P> =>
   observer<P>(function WithClassroomStore(props) {
-    const params =
-      useParams<
-        RouteParams<
-          RouteNameType.BigClassPage | RouteNameType.SmallClassPage | RouteNameType.OneToOnePage
-        >
-      >();
+    // 拿到路由上的数据 { roomUUID: "房间唯一id", ownerUUID: "用户唯一id" }
+    const params = useParams<RouteParams<RouteNameType.BigClassPage>>();
 
     const classroomStore = useClassroomStore(params);
 
