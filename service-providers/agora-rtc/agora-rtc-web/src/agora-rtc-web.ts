@@ -1,8 +1,20 @@
 import AgoraRTC from "agora-rtc-sdk-ng";
 
-import { IServiceVideoChat } from "@netless/flat-services";
+import { IServiceVideoChat } from "@netless/flint-services";
 
 import { AgoraRTCWebShareScreen } from "./rtc-share-screen";
+
+if (process.env.PROD) {
+  AgoraRTC.setLogLevel(/* WARNING */ 2);
+}
+
+if (process.env.DEV) {
+  (window as any).AgoraRTC = AgoraRTC;
+}
+
+export interface AgoraRTCWebConfig {
+  APP_ID: string;
+}
 
 export class AgoraRTCWeb extends IServiceVideoChat {
   public readonly APP_ID: string;

@@ -10,6 +10,7 @@ export interface AgoraRTCWebShareScreenAvatarConfig {
   element?: HTMLElement | null;
 }
 
+/** 创建 AgoraRTC 客户端 client */
 export class AgoraRTCWebShareScreen extends IServiceShareScreen {
   private readonly APP_ID: string;
   private readonly _sideEffect = new SideEffectManager();

@@ -14,6 +14,7 @@
     "@netless/flint-components": "workspace:*",
     "@netless/flint-i18n": "workspace:*",
     "@netless/flint-pages": "workspace:*",
+    "@netless/flint-service-provider-agora-rtc-web": "workspace:*",
     "@netless/flint-services": "workspace:*",
     "@netless/flat-rtc": "workspace:*",
     "@netless/flat-rtc-agora-web": "workspace:*",

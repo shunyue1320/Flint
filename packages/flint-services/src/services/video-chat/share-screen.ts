@@ -25,7 +25,7 @@ export interface IServiceShareScreenInfo {
   image: Uint8Array;
 }
 
-/** 给共享视频一个 events 发布订阅的一个接口 */
+/** 接口：通过 events 发布订阅获取屏幕共享视频信息 */
 export abstract class IServiceShareScreen {
   public readonly events = new Remitter<IServiceShareScreenData>();
 

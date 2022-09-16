@@ -6,9 +6,9 @@ import { IServiceVideoChat } from "./services/video-chat";
 export type FlintServicesCatalog = IServiceFileCatalog & {
   file: IServiceFile;
   videoChat: IServiceVideoChat;
-  textChat: IServiceTextChat;
-  whiteboard: IServiceWhiteboard;
-  recording: IServiceRecording;
+  // textChat: IServiceTextChat;
+  // whiteboard: IServiceWhiteboard;
+  // recording: IServiceRecording;
 };
 
 export type FlintServiceID = Extract<keyof FlintServicesCatalog, string>;

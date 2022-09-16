@@ -9,6 +9,7 @@ export interface IServiceVideoChatDevice {
   label: string;
 }
 
+/** 存储当前 摄像机 麦克风 扬声器 ID */
 export abstract class IServiceVideoChat implements IService {
   protected readonly sideEffect = new SideEffectManager();
 
