@@ -2,6 +2,7 @@ import { autorun, makeAutoObservable, toJS } from "mobx";
 
 type LSPersistStore<TStore> = [number, TStore];
 
+/** 数据持久化存储 */
 export function autoPersistStore<TStore extends object>({
   storeLSName,
   store,

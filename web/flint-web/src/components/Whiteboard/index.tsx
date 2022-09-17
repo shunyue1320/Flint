@@ -6,7 +6,7 @@ import { message } from "antd";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import { RaiseHand, DarkModeContext } from "flint-components";
+import { RaiseHand, DarkModeContext } from "@netless/flint-components";
 import { RoomPhase } from "white-web-sdk";
 import { noop } from "lodash-es";
 

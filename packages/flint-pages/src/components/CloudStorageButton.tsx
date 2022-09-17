@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { SVGCloudOutlined, TopBarRightBtn } from "@netless/flint-components";
 import { Modal } from "antd";
 
-import { ClassRoomStore } from "../stores/class-room-store";
+import { ClassroomStore } from "@netless/flint-stores";
 import { CloudStoragePanel } from "../CloudStoragePage/CloudStoragePanel";
 
 interface CloudStorageButtonProps {
-  classroom: ClassRoomStore;
+  classroom: ClassroomStore;
 }
 
 export const CloudStorageButton = observer<CloudStorageButtonProps>(function CloudStorageButton({

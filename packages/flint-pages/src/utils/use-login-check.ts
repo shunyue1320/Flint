@@ -6,6 +6,7 @@ import { errorTips } from "@netless/flint-components";
 import { useReplaceNavigate, RouteNameType } from "./routes";
 import { loginCheck } from "@netless/flint-server-api";
 
+/** 第一次执行后登录状态一直保留，后续直接返回 */
 export function useLoginCheck(): boolean {
   const replaceNavigate = useReplaceNavigate();
   const globalStore = useContext(GlobalStoreContext);

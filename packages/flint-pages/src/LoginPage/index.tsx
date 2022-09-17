@@ -1,8 +1,13 @@
 import "./style.less";
 
 import React, { useCallback, useState, useRef, useContext, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { LoginPanel, LoginButtonProviderType, LoginWithPhone } from "@netless/flint-components";
+import { useLanguage } from "@netless/flint-i18n";
+import {
+  LoginPanel,
+  LoginButtonProviderType,
+  LoginWithPhone,
+  errorTips,
+} from "@netless/flint-components";
 
 import { LoginDisposer } from "./utils";
 import { WeChatLogin } from "./WeChatLogin";
@@ -11,7 +16,6 @@ import { googleLogin } from "./googleLogin";
 import { agoraLogin } from "./agoraLogin";
 import { NEED_BINDING_PHONE } from "../constants/config";
 import { PRIVACY_URL_CN, PRIVACY_URL, SERVICE_URL_CN, SERVICE_URL } from "../constants/process";
-import { errorTips } from "@netless/flint-components";
 import { GlobalStoreContext } from "../components/StoreProvider";
 import { usePushNavigate, RouteNameType, useURLParams } from "../utils/routes";
 import { useSafePromise } from "../utils/hooks/lifecycle";
@@ -26,7 +30,8 @@ import {
 } from "@netless/flint-server-api";
 
 export const LoginPage: React.FC = () => {
-  const { i18n } = useTranslation();
+  const language = useLanguage();
+  // const { i18n } = useTranslation();
   const pushNavigate = usePushNavigate();
   const globalStore = useContext(GlobalStoreContext);
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
@@ -133,8 +138,8 @@ export const LoginPage: React.FC = () => {
     });
   }, [setLoginResult, sp, urlParams.token]);
 
-  const privacyURL = i18n.language.startsWith("zh") ? PRIVACY_URL_CN : PRIVACY_URL;
-  const serviceURL = i18n.language.startsWith("zh") ? SERVICE_URL_CN : SERVICE_URL;
+  const privacyURL = language.startsWith("zh") ? PRIVACY_URL_CN : PRIVACY_URL;
+  const serviceURL = language.startsWith("zh") ? SERVICE_URL_CN : SERVICE_URL;
 
   return (
     <div className="login-page-container">

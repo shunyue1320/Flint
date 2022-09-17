@@ -1,5 +1,6 @@
 import { autoPersistStore } from "./utils/auto-persist-store";
-import { LoginProcessResult } from "@netless/flint-server-api";
+import { LoginProcessResult, setFlintAuthToken } from "@netless/flint-server-api";
+import { autorun } from "mobx";
 
 enum Region {
   CN_HZ = "cn-hz",
@@ -42,6 +43,11 @@ export class GlobalStore {
 
   public constructor() {
     autoPersistStore({ storeLSName: "GlobalStore", store: this, version: LS_VERSION });
+    autorun(() => {
+      if (this.userInfo?.token) {
+        setFlintAuthToken(this.userInfo.token);
+      }
+    });
   }
 
   public updateUserInfo = (userInfo: UserInfo | null): void => {

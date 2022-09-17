@@ -1,12 +1,17 @@
 import "./WeChatLogin.less";
 
 import React, { useEffect, useState } from "react";
+import { useTranslate } from "@netless/flint-i18n";
 import { LoadingOutlined } from "@ant-design/icons";
 import { v4 as uuidv4 } from "uuid";
 
-import { loginProcess, LoginProcessResult, setAuthUUID } from "@netless/flint-server-api";
+import {
+  loginProcess,
+  LoginProcessResult,
+  setAuthUUID,
+  FLAT_SERVER_LOGIN,
+} from "@netless/flint-server-api";
 import { useSafePromise } from "../utils/hooks/lifecycle";
-import { FLAT_SERVER_LOGIN } from "@netless/flint-server-api";
 import { WECHAT } from "../constants/process";
 import { errorTips } from "@netless/flint-components";
 
@@ -22,10 +27,13 @@ export const WeChatLogin: React.FC<WeChatLoginProps> = ({ setLoginResult }) => {
   const [qrCodeURL, setQRCodeURL] = useState("");
   const sp = useSafePromise();
 
+  const t = useTranslate();
+
   useEffect(() => {
     const authUUID = uuidv4();
     const ticket: Ticket = {};
 
+    // 1. 获取二维码路径
     setQRCodeURL(getQRCodeURL(authUUID));
 
     // 3. 每隔2秒通过authUUID获取用户登入状态 作用：后端通过 redirectURL 获取的 code 请求微信拿到用户信息与token 不在前端暴露 appid secret
@@ -63,16 +71,18 @@ export const WeChatLogin: React.FC<WeChatLoginProps> = ({ setLoginResult }) => {
       <div className="wechat-login-spin">
         <LoadingOutlined spin />
       </div>
-      <span className="wechat-login-text">请使用微信扫描二维码登录</span>
+      <span className="wechat-login-text">{t("wechat-login-tips")}</span>
     </div>
   );
 };
 
 export default WeChatLogin;
 
-function getQRCodeURL(authUUID: string): string {
-  // 2. redirectURL: 授权回调域 (扫码授权后 iframe 跳转到 redirectURL 请求后端)
-  const redirectURL = encodeURIComponent(`${FLAT_SERVER_LOGIN.WECHAT_CALLBACK}`);
+function getQRCodeURL(
+  authUUID: string,
+  redirect_uri: string = FLAT_SERVER_LOGIN.WECHAT_CALLBACK,
+): string {
+  const redirectURL = encodeURIComponent(`${redirect_uri}`);
   const qrCodeStyle = `
   .impowerBox .qrcode {
     width: 238px;

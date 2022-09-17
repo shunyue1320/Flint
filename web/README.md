@@ -1,4 +1,4 @@
-## Flat Web
+## Flint Web
 
 <!-- [Goto Web Site](...) -->
 

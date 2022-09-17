@@ -12,6 +12,7 @@ interface MainPageLayoutProps {
 export const MainPageLayout = observer(function MainPageLayout({ children }: MainPageLayoutProps) {
   const pageStore = useContext(PageStoreContext);
   const hasHeader = pageStore.name && routePages[pageStore.name].hasHeader;
+  console.log("hasHeader===", pageStore, hasHeader);
   return hasHeader ? (
     <MainPageLayoutHorizontalContainer
       activeKeys={pageStore.activeKeys}

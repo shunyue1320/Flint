@@ -15,7 +15,6 @@ const LS_VERSION = 1;
 
 /**
  * 用户偏好
- *
  * 首选项存储中的属性是持久化的，并全局共享.
  */
 export class PreferencesStore {
@@ -30,7 +29,7 @@ export class PreferencesStore {
   /** 在“设备测试”页面上选择的麦克风设备id */
   public microphoneId?: string | null = null;
 
-  public prefersColorScheme: FlintPrefersColorScheme = "light";
+  public prefersColorScheme: FlintPrefersColorScheme = "auto";
 
   public constructor() {
     autoPersistStore({ storeLSName: "PreferencesStore", store: this, version: LS_VERSION });
