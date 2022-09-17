@@ -1,4 +1,5 @@
 import "./style.less";
+
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { DeviceTestPanel } from "@netless/flint-components";
@@ -9,16 +10,21 @@ import { GlobalStoreContext, PreferencesStoreContext } from "../components/Store
 import { joinRoomHandler } from "../utils/join-room-handler";
 import { RouteNameType, RouteParams, usePushNavigate } from "../utils/routes";
 import { useFlintService } from "../components/FlintServicesContext";
+import { useLoginCheck } from "../utils/use-login-check";
 
 export const DevicesTestPage: React.FC = () => {
   const rtc = useFlintService("videoChat");
   const globalStore = useContext(GlobalStoreContext);
+  const preferencesStore = useContext(PreferencesStoreContext);
   const sp = useSafePromise();
   const pushNavigate = usePushNavigate();
+
+  useLoginCheck();
 
   const { roomUUID } = useParams<RouteParams<RouteNameType.JoinPage>>();
 
   const cameraVideoStreamRef = useRef<HTMLDivElement>(null);
+
   const [cameraDevices, setCameraDevices] = useState<IServiceVideoChatDevice[]>([]);
   const [microphoneDevices, setMicrophoneDevices] = useState<IServiceVideoChatDevice[]>([]);
 
@@ -31,6 +37,10 @@ export const DevicesTestPage: React.FC = () => {
   const [volume, setVolume] = useState(0);
 
   useEffect(() => {
+    if (!rtc) {
+      return;
+    }
+
     const avatar = rtc.getTestAvatar();
     if (avatar) {
       avatar.enableCamera(true);

@@ -1,8 +1,9 @@
 import AgoraRTC from "agora-rtc-sdk-ng";
 
-import { IServiceVideoChat } from "@netless/flint-services";
+import { IServiceVideoChat, IServiceVideoChatAvatar } from "@netless/flint-services";
 
 import { AgoraRTCWebShareScreen } from "./rtc-share-screen";
+import { RTCLocalAvatar } from "./rtc-local-avatar";
 
 if (process.env.PROD) {
   AgoraRTC.setLogLevel(/* WARNING */ 2);
@@ -19,6 +20,11 @@ export interface AgoraRTCWebConfig {
 export class AgoraRTCWeb extends IServiceVideoChat {
   public readonly APP_ID: string;
   public readonly shareScreen: AgoraRTCWebShareScreen;
+
+  private _localAvatar?: RTCLocalAvatar;
+  public get localAvatar(): IServiceVideoChatAvatar {
+    return (this._localAvatar ??= new RTCLocalAvatar({ rtc: this }));
+  }
 
   public constructor({ APP_ID }: AgoraRTCWebConfig) {
     super();
@@ -46,5 +52,9 @@ export class AgoraRTCWeb extends IServiceVideoChat {
         AgoraRTC.onPlaybackDeviceChanged = undefined;
       };
     });
+  }
+
+  public getTestAvatar(): IServiceVideoChatAvatar {
+    return this.localAvatar;
   }
 }

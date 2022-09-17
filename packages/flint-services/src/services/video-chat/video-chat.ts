@@ -9,6 +9,14 @@ export interface IServiceVideoChatDevice {
   label: string;
 }
 
+export interface IServiceVideoChatAvatar {
+  enableCamera(enabled: boolean): void;
+  enableMic(enabled: boolean): void;
+  setElement(element: HTMLElement | null): void;
+  getVolumeLevel(): number;
+  destroy(): void;
+}
+
 /** 存储当前 摄像机 麦克风 扬声器 ID */
 export abstract class IServiceVideoChat implements IService {
   protected readonly sideEffect = new SideEffectManager();
@@ -19,6 +27,8 @@ export abstract class IServiceVideoChat implements IService {
     this.sideEffect.flushAll();
     this.events.destroy();
   }
+
+  public abstract getTestAvatar(): IServiceVideoChatAvatar;
 
   public abstract setCameraID(deviceId: string): Promise<void>;
   public abstract getCameraID(): string | undefined;

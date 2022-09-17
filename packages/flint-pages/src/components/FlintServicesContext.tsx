@@ -17,6 +17,7 @@ export const FlintServicesContextProvider: React.FC = props => (
   </FlintServicesContext.Provider>
 );
 
+/** 使用主持好的服务 如：VideoChat TextChat */
 export const useFlintService = <T extends FlintServiceID>(
   name: T,
 ): FlintServicesInstance<T> | undefined => {

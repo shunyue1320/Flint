@@ -51,7 +51,7 @@ export const AppRouteContainer: React.FC<AppRouteContainerProps> = ({ name, Comp
       });
     }
   }, [Comp, name]);
-  console.log("preferencesStore.prefersColorScheme===", preferencesStore);
+
   return (
     <FlintThemeBodyProvider prefersColorScheme={preferencesStore.prefersColorScheme}>
       <AppRouteErrorBoundary Comp={componentCache.get(name) || loadable(Comp, {})} title={title} />
