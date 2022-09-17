@@ -23,6 +23,7 @@ export class AgoraRTCWeb extends IServiceVideoChat {
   public constructor({ APP_ID }: AgoraRTCWebConfig) {
     super();
     this.APP_ID = APP_ID;
+    // 创建 AgoraRTC 客户端 client
     this.shareScreen = new AgoraRTCWebShareScreen({ APP_ID });
     this.sideEffect.add(() => {
       // 监听 摄像头 改变并更新id

@@ -2,6 +2,7 @@ import "./theme/index.less";
 
 export * from "./utils/hooks";
 export * from "./utils/errorTip";
+export * from "./components/LoadingPage";
 export * from "./components/LoginPage";
 export * from "./components/FlintThemeProvider";
 export * from "./components/MainPageLayout";

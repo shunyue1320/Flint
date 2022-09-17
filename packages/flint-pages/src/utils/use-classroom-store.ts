@@ -22,7 +22,7 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
   }, [title]);
 
   useEffect(() => {
-    const isUnmounted = false;
+    let isUnmounted = false;
     let classroomStore: ClassroomStore | undefined;
     const flintServices = FlintServices.getInstance();
 

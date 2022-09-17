@@ -13,6 +13,9 @@
     "mobx": "6.x",
     "white-web-sdk": ">=2.16"
   },
+  "devDependencies": {
+    "@netless/fastboard": "1.0.0-canary.6"
+  },
   "dependencies": {
     "@netless/flint-components": "workspace:*",
     "@netless/flint-i18n": "workspace:*",

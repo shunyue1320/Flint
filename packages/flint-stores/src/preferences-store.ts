@@ -2,7 +2,7 @@ import { FlintPrefersColorScheme } from "@netless/flint-components";
 import { FlintI18n } from "@netless/flint-i18n";
 import { autoPersistStore } from "./utils/auto-persist-store";
 
-export enum Region {
+enum Region {
   CN_HZ = "cn-hz",
   US_SV = "us-sv",
   SG = "sg",

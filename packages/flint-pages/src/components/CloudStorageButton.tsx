@@ -5,7 +5,7 @@ import { SVGCloudOutlined, TopBarRightBtn } from "@netless/flint-components";
 import { Modal } from "antd";
 
 import { ClassRoomStore } from "../stores/class-room-store";
-import { CloudStoragePanel } from "../pages/CloudStoragePage/CloudStoragePanel";
+import { CloudStoragePanel } from "../CloudStoragePage/CloudStoragePanel";
 
 interface CloudStorageButtonProps {
   classroom: ClassRoomStore;

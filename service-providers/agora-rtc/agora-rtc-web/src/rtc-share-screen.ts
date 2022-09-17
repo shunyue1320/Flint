@@ -3,7 +3,7 @@ import type { IRemoteVideoTrack, IAgoraRTCClient, ILocalVideoTrack } from "agora
 import { SideEffectManager } from "side-effect-manager";
 import { Val } from "value-enhancer";
 
-import { IServiceShareScreen } from "@netless/flat-services";
+import { IServiceShareScreen } from "@netless/flint-services";
 
 export interface AgoraRTCWebShareScreenAvatarConfig {
   APP_ID: string;
@@ -14,6 +14,8 @@ export interface AgoraRTCWebShareScreenAvatarConfig {
 export class AgoraRTCWebShareScreen extends IServiceShareScreen {
   private readonly APP_ID: string;
   private readonly _sideEffect = new SideEffectManager();
+
+  private readonly _enabled$ = new Val(false);
 
   // 远程视频跟踪
   private readonly _remoteVideoTrack$ = new Val<IRemoteVideoTrack | null>(null);
@@ -55,5 +57,12 @@ export class AgoraRTCWebShareScreen extends IServiceShareScreen {
         }
       }),
     );
+  }
+
+  public enable(enabled: boolean): void {
+    if (enabled && this._remoteVideoTrack$.value) {
+      throw new Error("已经存在远程屏幕跟踪。");
+    }
+    this._enabled$.setValue(enabled);
   }
 }

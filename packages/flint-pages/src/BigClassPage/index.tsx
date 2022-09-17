@@ -1,6 +1,6 @@
 import "./style.less";
 
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslate } from "@netless/flint-i18n";
 import {
@@ -29,23 +29,62 @@ import { RealtimePanel } from "../components/RealtimePanel";
 import { RTCAvatar } from "../components/RTCAvatar";
 import { ChatPanel } from "../components/ChatPanel";
 import { withClassroomStore, WithClassroomStoreProps } from "../utils/with-classroom-store";
+import { WindowsSystemBtnContext } from "../components/StoreProvider";
 
-const recordingConfig: RecordingConfig = Object.freeze({
-  channelType: RtcChannelType.Broadcast, // 广播
-  transcodingConfig: {},
-  maxIdleTime: 60,
-  subscribeUidGroup: 0,
-});
+// const recordingConfig: RecordingConfig = Object.freeze({
+//   channelType: RtcChannelType.Broadcast, // 广播
+//   transcodingConfig: {},
+//   maxIdleTime: 60,
+//   subscribeUidGroup: 0,
+// });
 
 export type BigClassPageProps = {};
 
 export const BigClassPage = withClassroomStore<BigClassPageProps>(
   observer<WithClassroomStoreProps<BigClassPageProps>>(function BigClassPage({ classroomStore }) {
-    useLoginCheck();
+    // useLoginCheck();
 
-    const t = useTranslate();
-    const whiteboardStore = classroomStore.whiteboardStore;
+    // const t = useTranslate();
+    // const whiteboardStore = classroomStore.whiteboardStore;
     const windowsBtn = useContext(WindowsSystemBtnContext);
+
+    return (
+      <div className="big-class-realtime-container">
+        <div className="big-class-realtime-container">
+          <div className="big-class-realtime-box">
+            {windowsBtn ? (
+              <div>windowsBtn1</div>
+            ) : (
+              <div>windowsBtn2</div>
+              // <TopBar left={renderTopBarLeft()} right={renderTopBarRight()} />
+            )}
+
+            {/* <div className="big-class-realtime-content">
+              <div className="big-class-realtime-content-container">
+                <Whiteboard classRoomStore={classroomStore} whiteboardStore={whiteboardStore} />
+              </div>
+              {renderRealtimePanel()}
+            </div> */}
+          </div>
+        </div>
+      </div>
+    );
+
+    function renderTopBarLeft(): React.ReactNode {
+      return (
+        <>
+          <NetworkStatus networkQuality={classroomStore.networkQuality} />
+        </>
+      );
+    }
+
+    function renderTopBarRight(): React.ReactNode {
+      return <div>renderTopBarRight</div>;
+    }
+
+    function renderRealtimePanel(): React.ReactNode {
+      return <div>renderRealtimePanel</div>;
+    }
   }),
 );
 

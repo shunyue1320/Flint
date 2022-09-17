@@ -15,7 +15,7 @@ import {
 // import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
 import { preferencesStore } from "./preferences-store";
 
-export enum Region {
+enum Region {
   CN_HZ = "cn-hz",
   US_SV = "us-sv",
   SG = "sg",

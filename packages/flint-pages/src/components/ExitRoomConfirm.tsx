@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { RoomStatus } from "../api-middleware/flatServer/constants";
+import { RoomStatus } from "@netless/flint-server-api";
 import { useSafePromise } from "../utils/hooks/lifecycle";
 import { RouteNameType, usePushNavigate } from "../utils/routes";
 import { errorTips } from "@netless/flint-components";

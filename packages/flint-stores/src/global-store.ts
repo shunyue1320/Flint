@@ -1,7 +1,7 @@
 import { autoPersistStore } from "./utils/auto-persist-store";
 import { LoginProcessResult } from "@netless/flint-server-api";
 
-export enum Region {
+enum Region {
   CN_HZ = "cn-hz",
   US_SV = "us-sv",
   SG = "sg",
@@ -14,8 +14,9 @@ const LS_VERSION = 1;
 
 export type UserInfo = LoginProcessResult;
 
-// 全局存储中的属性是全局持久化和共享的。
+/** 全局存储中的属性是全局持久化和共享的。*/
 export class GlobalStore {
+  public isShowGuide = false;
   public userInfo: UserInfo | null = null;
   public lastLoginCheck: number | null = null;
   public isTurnOffDeviceTest = false;
