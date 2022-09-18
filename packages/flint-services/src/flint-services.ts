@@ -56,6 +56,7 @@ export class FlintServices {
     if (!service) {
       const creator = this.registry.get(name);
       if (creator) {
+        // 没有服务就创建服务并返回 走的就是 init-flint-services.ts
         service = creator();
         if (keepReference) {
           this.services.set(name, service);

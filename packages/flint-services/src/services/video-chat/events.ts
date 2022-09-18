@@ -14,6 +14,8 @@ export interface IServiceVideoChatEventData {
   "volume-level-changed": number;
   /** 添加或删除音频采样设备时触发 */
   "camera-changed": string;
+  /** 添加或删除音频采样设备时 */
+  "mic-changed": string;
   /** 添加或删除音频播放设备时触发 */
   "speaker-changed": string;
 

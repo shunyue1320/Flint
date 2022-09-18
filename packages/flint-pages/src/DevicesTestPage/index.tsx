@@ -21,6 +21,7 @@ export const DevicesTestPage: React.FC = () => {
 
   useLoginCheck();
 
+  // 拿到路由上要去的房间唯一id roomUUID
   const { roomUUID } = useParams<RouteParams<RouteNameType.JoinPage>>();
 
   const cameraVideoStreamRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,9 @@ export const DevicesTestPage: React.FC = () => {
 
       return () => {
         window.clearInterval(ticket);
-        avatar.destroy();
+        avatar.enableCamera(false);
+        avatar.enableMic(false);
+        avatar.setElement(null);
       };
     }
     return;
@@ -65,7 +68,7 @@ export const DevicesTestPage: React.FC = () => {
       return;
     }
 
-    const handlerDeviceError = (error: any): void => {
+    const handlerDeviceError = (): void => {
       setIsCameraAccessible(false);
     };
 
@@ -99,33 +102,52 @@ export const DevicesTestPage: React.FC = () => {
     refreshMicDevices();
 
     return () => {
+      // 取消监听
       cameraChangeDisposer();
       micChangedDisposer();
     };
   }, [rtc, sp]);
 
+  // 设置当前使用 扬声器 设备id
+  useEffect(() => {
+    if (rtc && cameraDeviceId) {
+      void rtc.setCameraID(cameraDeviceId).catch(() => {
+        setIsCameraAccessible(false);
+      });
+    }
+  }, [rtc, cameraDeviceId]);
+
+  // 设置当前使用 麦克风 设备id
+  useEffect(() => {
+    if (rtc && microphoneDeviceId) {
+      void rtc.setMicID(microphoneDeviceId).catch(() => {
+        setIsMicrophoneAccessible(false);
+      });
+    }
+  }, [rtc, microphoneDeviceId]);
+
   // 检查摄像头更改时的设备id
   useEffect(() => {
     if (cameraDevices.length > 0 && !cameraDeviceId) {
-      const lastCameraId = PreferencesStoreContext.cameraId;
+      const lastCameraId = preferencesStore.cameraId;
       // 默认设置第一个设备id
       lastCameraId ? setCameraDeviceId(lastCameraId) : setCameraDeviceId(cameraDevices[0].deviceId);
     }
-  }, [cameraDeviceId, cameraDevices]);
+  }, [preferencesStore, cameraDeviceId, cameraDevices]);
 
   // 检查麦克风更改时的设备id
   useEffect(() => {
     if (microphoneDevices.length > 0 && !microphoneDeviceId) {
-      const lastMicrophoneId = PreferencesStoreContext.microphoneId;
+      const lastMicrophoneId = preferencesStore.microphoneId;
       lastMicrophoneId
         ? setMicrophoneDeviceId(lastMicrophoneId)
         : setMicrophoneDeviceId(microphoneDevices[0].deviceId);
     }
-  }, [microphoneDeviceId, microphoneDevices]);
+  }, [preferencesStore, microphoneDeviceId, microphoneDevices]);
 
   const joinRoom = async (): Promise<void> => {
-    PreferencesStoreContext.updateCameraId(cameraDeviceId);
-    PreferencesStoreContext.updateMicrophoneId(microphoneDeviceId);
+    preferencesStore.updateCameraId(cameraDeviceId);
+    preferencesStore.updateMicrophoneId(microphoneDeviceId);
     await joinRoomHandler(roomUUID, pushNavigate);
   };
 

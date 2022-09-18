@@ -38,4 +38,8 @@ export abstract class IServiceVideoChat implements IService {
 
   public abstract setSpeakerID(deviceId: string): Promise<void>;
   public abstract getSpeakerID(): string | undefined;
+
+  public abstract getCameraDevices(): Promise<IServiceVideoChatDevice[]>;
+  public abstract getMicDevices(): Promise<IServiceVideoChatDevice[]>;
+  public abstract getSpeakerDevices(): Promise<IServiceVideoChatDevice[]>;
 }
