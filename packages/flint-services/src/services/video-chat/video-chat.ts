@@ -3,6 +3,7 @@ import { SideEffectManager } from "side-effect-manager";
 
 import { IService } from "../typing";
 import { IServiceVideoChatEventData } from "./events";
+import { IServiceVideoChatRole } from "./constants";
 
 export interface IServiceVideoChatDevice {
   deviceId: string;
@@ -27,6 +28,9 @@ export abstract class IServiceVideoChat implements IService {
     this.sideEffect.flushAll();
     this.events.destroy();
   }
+
+  /** 设置聊天角色 */
+  public abstract setRole(role: IServiceVideoChatRole): Promise<void>;
 
   public abstract getTestAvatar(): IServiceVideoChatAvatar;
 

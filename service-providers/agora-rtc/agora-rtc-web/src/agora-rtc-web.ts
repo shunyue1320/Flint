@@ -1,4 +1,8 @@
-import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
+import AgoraRTC, {
+  ICameraVideoTrack,
+  IMicrophoneAudioTrack,
+  IAgoraRTCClient,
+} from "agora-rtc-sdk-ng";
 
 import {
   IServiceVideoChat,
@@ -29,6 +33,8 @@ export class AgoraRTCWeb extends IServiceVideoChat {
   private _pJoiningRoom?: Promise<unknown>;
   // 离开教室
   private _pLeavingRoom?: Promise<unknown>;
+
+  public client?: IAgoraRTCClient;
 
   private _cameraID?: string;
   private _micID?: string;
