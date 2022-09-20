@@ -1,4 +1,9 @@
 export enum IServiceVideoChatRole {
-  Host = "Host", // 主办方
-  Audience = "Audience", // 观众
+  Host = "host", // 主办方
+  Audience = "audience", // 观众
+}
+
+export enum IServiceVideoChatMode {
+  Communication = "Communication", // 私聊
+  Broadcast = "Broadcast", // 广播
 }

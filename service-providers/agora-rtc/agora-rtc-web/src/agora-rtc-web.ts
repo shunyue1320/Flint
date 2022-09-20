@@ -8,6 +8,8 @@ import {
   IServiceVideoChat,
   IServiceVideoChatAvatar,
   IServiceVideoChatDevice,
+  IServiceVideoChatRole,
+  IServiceVideoChatMode,
 } from "@netless/flint-services";
 
 import { AgoraRTCWebShareScreen } from "./rtc-share-screen";
@@ -35,6 +37,7 @@ export class AgoraRTCWeb extends IServiceVideoChat {
   private _pLeavingRoom?: Promise<unknown>;
 
   public client?: IAgoraRTCClient;
+  public mode?: IServiceVideoChatMode;
 
   private _cameraID?: string;
   private _micID?: string;
@@ -71,6 +74,13 @@ export class AgoraRTCWeb extends IServiceVideoChat {
         AgoraRTC.onPlaybackDeviceChanged = undefined;
       };
     });
+  }
+
+  public async setRole(role: IServiceVideoChatRole): Promise<void> {
+    // 状态是广播才需要设置角色
+    if (this.client && this.mode === IServiceVideoChatMode.Broadcast) {
+      await this.client.setClientRole(role);
+    }
   }
 
   public getCameraID(): string | undefined {

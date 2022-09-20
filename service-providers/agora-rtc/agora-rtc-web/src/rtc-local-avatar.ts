@@ -96,6 +96,8 @@ export class RTCLocalAvatar implements IServiceVideoChatAvatar {
                         this._sideEffect.flush(lowVolumeLevelDisposerID);
                         return;
                       }
+                    } else {
+                      lowVolumeLevelCount = 0;
                     }
                   } catch (e) {
                     console.error(e);
@@ -106,6 +108,8 @@ export class RTCLocalAvatar implements IServiceVideoChatAvatar {
               500,
               lowVolumeLevelDisposerID,
             );
+          } else {
+            this._sideEffect.flush(lowVolumeLevelDisposerID);
           }
         } catch (e) {
           this._rtc.events.emit("err-set-mic", e);
