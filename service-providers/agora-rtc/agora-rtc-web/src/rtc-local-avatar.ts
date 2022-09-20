@@ -67,7 +67,7 @@ export class RTCLocalAvatar implements IServiceVideoChatAvatar {
             await this._rtc.setRole(IServiceVideoChatRole.Host); // 变成主办方
             await this._rtc.client?.publish(localMicTrack);
           } else {
-            // 关闭麦克风逻辑：取消发布, 摄像头也关闭了就变成观众
+            // 关闭麦克风逻辑：取消发布, 角色变成观众
             await this._rtc.client?.unpublish(localMicTrack);
             if (!this._shouldCamera$.value) {
               await this._rtc.setRole(IServiceVideoChatRole.Audience); // 变成观众
@@ -121,20 +121,55 @@ export class RTCLocalAvatar implements IServiceVideoChatAvatar {
     this._sideEffect.addDisposer(
       this._shouldCamera$.subscribe(async shouldCamera => {
         try {
-          const localCameraTrack = this._rtc.localCameraTrack;
-          console.log("localCameraTrack=====", localCameraTrack);
+          let localCameraTrack = this._rtc.localCameraTrack;
+
+          // 打开摄像头 并且 当前没有打开过摄像头
+          if (shouldCamera && !localCameraTrack) {
+            localCameraTrack = await this._rtc.createLocalCameraTrack();
+            // 设置视频dom挂载点
+            if (this._el$.value) {
+              localCameraTrack.play(this._el$.value);
+            }
+          }
+
+          if (localCameraTrack) {
+            await localCameraTrack.setEnabled(shouldCamera);
+          }
+
+          if (shouldCamera && localCameraTrack) {
+            await this._rtc.setRole(IServiceVideoChatRole.Host);
+            await this._rtc.client?.publish(localCameraTrack);
+          } else {
+            // 关闭摄像头逻辑：取消发布, 角色变成观众
+            await this._rtc.client?.unpublish(localCameraTrack);
+            if (!this._shouldMic$.value) {
+              await this._rtc.setRole(IServiceVideoChatRole.Audience);
+            }
+          }
         } catch (e) {
           this._rtc.events.emit("err-set-camera", e);
         }
       }),
     );
 
-    // 摄像机轨迹渲染节点
+    // _el$改变时摄像视频切换新dom渲染
     this._sideEffect.addDisposer(
+      // Val 的 reaction 表示订阅时不触发回调，_el$改变时触发
       this._el$.reaction(async el => {
         if (el && this._rtc.localCameraTrack) {
           try {
             this._rtc.localCameraTrack.play(el);
+            await this._rtc.localCameraTrack.setEnabled(this._shouldCamera$.value);
+            if (this._shouldCamera$.value) {
+              await this._rtc.setRole(IServiceVideoChatRole.Host);
+              await this._rtc.client?.publish(this._rtc.localCameraTrack);
+            } else {
+              // 关闭摄像头逻辑：取消发布, 角色变成观众
+              await this._rtc.client?.unpublish(this._rtc.localCameraTrack);
+              if (!this._shouldMic$.value) {
+                await this._rtc.setRole(IServiceVideoChatRole.Audience);
+              }
+            }
           } catch (e) {
             console.error(e);
           }
@@ -142,7 +177,7 @@ export class RTCLocalAvatar implements IServiceVideoChatAvatar {
       }),
     );
 
-    // 轨道设置状态不启用
+    // 收集销毁时需要关闭流的副作用函数， flushAll触发时关闭所有流
     this._sideEffect.addDisposer(async () => {
       try {
         await this._rtc.localCameraTrack?.setEnabled(false);
