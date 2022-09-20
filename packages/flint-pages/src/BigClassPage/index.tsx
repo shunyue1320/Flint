@@ -43,7 +43,6 @@ export type BigClassPageProps = {};
 export const BigClassPage = withClassroomStore<BigClassPageProps>(
   observer<WithClassroomStoreProps<BigClassPageProps>>(function BigClassPage({ classroomStore }) {
     // useLoginCheck();
-
     // const t = useTranslate();
     // const whiteboardStore = classroomStore.whiteboardStore;
     const windowsBtn = useContext(WindowsSystemBtnContext);

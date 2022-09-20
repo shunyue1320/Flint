@@ -76,6 +76,12 @@ export class AgoraRTCWeb extends IServiceVideoChat {
     });
   }
 
+  public override async destroy(): Promise<void> {
+    super.destroy();
+    this.shareScreen.destroy();
+    // await this.leaveRoom()
+  }
+
   public async setRole(role: IServiceVideoChatRole): Promise<void> {
     // 状态是广播才需要设置角色
     if (this.client && this.mode === IServiceVideoChatMode.Broadcast) {

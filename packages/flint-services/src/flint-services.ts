@@ -66,6 +66,25 @@ export class FlintServices {
     return service as Promise<FlintServicesCatalog[T] | null>;
   }
 
+  public async shutdownService<T extends FlintServiceID = FlintServiceID>(
+    name: T,
+  ): Promise<boolean> {
+    const pService = this.services.get(name);
+    if (pService) {
+      this.services.delete(name);
+      const service = await pService;
+      try {
+        await service?.destroy?.();
+      } catch (e) {
+        if (process.env.NODE_ENV !== "production") {
+          console.error(e);
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
   public isRegistered(name: FlintServiceID): boolean {
     return this.registry.has(name);
   }

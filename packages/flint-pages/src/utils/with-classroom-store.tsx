@@ -18,7 +18,6 @@ export const withClassroomStore = <P extends {}>(
     const params = useParams<RouteParams<RouteNameType.BigClassPage>>();
 
     const classroomStore = useClassroomStore(params);
-
     const isReady =
       classroomStore &&
       classroomStore.whiteboardStore.room &&
