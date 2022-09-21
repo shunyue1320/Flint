@@ -3,8 +3,7 @@ import { SideEffectManager } from "side-effect-manager";
 import { action, autorun, makeAutoObservable, observable, reaction, runInAction } from "mobx";
 
 import type { Storage } from "@netless/fastboard";
-import { UserStore } from "../user-store";
-
+import { RoomType } from "@netless/flint-server-api";
 import {
   // IServiceRecording,
   // IServiceTextChat,
@@ -13,8 +12,11 @@ import {
   // IServiceVideoChatRole,
   // IServiceWhiteboard,
 } from "@netless/flint-services";
+
 import { globalStore } from "../global-store";
 import { ClassModeType } from "./constants";
+import { RoomItem, roomStore } from "../room-store";
+import { UserStore } from "../user-store";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
@@ -81,6 +83,10 @@ export class ClassroomStore {
       // classroomStorage: false,
       // onStageUsersStorage: false,
     });
+  }
+
+  public get roomInfo(): RoomItem | undefined {
+    return roomStore.rooms.get(this.roomUUID);
   }
 
   public get isCreator(): boolean {

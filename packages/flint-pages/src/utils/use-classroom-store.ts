@@ -29,22 +29,24 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
     sp(
       Promise.all([
         flintServices.requestService("videoChat"),
-        flintServices.requestService("textChat"),
-        flintServices.requestService("whiteboard"),
-        flintServices.requestService("recording"),
+        // flintServices.requestService("textChat"),
+        // flintServices.requestService("whiteboard"),
+        // flintServices.requestService("recording"),
       ]),
-    ).then(([videoChat, textChat, whiteboard, recording]) => {
-      if (!isUnmounted && videoChat && textChat && whiteboard && recording) {
+    ).then(([videoChat]) => {
+      if (!isUnmounted && videoChat) {
+        // 初始化房间状态
         classroomStore = new ClassroomStore({
           ...config,
           rtc: videoChat,
-          rtm: textChat,
-          whiteboard,
-          recording,
+          // rtm: textChat,
+          // whiteboard,
+          // recording,
         });
 
         setClassroomStore(classroomStore);
         sp(classroomStore.init()).catch(e => {
+          // 出错跳回首页
           errorTips(e);
           pushNavigate(RouteNameType.HomePage);
         });
@@ -60,9 +62,9 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
       });
 
       flintServices.shutdownService("videoChat");
-      flintServices.shutdownService("textChat");
-      flintServices.shutdownService("whiteboard");
-      flintServices.shutdownService("recording");
+      // flintServices.shutdownService("textChat");
+      // flintServices.shutdownService("whiteboard");
+      // flintServices.shutdownService("recording");
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
