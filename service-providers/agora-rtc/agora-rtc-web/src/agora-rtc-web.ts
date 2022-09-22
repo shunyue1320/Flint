@@ -82,6 +82,91 @@ export class AgoraRTCWeb extends IServiceVideoChat {
     // await this.leaveRoom()
   }
 
+  public async joinRoom(config: IServiceVideoChatJoinRoomConfig): Promise<void> {
+    if (!this.APP_ID) {
+      throw new Error("未设置APP_ID");
+    }
+
+    if (this._pJoiningRoom) {
+      await this._pJoiningRoom;
+    }
+    if (this._pLeavingRoom) {
+      await this._pLeavingRoom;
+    }
+
+    // 已经加入了房间就终止，加入大不对就退出上个房间（避免同时多次加入房间）
+    if (this.client) {
+      if (this.roomUUID === config.roomUUID) {
+        return;
+      }
+      await this.leaveRoom();
+    }
+
+    this._pLeavingRoom = this._createRTCClient(config);
+    await this._pJoiningRoom;
+    this._pJoiningRoom = undefined;
+  }
+
+  private async _createRTCClient({
+    uid,
+    token,
+    mode,
+    refreshToken,
+    role,
+    roomUUID,
+    shareScreenUID,
+    shareScreenToken,
+  }: IServiceVideoChatJoinRoomConfig): Promise<void> {
+    // 先清除房间的副作用
+    this._roomSideEffect.flushAll();
+
+    const client = AgoraRTC.createClient({
+      mode: mode === IServiceVideoChatMode.Broadcast ? "live" : "rtc",
+      codec: "h264",
+    });
+    this.client = client;
+    this.mode = mode;
+    if (process.env.DEV) {
+      (window as any).rtc_client = client;
+    }
+
+    // 设置当前用户角色
+    if (mode === IServiceVideoChatMode.Broadcast) {
+      await client.setClientRole(role === IServiceVideoChatRole.Host ? "host" : "audience");
+    }
+
+    // if (refreshToken) {
+    // }
+
+    // 开发模式下的 客户端例外日子收集
+    if (process.env.NODE_ENV === "development") {
+      this._roomSideEffect.add(() => {
+        const handler = (exception: any): void => {
+          console.log(exception);
+        };
+        client.on("exception", handler);
+        return () => client.off("exception", handler);
+      });
+    }
+
+    //  rtc 客户端加入房间
+    await client.join(
+      this.APP_ID,
+      roomUUID,
+      token || (await refreshToken?.(roomUUID)) || null,
+      Number(uid),
+    );
+
+    this.uid = uid;
+    this.roomUUID = roomUUID;
+    // this.shareScreenUID = shareScreenUID;
+    // this.shareScreen.setParams({
+    //   roomUUID,
+    //   token: shareScreenToken,
+    //   uid: shareScreenUID,
+    // });
+  }
+
   public async setRole(role: IServiceVideoChatRole): Promise<void> {
     // 状态是广播才需要设置角色
     if (this.client && this.mode === IServiceVideoChatMode.Broadcast) {
