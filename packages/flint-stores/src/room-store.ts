@@ -11,6 +11,7 @@ import {
   PeriodicRoomInfoResult,
   RoomType,
   RoomStatus,
+  ordinaryRoomInfo,
 } from "@netless/flint-server-api";
 // import { RoomType, RoomStatus } from "../api-middleware/flatServer/constants";
 import { preferencesStore } from "./preferences-store";
@@ -135,6 +136,15 @@ export class RoomStore {
     });
 
     return roomUUID;
+  }
+
+  public async syncOrdinaryRoomInfo(roomUUID: string): Promise<void> {
+    const { roomInfo, ...restInfo } = await ordinaryRoomInfo(roomUUID);
+    this.updateRoom(roomUUID, roomInfo.ownerUUID, {
+      ...restInfo,
+      ...roomInfo,
+      roomUUID,
+    });
   }
 }
 

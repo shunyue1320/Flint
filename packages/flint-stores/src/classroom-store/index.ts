@@ -10,20 +10,21 @@ import {
   IServiceVideoChat,
   // IServiceVideoChatMode,
   // IServiceVideoChatRole,
-  // IServiceWhiteboard,
+  IServiceWhiteboard,
 } from "@netless/flint-services";
 
 import { globalStore } from "../global-store";
 import { ClassModeType } from "./constants";
 import { RoomItem, roomStore } from "../room-store";
 import { UserStore } from "../user-store";
+import { WhiteboardStore } from "../whiteboard-store";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
   ownerUUID: string;
   rtc: IServiceVideoChat;
   // rtm: IServiceTextChat;
-  // whiteboard: IServiceWhiteboard;
+  whiteboard: IServiceWhiteboard;
   // recording: IServiceRecording;
 }
 
@@ -51,6 +52,7 @@ export class ClassroomStore {
 
   public readonly rtc: IServiceVideoChat;
   // public readonly rtm: IServiceTextChat;
+  public readonly whiteboardStore: WhiteboardStore;
   // public readonly recording: IServiceRecording;
 
   public constructor(config: ClassroomStoreConfig) {
@@ -75,6 +77,13 @@ export class ClassroomStore {
     //   isShowUserGuide: globalStore.isShowGuide,
     // });
 
+    this.whiteboardStore = new WhiteboardStore({
+      isCreator: this.isCreator,
+      isWritable: this.isCreator,
+      getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
+      whiteboard: config.whiteboard,
+    });
+
     makeAutoObservable<this, "sideEffect">(this, {
       rtc: observable.ref,
       // rtm: observable.ref,
@@ -83,6 +92,44 @@ export class ClassroomStore {
       // classroomStorage: false,
       // onStageUsersStorage: false,
     });
+  }
+
+  public async init(): Promise<void> {
+    // 同步普通客房信息
+    await roomStore.syncOrdinaryRoomInfo(this.roomUUID);
+
+    if (process.env.Node_ENV === "development") {
+      if (this.roomInfo && this.roomInfo.ownerUUID !== this.ownerUUID) {
+        (this.ownerUUID as string) = this.roomInfo.ownerUUID;
+        if (process.env.DEV) {
+          console.error(new Error("教室错误: ownerUUID 不匹配！"));
+        }
+      }
+    }
+
+    await this.initRTC();
+
+    // const fastboard = await this.whiteboardStore.joinWhiteboardRoom();
+
+    // const channel = await this.rtm.init(this.userUUID, this.roomUUID);
+    // // 监听消息
+    // this.startListenCommands();
+
+    // const members = await channel.getMembers();
+    // await this.users.initUsers(members);
+
+    // await this.joinRTC();
+    // // 更新房间历史消息
+    // await this.updateHistory();
+
+    // this.sideEffect.addDisposer(
+    //   this.rtc.events.on(
+    //     "network",
+    //     action("checkNetworkQuality", networkQuality => {
+    //       this.networkQuality = networkQuality;
+    //     }),
+    //   ),
+    // );
   }
 
   public get roomInfo(): RoomItem | undefined {

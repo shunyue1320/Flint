@@ -2,12 +2,13 @@ import { IServiceFile, IServiceFileCatalog } from "./services/file";
 import { IService } from "./services/typing";
 
 import { IServiceVideoChat } from "./services/video-chat";
+import { IServiceWhiteboard } from "./services/whiteboard";
 
 export type FlintServicesCatalog = IServiceFileCatalog & {
   file: IServiceFile;
   videoChat: IServiceVideoChat;
   // textChat: IServiceTextChat;
-  // whiteboard: IServiceWhiteboard;
+  whiteboard: IServiceWhiteboard;
   // recording: IServiceRecording;
 };
 

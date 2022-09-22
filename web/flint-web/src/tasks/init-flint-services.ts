@@ -14,6 +14,8 @@ export function initFlintServices(): void {
     const { AgoraRTCWeb } = await import("@netless/flint-service-provider-agora-rtc-web");
     return new AgoraRTCWeb({ APP_ID: process.env.AGORA_APP_ID });
   });
+
+  flintServices.register("whiteboard", async () => { });
 }
 
 // function createToaster(): Toaster {

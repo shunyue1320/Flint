@@ -9,6 +9,11 @@ export type useClassRoomStoreConfig = Omit<
   "rtc" | "rtm" | "whiteboard" | "recording"
 >;
 
+/**
+ * 房间状态管理：初始化状态 ｜ 销毁状态
+ * @param config { roomUUID: "房间唯一id", ownerUUID: "用户唯一id" }
+ * @returns 初始化教室状态并返回 classroomStore, 退出页面时销毁状态
+ */
 export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomStore | undefined {
   const [classroomStore, setClassroomStore] = useState<ClassroomStore>();
   const pushNavigate = usePushNavigate();
@@ -30,17 +35,17 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
       Promise.all([
         flintServices.requestService("videoChat"),
         // flintServices.requestService("textChat"),
-        // flintServices.requestService("whiteboard"),
+        flintServices.requestService("whiteboard"),
         // flintServices.requestService("recording"),
       ]),
-    ).then(([videoChat]) => {
-      if (!isUnmounted && videoChat) {
+    ).then(([videoChat, whiteboard]) => {
+      if (!isUnmounted && videoChat && whiteboard) {
         // 初始化房间状态
         classroomStore = new ClassroomStore({
           ...config,
           rtc: videoChat,
           // rtm: textChat,
-          // whiteboard,
+          whiteboard,
           // recording,
         });
 

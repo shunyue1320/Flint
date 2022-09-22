@@ -117,3 +117,29 @@ export type PeriodicRoomInfoResult = {
     roomStatus: RoomStatus;
   }>;
 };
+
+export interface OrdinaryRoomInfo {
+  title: string;
+  beginTime: number;
+  endTime: number;
+  roomType: RoomType;
+  roomStatus: RoomStatus;
+  ownerUUID: string;
+  ownerName: string;
+  region: Region;
+}
+
+export interface OrdinaryRoomInfoPayload {
+  roomUUID: string;
+}
+
+export interface OrdinaryRoomInfoResult {
+  roomInfo: OrdinaryRoomInfo;
+  inviteCode: string;
+}
+
+export function ordinaryRoomInfo(roomUUID: string): Promise<OrdinaryRoomInfoResult> {
+  return post<OrdinaryRoomInfoPayload, OrdinaryRoomInfoResult>("room/info/ordinary", {
+    roomUUID,
+  });
+}
