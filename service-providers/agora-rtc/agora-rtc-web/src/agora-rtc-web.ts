@@ -2,7 +2,9 @@ import AgoraRTC, {
   ICameraVideoTrack,
   IMicrophoneAudioTrack,
   IAgoraRTCClient,
+  NetworkQuality,
 } from "agora-rtc-sdk-ng";
+import { SideEffectManager } from "side-effect-manager";
 
 import {
   IServiceVideoChat,
@@ -10,6 +12,8 @@ import {
   IServiceVideoChatDevice,
   IServiceVideoChatRole,
   IServiceVideoChatMode,
+  IServiceVideoChatJoinRoomConfig,
+  IServiceVideoChatUID,
 } from "@netless/flint-services";
 
 import { AgoraRTCWebShareScreen } from "./rtc-share-screen";
@@ -31,6 +35,8 @@ export class AgoraRTCWeb extends IServiceVideoChat {
   public readonly APP_ID: string;
   public readonly shareScreen: AgoraRTCWebShareScreen;
 
+  private readonly _roomSideEffect = new SideEffectManager();
+
   // 加入教室
   private _pJoiningRoom?: Promise<unknown>;
   // 离开教室
@@ -42,6 +48,9 @@ export class AgoraRTCWeb extends IServiceVideoChat {
   private _cameraID?: string;
   private _micID?: string;
   private _speakerID?: string;
+
+  private uid?: IServiceVideoChatUID;
+  private roomUUID?: string;
 
   private _localAvatar?: RTCLocalAvatar;
   public get localAvatar(): IServiceVideoChatAvatar {
@@ -148,6 +157,24 @@ export class AgoraRTCWeb extends IServiceVideoChat {
         return () => client.off("exception", handler);
       });
     }
+
+    this._roomSideEffect.addDisposer(
+      this.events.remit("network", () => {
+        const handler = ({
+          uplinkNetworkQuality,
+          downlinkNetworkQuality,
+        }: NetworkQuality): void => {
+          this.events.emit("network", {
+            uplink: uplinkNetworkQuality,
+            downlink: downlinkNetworkQuality,
+            delay: client.getRTCStats().RTT ?? NaN,
+          });
+        };
+
+        client.on("network-quality", handler);
+        return () => client.off("network-quality", handler);
+      }),
+    );
 
     //  rtc 客户端加入房间
     await client.join(

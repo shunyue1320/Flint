@@ -45,6 +45,10 @@ export class ClassroomStore {
   public classMode: ClassModeType;
   /** 创造者是否禁止发言 */
   public isBan = false;
+
+  /** RTC加入了房间 */
+  public isJoinedRTC = false;
+
   /** 是当前用户共享屏幕 */
   public isScreenSharing = false;
   /** 其他用户是否共享屏幕 */
@@ -201,6 +205,10 @@ export class ClassroomStore {
         refreshToken: generateRTCToken,
         shareScreenUID: String(globalStore.rtcShareScreen?.uid || -1),
         shareScreenToken: globalStore.rtcShareScreen?.token || "",
+      });
+
+      runInAction(() => {
+        this.isJoinedRTC = true;
       });
     }
   }
