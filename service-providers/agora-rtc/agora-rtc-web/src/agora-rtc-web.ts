@@ -116,6 +116,23 @@ export class AgoraRTCWeb extends IServiceVideoChat {
     this._pJoiningRoom = undefined;
   }
 
+  public async leaveRoom(): Promise<void> {
+    if (this._pJoiningRoom) {
+      await this._pJoiningRoom;
+    }
+    if (this._pLeavingRoom) {
+      await this._pLeavingRoom;
+    }
+
+    this._pLeavingRoom = this.client.leave();
+    await this._pLeavingRoom;
+    this._pLeavingRoom = undefined;
+
+    this.uid = undefined;
+    this.roomUUID = undefined;
+    // this.shareScreen.setParams(null);
+  }
+
   private async _createRTCClient({
     uid,
     token,
