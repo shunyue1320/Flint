@@ -54,7 +54,6 @@ importers:
 
   packages/flint-components:
     specifiers:
-      '@netless/flat-rtc': workspace:*
       '@netless/flint-i18n': workspace:*
       '@netless/flint-server-api': workspace:*
       '@netless/flint-services': workspace:*
@@ -88,7 +87,6 @@ importers:
       tachyons: ^4.12.0
       webpack: ^5.73.0
     dependencies:
-      '@netless/flat-rtc': link:../../services/rtc/flat-rtc
       '@netless/flint-i18n': link:../flint-i18n
       '@netless/flint-server-api': link:../flint-server-api
       '@netless/flint-services': link:../flint-services
@@ -225,8 +223,19 @@ importers:
 
   packages/flint-services:
     specifiers:
+      '@netless/flint-i18n': workspace:*
+      '@netless/flint-server-api': workspace:*
       prettier: ^2.3.0
+      remitter: ^0.2.9
+      side-effect-manager: ^1.2.1
       typescript: ^4.7.4
+      value-enhancer: ^1.3.2
+    dependencies:
+      '@netless/flint-i18n': link:../flint-i18n
+      '@netless/flint-server-api': link:../flint-server-api
+      remitter: 0.2.9
+      side-effect-manager: 1.2.1
+      value-enhancer: 1.3.2
     devDependencies:
       prettier: 2.6.2
       typescript: 4.8.2
@@ -266,42 +275,12 @@ importers:
       prettier: 2.6.2
       typescript: 4.8.2
 
-  services/rtc/flat-rtc:
-    specifiers:
-      emittery: ^0.10.2
-      prettier: ^2.3.0
-      typescript: ^4.6.2
-    devDependencies:
-      emittery: 0.10.2
-      prettier: 2.6.2
-      typescript: 4.6.4
-
-  services/rtc/flat-rtc-agora-web:
-    specifiers:
-      '@netless/flat-rtc': workspace:*
-      agora-rtc-sdk-ng: ^4.12.2
-      emittery: ^0.10.2
-      prettier: ^2.3.0
-      side-effect-manager: ^0.1.5
-      typescript: ^4.6.2
-      value-enhancer: ^1.0.3
-    dependencies:
-      agora-rtc-sdk-ng: 4.12.2
-    devDependencies:
-      '@netless/flat-rtc': link:../flat-rtc
-      emittery: 0.10.2
-      prettier: 2.6.2
-      side-effect-manager: 0.1.6
-      typescript: 4.6.4
-      value-enhancer: 1.3.2
-
   web/flint-web:
     specifiers:
       '@ant-design/icons': ^4.7.0
       '@loadable/component': ^5.15.2
-      '@netless/fastboard-react': ^0.3.6
-      '@netless/flat-rtc': workspace:*
-      '@netless/flat-rtc-agora-web': workspace:*
+      '@netless/app-countdown': ^0.0.3
+      '@netless/app-monaco': 0.2.0-canary.0
       '@netless/flint-components': workspace:*
       '@netless/flint-i18n': workspace:*
       '@netless/flint-pages': workspace:*
@@ -314,6 +293,7 @@ importers:
       '@types/react-transition-group': ^4.4.4
       '@types/uuid': ^8.3.4
       '@vitejs/plugin-react': ^1.3.0
+      agora-rtc-sdk-ng: ^4.12.2
       agora-rtm-sdk: ^1.5.0
       antd: ^4.21.0
       axios: ^0.27.2
@@ -343,15 +323,15 @@ importers:
     dependencies:
       '@ant-design/icons': 4.7.0_ef5jwxihqo6n7gxfmzogljlgcm
       '@loadable/component': 5.15.2_react@18.1.0
-      '@netless/fastboard-react': 0.3.6_wyhgxia5woqzjzoysgz2bcj5fe
-      '@netless/flat-rtc': link:../../services/rtc/flat-rtc
-      '@netless/flat-rtc-agora-web': link:../../services/rtc/flat-rtc-agora-web
+      '@netless/app-countdown': 0.0.3
+      '@netless/app-monaco': 0.2.0-canary.0
       '@netless/flint-components': link:../../packages/flint-components
       '@netless/flint-i18n': link:../../packages/flint-i18n
       '@netless/flint-pages': link:../../packages/flint-pages
       '@netless/flint-service-provider-agora-rtc-web': link:../../service-providers/agora-rtc/agora-rtc-web
       '@netless/flint-services': link:../../packages/flint-services
       '@netless/window-manager': 0.4.37_white-web-sdk@2.16.28
+      agora-rtc-sdk-ng: 4.13.0
       agora-rtm-sdk: 1.5.0
       antd: 4.21.0_ef5jwxihqo6n7gxfmzogljlgcm
       axios: 0.27.2
@@ -3633,8 +3613,12 @@ packages:
       glob-to-regexp: 0.3.0
     dev: true
 
-  /@netless/app-slide/0.2.2:
-    resolution: {integrity: sha512-2+EFJUT5PHDbcgfIP1P2/BKE/c/I+Etr9YD0y4zSym2UoqS3GyZWgQLIES1d2nQVnaRomOjppighlbNZ/ccbZA==}
+  /@netless/app-countdown/0.0.3:
+    resolution: {integrity: sha512-2AcnExiK2iyqnkJ7ziS06SvAJvnzPYielRz2NXEjE3vCcBqdlDrETzFMlQGdYt/dSJdITY+QvjYA6nPHz+H0vw==}
+    dev: false
+
+  /@netless/app-monaco/0.2.0-canary.0:
+    resolution: {integrity: sha512-P+cymtUXS0gTcpOVz7khdIyfizKvN9nw70tEIYvz+3p4LKE+20iIs6rJcwowB63jGYLoZAEZY4FuJumLmYbang==}
     dev: false
 
   /@netless/app-slide/0.3.0-canary.7:
@@ -3647,18 +3631,6 @@ packages:
     resolution: {integrity: sha512-7NzsJrba0R/mq/l10SkIZQwbrNVJyPxZYrjK6xL3Ts732iWAVuS2UB0u3s6iGeUVcqV39A679yva8APWRl4M0A==}
     dev: false
 
-  /@netless/fastboard-core/0.3.6_gu6mpjeqpknr7fxby5jhbcsrtu:
-    resolution: {integrity: sha512-EoiN8CQREv1UTjM9EDs4dmqy8TsVW7HPQ+vhoWJk/idvP7Xgt1EY0x1Mg3zziU+jb9vhnC8+c9NpayfSfenE9w==}
-    peerDependencies:
-      '@netless/window-manager': '>=0.4.0'
-      white-web-sdk: '>=2.16.0'
-    dependencies:
-      '@netless/app-slide': 0.2.2
-      '@netless/synced-store': 2.0.3_white-web-sdk@2.16.28
-      '@netless/window-manager': 0.4.37_white-web-sdk@2.16.28
-      white-web-sdk: 2.16.28
-    dev: false
-
   /@netless/fastboard-core/1.0.0-canary.6:
     resolution: {integrity: sha512-lcPYhsFuHEPgi+nOHtqR0bX/nbAM3fKvJXgkBwh9ATstUArz15WOb/W7AwXGw/INze+tsRbIxnbA/5Y/z8hKvA==}
     peerDependencies:
@@ -3668,28 +3640,6 @@ packages:
       '@lukeed/uuid': 2.0.0
       '@netless/synced-store': 2.0.7
     dev: true
-
-  /@netless/fastboard-react/0.3.6_wyhgxia5woqzjzoysgz2bcj5fe:
-    resolution: {integrity: sha512-ijaXelp9i6vYrBAfF0ZPQIhyhDcDTmt5vGZ9Pk7lHTgkhZ58FJf4biTxX2fESjiG3p2kyQYNqw5/eFxuBaKVlA==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      '@netless/fastboard-core': 0.3.6_gu6mpjeqpknr7fxby5jhbcsrtu
-      '@netless/fastboard-ui': 0.3.6_dh4pwpaiunoyuozzscsfopi4z4
-      react: 18.1.0
-    transitivePeerDependencies:
-      - '@netless/window-manager'
-      - white-web-sdk
-    dev: false
-
-  /@netless/fastboard-ui/0.3.6_dh4pwpaiunoyuozzscsfopi4z4:
-    resolution: {integrity: sha512-tbHJ29neCS51ojWoETEIagy/JsUJkT8UcLEMOm1Mj6tMj7Nha60SM3mT79iwBHlRYCImDxVadV+WogEMhk2YWw==}
-    peerDependencies:
-      '@netless/fastboard-core': 0.3.6
-    dependencies:
-      '@netless/fastboard-core': 0.3.6_gu6mpjeqpknr7fxby5jhbcsrtu
-      tippy.js: 6.3.7
-    dev: false
 
   /@netless/fastboard-ui/1.0.0-canary.6_m23f4skpfoq3arppzbqjiodchi:
     resolution: {integrity: sha512-yvAhixIuv5QrJ1w49iRNCXUm+bLCl9U2bEU5IaCiPDL0neuo8vLOONI96KBqxS9JQLQVwNtJ/ZCnfbIUVh1/1g==}
@@ -3727,26 +3677,13 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /@netless/synced-store/2.0.3_white-web-sdk@2.16.28:
-    resolution: {integrity: sha512-MyAOW+QX19PXXb41yrdJzwMmdCLbe9l3Jw8zHI125D6EF516zMvmGjnyXzo1iLHpoMx0JIj1kYlKwEAVNbbe7w==}
-    requiresBuild: true
-    peerDependencies:
-      white-web-sdk: '>= 2.16'
-    dependencies:
-      lodash-es: 4.17.21
-      remitter: 0.2.6
-      side-effect-manager: 1.2.1
-      value-enhancer: 1.3.2
-      white-web-sdk: 2.16.28
-    dev: false
-
   /@netless/synced-store/2.0.7:
     resolution: {integrity: sha512-E5ukXMTLa0Mlhlv9Rcy3MJSAM5kwiLoXQy42OCSIFdBR8jf0BKbSUXSjnA8J+FZq6UidNtGaadDWjhwlM1z5MA==}
     peerDependencies:
       white-web-sdk: '>= 2.16'
     dependencies:
       lodash-es: 4.17.21
-      remitter: 0.2.6
+      remitter: 0.2.9
       side-effect-manager: 1.2.1
       value-enhancer: 1.3.2
     dev: true
@@ -3917,6 +3854,7 @@ packages:
 
   /@popperjs/core/2.11.5:
     resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
+    dev: true
 
   /@protobufjs/aspromise/1.1.2:
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -6354,12 +6292,6 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /agora-rtc-sdk-ng/4.12.2:
-    resolution: {integrity: sha512-PcXuqHVrsc1W1A4YM6SSzBwazhbNCKc4peAckQHOQ+KODvR+DlZt0kN8toDcupa0B6gBwtM6guYoPvF9cpEg+w==}
-    dependencies:
-      agora-rte-extension: 1.0.23
-    dev: false
-
   /agora-rtc-sdk-ng/4.13.0:
     resolution: {integrity: sha512-+ZVVPgaSbAVjTREbOtyyfhVyJ24dgvTug68kFFRDxEhSuGHqReOwS8obwJiDmH9JvYhc8CzuWWwAebWEmbupsg==}
     dependencies:
@@ -8766,11 +8698,6 @@ packages:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
-    dev: true
-
-  /emittery/0.10.2:
-    resolution: {integrity: sha512-aITqOwnLanpHLNXZJENbOgjUBeHocD+xsSJmNrjovKBW5HbSpW3d1pEls7GFQPUWXiwG9+0P4GtHfEqC/4M0Iw==}
-    engines: {node: '>=12'}
     dev: true
 
   /emittery/0.9.2:
@@ -15630,8 +15557,8 @@ packages:
       mdast-squeeze-paragraphs: 4.0.0
     dev: true
 
-  /remitter/0.2.6:
-    resolution: {integrity: sha512-vg6psVwfJsg7zcX7HVJ0UxZiRc0V7EfFOOzcp6WAEP2Br0G75DEM5KUglyxyMuxG57ntrfEBzqP6Cd91Nf2CBw==}
+  /remitter/0.2.9:
+    resolution: {integrity: sha512-VlXdiDJZ17WJ75QjWmyaUkz2gR+CjlUejNyoNYVajnY+pMvzBbbRspibFhhev3szN9XWmTQBs9R4nGXrz8jrFQ==}
 
   /remove-trailing-separator/1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
@@ -16103,6 +16030,7 @@ packages:
 
   /side-effect-manager/0.1.6:
     resolution: {integrity: sha512-2AniIPP3EgNjlVSHzukf1v5v8Y3F+j6AWZPKLh+p/AM3FthtQYhBkkGeOYd1yH5USSCvSQ1qRsRVeYDuAjvZ+A==}
+    dev: false
 
   /side-effect-manager/1.2.1:
     resolution: {integrity: sha512-RBosCqit8LYMfrEXBt+4klzwWi3faGy4vfXNmUFZhgJY/oY6ZqF7RyUxWOJb0EUfA3jsY3juvFBJHYTk1q/3RQ==}
@@ -16863,6 +16791,7 @@ packages:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
     dependencies:
       '@popperjs/core': 2.11.5
+    dev: true
 
   /tmpl/1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}

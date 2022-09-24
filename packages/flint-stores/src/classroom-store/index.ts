@@ -10,21 +10,21 @@ import {
   IServiceVideoChat,
   IServiceVideoChatMode,
   // IServiceVideoChatRole,
-  IServiceWhiteboard,
+  // IServiceWhiteboard,
 } from "@netless/flint-services";
 
 import { globalStore } from "../global-store";
 import { ClassModeType } from "./constants";
 import { RoomItem, roomStore } from "../room-store";
 import { UserStore } from "../user-store";
-import { WhiteboardStore } from "../whiteboard-store";
+// import { WhiteboardStore } from "../whiteboard-store";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
   ownerUUID: string;
   rtc: IServiceVideoChat;
   // rtm: IServiceTextChat;
-  whiteboard: IServiceWhiteboard;
+  // whiteboard: IServiceWhiteboard;
   // recording: IServiceRecording;
 }
 
@@ -66,7 +66,7 @@ export class ClassroomStore {
 
   public readonly rtc: IServiceVideoChat;
   // public readonly rtm: IServiceTextChat;
-  public readonly whiteboardStore: WhiteboardStore;
+  // public readonly whiteboardStore: WhiteboardStore;
   // public readonly recording: IServiceRecording;
 
   public constructor(config: ClassroomStoreConfig) {
@@ -91,12 +91,12 @@ export class ClassroomStore {
     //   isShowUserGuide: globalStore.isShowGuide,
     // });
 
-    this.whiteboardStore = new WhiteboardStore({
-      isCreator: this.isCreator,
-      isWritable: this.isCreator,
-      getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
-      whiteboard: config.whiteboard,
-    });
+    // this.whiteboardStore = new WhiteboardStore({
+    //   isCreator: this.isCreator,
+    //   isWritable: this.isCreator,
+    //   getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
+    //   whiteboard: config.whiteboard,
+    // });
 
     makeAutoObservable<this, "sideEffect">(this, {
       rtc: observable.ref,

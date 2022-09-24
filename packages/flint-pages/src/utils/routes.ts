@@ -8,7 +8,7 @@ export { RouteNameType } from "../route-config";
 type PickExtraRouteConfig<
   T extends RouteNameType,
   K extends string,
-  > = T extends keyof ExtraRouteConfig
+> = T extends keyof ExtraRouteConfig
   ? K extends keyof ExtraRouteConfig[T]
   ? ExtraRouteConfig[T][K]
   : string
@@ -20,7 +20,7 @@ type PickExtraRouteConfig<
  */
 type ExtractRouteParams<T extends RouteNameType, P extends string> = string extends P
   ? Record<string, string>
-  : P extends `${infer _Start}:${infer Param} /${infer Rest}`
+  : P extends `${infer _Start}:${infer Param}/${infer Rest}`
   ? Param extends `${infer Param}?`
   ? { [k in Param]?: PickExtraRouteConfig<T, k> } & ExtractRouteParams<T, Rest>
   : { [k in Param]: PickExtraRouteConfig<T, k> } & ExtractRouteParams<T, Rest>

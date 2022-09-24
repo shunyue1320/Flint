@@ -12,7 +12,6 @@
     "build": "build-storybook -s public"
   },
   "dependencies": {
-    "@netless/flat-rtc": "workspace:*",
     "@netless/flint-i18n": "workspace:*",
     "@netless/flint-server-api": "workspace:*",
     "@netless/flint-services": "workspace:*",

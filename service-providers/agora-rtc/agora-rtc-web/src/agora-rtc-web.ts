@@ -96,14 +96,16 @@ export class AgoraRTCWeb extends IServiceVideoChat {
       throw new Error("未设置APP_ID");
     }
 
+    // 正在连接教室
     if (this._pJoiningRoom) {
       await this._pJoiningRoom;
     }
+    // 正在离开教室
     if (this._pLeavingRoom) {
       await this._pLeavingRoom;
     }
 
-    // 已经加入了房间就终止，加入大不对就退出上个房间（避免同时多次加入房间）
+    // 当前已经加入房间就退出上个房间（避免同时多次加入房间）
     if (this.client) {
       if (this.roomUUID === config.roomUUID) {
         return;
@@ -117,16 +119,31 @@ export class AgoraRTCWeb extends IServiceVideoChat {
   }
 
   public async leaveRoom(): Promise<void> {
+    // 正在连接教室
     if (this._pJoiningRoom) {
       await this._pJoiningRoom;
     }
+    // 正在离开教室
     if (this._pLeavingRoom) {
       await this._pLeavingRoom;
     }
 
-    this._pLeavingRoom = this.client.leave();
-    await this._pLeavingRoom;
-    this._pLeavingRoom = undefined;
+    if (this.client) {
+      try {
+        this._roomSideEffect.flushAll();
+      } catch (e) {
+        // 忽略
+      }
+
+      this._pLeavingRoom = this.client.leave();
+      await this._pLeavingRoom;
+      this._pLeavingRoom = undefined;
+      this.client = undefined;
+      if (process.env.DEV) {
+        (window as any).rtc_client = undefined;
+      }
+      this.mode = undefined;
+    }
 
     this.uid = undefined;
     this.roomUUID = undefined;
@@ -187,7 +204,6 @@ export class AgoraRTCWeb extends IServiceVideoChat {
             delay: client.getRTCStats().RTT ?? NaN,
           });
         };
-
         client.on("network-quality", handler);
         return () => client.off("network-quality", handler);
       }),

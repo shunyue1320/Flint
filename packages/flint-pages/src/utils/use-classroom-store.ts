@@ -35,17 +35,17 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
       Promise.all([
         flintServices.requestService("videoChat"),
         // flintServices.requestService("textChat"),
-        flintServices.requestService("whiteboard"),
+        // flintServices.requestService("whiteboard"),
         // flintServices.requestService("recording"),
       ]),
-    ).then(([videoChat, whiteboard]) => {
-      if (!isUnmounted && videoChat && whiteboard) {
+    ).then(([videoChat]) => {
+      if (!isUnmounted && videoChat) {
         // 初始化房间状态
         classroomStore = new ClassroomStore({
           ...config,
           rtc: videoChat,
           // rtm: textChat,
-          whiteboard,
+          // whiteboard,
           // recording,
         });
 
