@@ -18,6 +18,7 @@ import {
 
 import { AgoraRTCWebShareScreen } from "./rtc-share-screen";
 import { RTCLocalAvatar } from "./rtc-local-avatar";
+import { RTCRemoteAvatar } from "./rtc-remote-avatar";
 
 if (process.env.PROD) {
   AgoraRTC.setLogLevel(/* WARNING */ 2);
@@ -51,10 +52,20 @@ export class AgoraRTCWeb extends IServiceVideoChat {
 
   private uid?: IServiceVideoChatUID;
   private roomUUID?: string;
+  private shareScreenUID?: IServiceVideoChatUID;
+
+  private _remoteAvatars = new Map<IServiceVideoChatUID, RTCRemoteAvatar>();
+  public get remoteAvatars(): IServiceVideoChatAvatar[] {
+    return [...this._remoteAvatars.values()];
+  }
 
   private _localAvatar?: RTCLocalAvatar;
   public get localAvatar(): IServiceVideoChatAvatar {
     return (this._localAvatar ??= new RTCLocalAvatar({ rtc: this }));
+  }
+
+  public get isJoinedRoom(): boolean {
+    return Boolean(this.roomUUID);
   }
 
   public constructor({ APP_ID }: AgoraRTCWebConfig) {
@@ -89,6 +100,29 @@ export class AgoraRTCWeb extends IServiceVideoChat {
     super.destroy();
     this.shareScreen.destroy();
     // await this.leaveRoom()
+  }
+
+  public getAvatar(uid: IServiceVideoChatUID): IServiceVideoChatAvatar | undefined {
+    if (!this.isJoinedRoom) {
+      return;
+    }
+    if (!uid || this.uid === uid) {
+      return this.localAvatar;
+    }
+    if (this.shareScreenUID === uid) {
+      throw new Error("不支持 getAvatar(shareScreenUID)。");
+    }
+
+    let remoteAvatar = this._remoteAvatars.get(uid);
+
+    // 如果没有就去 client.remoteUsers 找到该用户并设置到 _remoteAvatars 数组中
+    if (!remoteAvatar) {
+      const rtcRemoteUser = this.client?.remoteUsers.find(user => user.uid === uid);
+      remoteAvatar = new RTCRemoteAvatar({ rtcRemoteUser });
+      this._remoteAvatars.set(uid, remoteAvatar);
+    }
+
+    return remoteAvatar;
   }
 
   public async joinRoom(config: IServiceVideoChatJoinRoomConfig): Promise<void> {

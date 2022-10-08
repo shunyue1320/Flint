@@ -45,6 +45,10 @@ export class ClassroomStore {
   public classMode: ClassModeType;
   /** 创造者是否禁止发言 */
   public isBan = false;
+  /** 正在进行云录制 */
+  public isRecording = false;
+  /** 正在切换云录制 */
+  public isRecordingLoading = false;
 
   /** RTC加入了房间 */
   public isJoinedRTC = false;
@@ -122,28 +126,6 @@ export class ClassroomStore {
     }
 
     await this.initRTC();
-
-    // const fastboard = await this.whiteboardStore.joinWhiteboardRoom();
-
-    // const channel = await this.rtm.init(this.userUUID, this.roomUUID);
-    // // 监听消息
-    // this.startListenCommands();
-
-    // const members = await channel.getMembers();
-    // await this.users.initUsers(members);
-
-    // await this.joinRTC();
-    // // 更新房间历史消息
-    // await this.updateHistory();
-
-    // this.sideEffect.addDisposer(
-    //   this.rtc.events.on(
-    //     "network",
-    //     action("checkNetworkQuality", networkQuality => {
-    //       this.networkQuality = networkQuality;
-    //     }),
-    //   ),
-    // );
   }
 
   public get roomInfo(): RoomItem | undefined {
@@ -212,4 +194,11 @@ export class ClassroomStore {
       });
     }
   }
+
+  public toggleRecording = async ({ onStop }: { onStop?: () => void } = {}): Promise<void> => {
+    this.isRecordingLoading = true;
+    runInAction(() => {
+      this.isRecordingLoading = false;
+    });
+  };
 }

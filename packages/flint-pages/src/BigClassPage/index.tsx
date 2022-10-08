@@ -21,7 +21,7 @@ import { message } from "antd";
 // import { RouteNameType, RouteParams } from "../../utils/routes";
 // import { RecordingConfig, useClassRoomStore, User } from "../../stores/class-room-store";
 // import { RtcChannelType } from "../../api-middleware/rtc/room";
-import { CloudStorageButton } from "../components/CloudStorageButton";
+// import { CloudStorageButton } from "../components/CloudStorageButton";
 import InviteButton from "../components/InviteButton";
 import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../components/ExitRoomConfirm";
 import { Whiteboard } from "../components/Whiteboard";
@@ -43,9 +43,12 @@ export type BigClassPageProps = {};
 export const BigClassPage = withClassroomStore<BigClassPageProps>(
   observer<WithClassroomStoreProps<BigClassPageProps>>(function BigClassPage({ classroomStore }) {
     // useLoginCheck();
-    // const t = useTranslate();
+    const t = useTranslate();
     // const whiteboardStore = classroomStore.whiteboardStore;
     const windowsBtn = useContext(WindowsSystemBtnContext);
+
+    const { confirm, ...exitConfirmModalProps } = useExitRoomConfirmModal(classroomStore);
+    const [isRealtimeSideOpen, openRealtimeSide] = useState(true);
 
     return (
       <div className="big-class-realtime-container">
@@ -54,16 +57,15 @@ export const BigClassPage = withClassroomStore<BigClassPageProps>(
             {windowsBtn ? (
               <div>windowsBtn1</div>
             ) : (
-              <div>windowsBtn2</div>
-              // <TopBar left={renderTopBarLeft()} right={renderTopBarRight()} />
+              <TopBar left={renderTopBarLeft()} right={renderTopBarRight()} />
             )}
 
-            {/* <div className="big-class-realtime-content">
+            <div className="big-class-realtime-content">
               <div className="big-class-realtime-content-container">
-                <Whiteboard classRoomStore={classroomStore} whiteboardStore={whiteboardStore} />
+                {/* <Whiteboard classRoomStore={classroomStore} whiteboardStore={whiteboardStore} /> */}
               </div>
               {renderRealtimePanel()}
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
@@ -78,11 +80,84 @@ export const BigClassPage = withClassroomStore<BigClassPageProps>(
     }
 
     function renderTopBarRight(): React.ReactNode {
-      return <div>renderTopBarRight</div>;
+      return (
+        <>
+          {classroomStore.isCreator && (
+            <CloudRecordBtn
+              isRecording={classroomStore.isRecording}
+              onClick={() => {
+                void classroomStore.toggleRecording({
+                  onStop() {
+                    void message.success(t("recording-completed-tips"));
+                  },
+                });
+              }}
+            />
+          )}
+
+          {/* TODO：打开云存储子窗口 */}
+          {/* <CloudStorageButton classroom={classroomStore} /> */}
+          <InviteButton roomInfo={classroomStore.roomInfo} />
+          <TopBarRightBtn
+            icon={<SVGExit />}
+            title={t("exit")}
+            onClick={() => confirm(ExitRoomConfirmType.ExitButton)}
+          />
+          <TopBarDivider />
+          <TopBarRightBtn
+            icon={isRealtimeSideOpen ? <SVGMenuUnfold /> : <SVGMenuFold />}
+            title={isRealtimeSideOpen ? t("side-panel.hide") : t("side-panel.show")}
+            onClick={handleSideOpenerSwitch}
+          />
+        </>
+      );
     }
 
     function renderRealtimePanel(): React.ReactNode {
-      return <div>renderRealtimePanel</div>;
+      const { creator } = classroomStore.users;
+
+      return (
+        <RealtimePanel
+          chatSlot={
+            // 聊天列表
+            <div>聊天列表</div>
+            // <ChatPanel classRoomStore={classroomStore} maxSpeakingUsers={1}></ChatPanel>
+          }
+          isShow={isRealtimeSideOpen}
+          isVideoOn={classroomStore.isJoinedRTC}
+          videoSlot={
+            <div className="big-class-realtime-rtc-box">
+              {/* 老师 */}
+              <RTCAvatar
+                avatarUser={creator}
+                isAvatarUserCreator={true}
+                isCreator={classroomStore.isCreator}
+                rtcAvatar={creator && classroomStore.rtc.getAvatar(creator.rtcUID)}
+                updateDeviceState={classroomStore.updateDeviceState}
+                userUUID={classroomStore.userUUID}
+              />
+              {/* 发言的学生 */}
+              {classroomStore.onStageUserUUIDs.length > 0 && (
+                <RTCAvatar
+                  avatarUser={classroomStore.firstOnStageUser}
+                  isAvatarUserCreator={false}
+                  isCreator={classroomStore.isCreator}
+                  rtcAvatar={
+                    classroomStore.firstOnStageUser &&
+                    classroomStore.rtc.getAvatar(classroomStore.firstOnStageUser.rtcUID)
+                  }
+                  updateDeviceState={classroomStore.updateDeviceState}
+                  userUUID={classroomStore.userUUID}
+                />
+              )}
+            </div>
+          }
+        />
+      );
+    }
+
+    function handleSideOpenerSwitch(): void {
+      openRealtimeSide(isRealtimeSideOpen => !isRealtimeSideOpen);
     }
   }),
 );
@@ -135,7 +210,7 @@ export const BigClassPage2 = observer<BigClassPageProps>(function BigClassPage({
   function renderTopBarRight(): React.ReactNode {
     return (
       <>
-        {whiteboardStore.isWritable && !classRoomStore.isRemoteScreenSharing && (
+        {!classRoomStore.isRemoteScreenSharing && (
           <TopBarRightBtn
             icon={<SVGScreenSharing active={classRoomStore.isScreenSharing} />}
             title={t("share-screen.self")}
@@ -157,7 +232,7 @@ export const BigClassPage2 = observer<BigClassPageProps>(function BigClassPage({
         )}
 
         {/* TODO：打开云存储子窗口 */}
-        <CloudStorageButton classroom={classRoomStore} />
+        {/* <CloudStorageButton classroom={classRoomStore} /> */}
         <InviteButton roomInfo={classRoomStore.roomInfo} />
         <TopBarRightBtn
           icon={<SVGExit />}
