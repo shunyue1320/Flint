@@ -195,6 +195,11 @@ export class ClassroomStore {
     }
   }
 
+  public async destroy(): Promise<void> {
+    this.sideEffect.flushAll();
+    this.classroomStorage = undefined;
+  }
+
   public toggleRecording = async ({ onStop }: { onStop?: () => void } = {}): Promise<void> => {
     this.isRecordingLoading = true;
     runInAction(() => {
