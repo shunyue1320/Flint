@@ -51,6 +51,9 @@ export abstract class IServiceVideoChat implements IService {
   /** 设置聊天角色 */
   public abstract setRole(role: IServiceVideoChatRole): Promise<void>;
 
+  /** @returns 如果未提供uid，则本地化身在 uid == shareScreenUID 时抛出错误 */
+  public abstract getAvatar(uid?: IServiceVideoChatUID): IServiceVideoChatAvatar | undefined;
+
   public abstract getTestAvatar(): IServiceVideoChatAvatar;
 
   public abstract setCameraID(deviceId: string): Promise<void>;

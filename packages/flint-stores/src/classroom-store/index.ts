@@ -28,6 +28,7 @@ export interface ClassroomStoreConfig {
   // recording: IServiceRecording;
 }
 
+export type DeviceStateStorageState = Record<string, { camera: boolean; mic: boolean }>;
 export type ClassroomStorageState = {
   ban: boolean;
   raiseHandUsers: string[];
@@ -64,6 +65,7 @@ export class ClassroomStore {
     downlink: 0,
   };
 
+  public deviceStateStorage?: Storage<DeviceStateStorageState>;
   public classroomStorage?: Storage<ClassroomStorageState>;
 
   public readonly users: UserStore;
@@ -194,6 +196,33 @@ export class ClassroomStore {
       });
     }
   }
+
+  /** joiner更新自己的摄像机和麦克风状态 */
+  public updateDeviceState = (userUUID: string, camera: boolean, mic: boolean): void => {
+    // 只有创建者才能更改设备状态
+    if (this.deviceStateStorage?.isWritable && (this.userUUID === userUUID || this.isCreator)) {
+      const deviceState = this.deviceStateStorage.state[userUUID];
+      if (deviceState) {
+        // 创建者可以关闭joiner的相机和麦克风
+        // 创建者可以请求joiner打开相机和麦克风
+        if (userUUID !== this.userUUID) {
+          if (camera && !deviceState.camera) {
+            camera = deviceState.camera;
+          }
+
+          if (mic && !deviceState.mic) {
+            mic = deviceState.mic;
+          }
+        }
+        if (camera === deviceState.camera && mic === deviceState.mic) {
+          return;
+        }
+      }
+      this.deviceStateStorage.setState({
+        [userUUID]: camera || mic ? { camera, mic } : undefined,
+      });
+    }
+  };
 
   public async destroy(): Promise<void> {
     this.sideEffect.flushAll();
