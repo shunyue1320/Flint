@@ -12,6 +12,7 @@ export interface User {
   mic: boolean;
   isSpeak: boolean;
   isRaiseHand: boolean;
+  hasLeft: boolean;
 }
 
 export class UserStore {

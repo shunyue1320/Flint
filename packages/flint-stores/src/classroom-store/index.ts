@@ -16,7 +16,7 @@ import {
 import { globalStore } from "../global-store";
 import { ClassModeType } from "./constants";
 import { RoomItem, roomStore } from "../room-store";
-import { UserStore } from "../user-store";
+import { User, UserStore } from "../user-store";
 // import { WhiteboardStore } from "../whiteboard-store";
 
 export interface ClassroomStoreConfig {
@@ -70,6 +70,8 @@ export class ClassroomStore {
 
   public readonly users: UserStore;
 
+  public readonly onStageUserUUIDs = observable.array<string>();
+
   public readonly rtc: IServiceVideoChat;
   // public readonly rtm: IServiceTextChat;
   // public readonly whiteboardStore: WhiteboardStore;
@@ -112,6 +114,13 @@ export class ClassroomStore {
       // classroomStorage: false,
       // onStageUsersStorage: false,
     });
+  }
+
+  /** 获取第一个发言用户 */
+  public get firstOnStageUser(): User | undefined {
+    return this.onStageUserUUIDs.length > 0
+      ? this.users.cachedUsers.get(this.onStageUserUUIDs[0])
+      : undefined;
   }
 
   public async init(): Promise<void> {
