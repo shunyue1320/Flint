@@ -5,7 +5,7 @@ import { preferencesStore } from "./preferences-store";
 
 export interface User {
   userUUID: string;
-  rtcUID: number;
+  rtcUID: string;
   avatar: string;
   name: string;
   camera: boolean;

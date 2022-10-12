@@ -8,6 +8,7 @@ import {
 import { AvatarCanvas, AvatarCanvasProps } from "./AvatarCanvas";
 
 export type RTCAvatarProps = Omit<VideoAvatarProps, "getVolumeLevel" | "avatarUser"> &
+  VideoAvatarAbsentProps &
   AvatarCanvasProps;
 
 export const RTCAvatar: React.FC<RTCAvatarProps> = ({
