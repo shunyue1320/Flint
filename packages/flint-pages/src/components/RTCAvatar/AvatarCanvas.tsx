@@ -2,14 +2,14 @@ import "./AvatarCanvas.less";
 
 import React, { useCallback, useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { FlatRTCAvatar } from "@netless/flat-rtc";
 
-import { User } from "../../stores/class-room-store";
+import { IServiceVideoChatAvatar } from "@netless/flint-services";
+import { User } from "@netless/flint-stores";
 
 export interface AvatarCanvasProps {
   // 该头像的用户
   avatarUser?: User | null;
-  rtcAvatar?: FlatRTCAvatar | null;
+  rtcAvatar?: IServiceVideoChatAvatar | null;
 }
 
 export const AvatarCanvas = observer<

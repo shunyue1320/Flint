@@ -38,6 +38,10 @@ export const RTCAvatar: React.FC<RTCAvatarProps> = ({
       )}
     </AvatarCanvas>
   ) : (
-    <VideoAvatarAbsent isAvatarUserCreator={isAvatarUserCreator} small={small} />
+    <VideoAvatarAbsent
+      avatarUser={avatarUser}
+      isAvatarUserCreator={isAvatarUserCreator}
+      small={small}
+    />
   );
 };

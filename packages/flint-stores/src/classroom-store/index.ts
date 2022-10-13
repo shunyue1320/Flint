@@ -6,7 +6,7 @@ import type { Storage } from "@netless/fastboard";
 import { RoomType, generateRTCToken } from "@netless/flint-server-api";
 import {
   // IServiceRecording,
-  // IServiceTextChat,
+  IServiceTextChat,
   IServiceVideoChat,
   IServiceVideoChatMode,
   // IServiceVideoChatRole,
@@ -23,7 +23,7 @@ export interface ClassroomStoreConfig {
   roomUUID: string;
   ownerUUID: string;
   rtc: IServiceVideoChat;
-  // rtm: IServiceTextChat;
+  rtm: IServiceTextChat;
   // whiteboard: IServiceWhiteboard;
   // recording: IServiceRecording;
 }
@@ -73,7 +73,7 @@ export class ClassroomStore {
   public readonly onStageUserUUIDs = observable.array<string>();
 
   public readonly rtc: IServiceVideoChat;
-  // public readonly rtm: IServiceTextChat;
+  public readonly rtm: IServiceTextChat;
   // public readonly whiteboardStore: WhiteboardStore;
   // public readonly recording: IServiceRecording;
 
@@ -89,7 +89,7 @@ export class ClassroomStore {
     this.userUUID = globalStore.userUUID;
     this.classMode = ClassModeType.Lecture;
     this.rtc = config.rtc;
-    // this.rtm = config.rtm;
+    this.rtm = config.rtm;
     // this.recording = config.recording;
 
     // this.chatStore = new ChatStore({
@@ -98,6 +98,13 @@ export class ClassroomStore {
     //   rtm: this.rtm,
     //   isShowUserGuide: globalStore.isShowGuide,
     // });
+
+    this.users = new UserStore({
+      roomUUID: this.roomUUID,
+      ownerUUID: this.ownerUUID,
+      userUUID: this.userUUID,
+      // isInRoom: userUUID => this.rtm.members.has(userUUID),
+    });
 
     // this.whiteboardStore = new WhiteboardStore({
     //   isCreator: this.isCreator,
@@ -137,6 +144,8 @@ export class ClassroomStore {
     }
 
     await this.initRTC();
+
+    await this.users.initUsers([...this.rtm.members]);
   }
 
   public get roomInfo(): RoomItem | undefined {
