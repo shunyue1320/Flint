@@ -103,7 +103,7 @@ export class ClassroomStore {
       roomUUID: this.roomUUID,
       ownerUUID: this.ownerUUID,
       userUUID: this.userUUID,
-      // isInRoom: userUUID => this.rtm.members.has(userUUID),
+      isInRoom: userUUID => this.rtm.members.has(userUUID),
     });
 
     // this.whiteboardStore = new WhiteboardStore({
@@ -115,7 +115,7 @@ export class ClassroomStore {
 
     makeAutoObservable<this, "sideEffect">(this, {
       rtc: observable.ref,
-      // rtm: observable.ref,
+      rtm: observable.ref,
       sideEffect: false,
       // deviceStateStorage: false,
       // classroomStorage: false,
@@ -144,6 +144,13 @@ export class ClassroomStore {
     }
 
     await this.initRTC();
+
+    await this.rtm.joinRoom({
+      roomUUID: this.roomUUID,
+      ownerUUID: this.ownerUUID,
+      uid: this.userUUID,
+      token: globalStore.rtmToken,
+    });
 
     await this.users.initUsers([...this.rtm.members]);
   }

@@ -115,7 +115,7 @@ export const BigClassPage = withClassroomStore<BigClassPageProps>(
 
     function renderRealtimePanel(): React.ReactNode {
       const { creator } = classroomStore.users;
-
+      console.log("creator===", creator);
       return (
         <RealtimePanel
           chatSlot={

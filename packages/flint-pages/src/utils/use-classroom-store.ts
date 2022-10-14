@@ -34,17 +34,17 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
     sp(
       Promise.all([
         flintServices.requestService("videoChat"),
-        // flintServices.requestService("textChat"),
+        flintServices.requestService("textChat"),
         // flintServices.requestService("whiteboard"),
         // flintServices.requestService("recording"),
       ]),
-    ).then(([videoChat]) => {
-      if (!isUnmounted && videoChat) {
+    ).then(([videoChat, textChat]) => {
+      if (!isUnmounted && videoChat && textChat) {
         // 初始化房间状态
         classroomStore = new ClassroomStore({
           ...config,
           rtc: videoChat,
-          // rtm: textChat,
+          rtm: textChat,
           // whiteboard,
           // recording,
         });
@@ -67,7 +67,7 @@ export function useClassroomStore(config: useClassRoomStoreConfig): ClassroomSto
       });
 
       flintServices.shutdownService("videoChat");
-      // flintServices.shutdownService("textChat");
+      flintServices.shutdownService("textChat");
       // flintServices.shutdownService("whiteboard");
       // flintServices.shutdownService("recording");
     };

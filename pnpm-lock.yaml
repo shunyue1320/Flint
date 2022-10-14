@@ -304,6 +304,7 @@ importers:
       '@netless/flint-i18n': workspace:*
       '@netless/flint-pages': workspace:*
       '@netless/flint-service-provider-agora-rtc-web': workspace:*
+      '@netless/flint-service-provider-agora-rtm': workspace:*
       '@netless/flint-services': workspace:*
       '@netless/window-manager': ^0.4.37
       '@types/loadable__component': ^5.13.4
@@ -348,6 +349,7 @@ importers:
       '@netless/flint-i18n': link:../../packages/flint-i18n
       '@netless/flint-pages': link:../../packages/flint-pages
       '@netless/flint-service-provider-agora-rtc-web': link:../../service-providers/agora-rtc/agora-rtc-web
+      '@netless/flint-service-provider-agora-rtm': link:../../service-providers/agora-rtm
       '@netless/flint-services': link:../../packages/flint-services
       '@netless/window-manager': 0.4.37_white-web-sdk@2.16.28
       agora-rtc-sdk-ng: 4.13.0
