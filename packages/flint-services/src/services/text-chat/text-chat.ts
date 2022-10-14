@@ -42,8 +42,7 @@ export abstract class IServiceTextChat implements IService {
   public abstract sendRoomCommand<TName extends IServiceTextChatRoomCommandNames>(
     t: TName,
     v: IServiceTextChatRoomCommandData[TName],
-    peerID: string,
-  ): Promise<boolean>;
+  ): Promise<void>;
 
   /** 向对方发送命令消息 */
   public abstract sendPeerCommand<TName extends IServiceTextChatPeerCommandNames>(

@@ -16,6 +16,7 @@
     "@netless/flint-i18n": "workspace:*",
     "@netless/flint-pages": "workspace:*",
     "@netless/flint-service-provider-agora-rtc-web": "workspace:*",
+    "@netless/flint-service-provider-agora-rtm": "workspace:*",
     "@netless/flint-services": "workspace:*",
     "@netless/window-manager": "^0.4.37",
     "agora-rtc-sdk-ng": "^4.12.2",

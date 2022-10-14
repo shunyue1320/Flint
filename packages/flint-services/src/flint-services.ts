@@ -2,12 +2,13 @@ import { IServiceFile, IServiceFileCatalog } from "./services/file";
 import { IService } from "./services/typing";
 
 import { IServiceVideoChat } from "./services/video-chat";
+import { IServiceTextChat } from "./services/text-chat";
 import { IServiceWhiteboard } from "./services/whiteboard";
 
 export type FlintServicesCatalog = IServiceFileCatalog & {
   file: IServiceFile;
   videoChat: IServiceVideoChat;
-  // textChat: IServiceTextChat;
+  textChat: IServiceTextChat;
   whiteboard: IServiceWhiteboard;
   // recording: IServiceRecording;
 };
@@ -15,6 +16,14 @@ export type FlintServicesCatalog = IServiceFileCatalog & {
 export type FlintServiceID = Extract<keyof FlintServicesCatalog, string>;
 
 export type FlintServicesInstance<T extends FlintServiceID> = FlintServicesCatalog[T];
+
+export type FlintServicesCreator<T extends FlintServiceID> = () => Promise<
+  FlintServicesCatalog[T] | null
+>;
+
+export type FlintServicesCreatorCatalog = {
+  [K in FlintServiceID]: FlintServicesCreator<K>;
+};
 
 declare global {
   interface Window {

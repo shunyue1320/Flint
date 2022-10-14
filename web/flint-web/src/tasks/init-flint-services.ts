@@ -15,6 +15,11 @@ export function initFlintServices(): void {
     return new AgoraRTCWeb({ APP_ID: process.env.AGORA_APP_ID });
   });
 
+  flintServices.register("textChat", async () => {
+    const { AgoraRTM } = await import("@netless/flint-service-provider-agora-rtm");
+    return new AgoraRTM(process.env.AGORA_APP_ID);
+  });
+
   flintServices.register("whiteboard", async () => { });
 }
 
