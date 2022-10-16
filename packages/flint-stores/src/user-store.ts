@@ -38,10 +38,18 @@ export class UserStore {
     return this.ownerUUID === this.userUUID;
   }
 
-  public constructor(config: { userUUID: string; ownerUUID: string; roomUUID: string }) {
+  public isInRoom: (userUUID: string) => boolean;
+
+  public constructor(config: {
+    userUUID: string;
+    ownerUUID: string;
+    roomUUID: string;
+    isInRoom: (userUUID: string) => boolean;
+  }) {
     this.roomUUID = config.roomUUID;
     this.userUUID = config.userUUID;
     this.ownerUUID = config.ownerUUID;
+    this.isInRoom = config.isInRoom;
 
     makeAutoObservable(this);
   }
@@ -61,11 +69,9 @@ export class UserStore {
     if (this.cachedUsers.has(userUUID)) {
       this.removeUser(userUUID);
     }
-    const users = await this.createUsers([userUUID]);
-    users.forEach(user => {
-      this.cacheUser(user);
-      this.sortUser(user);
-    });
+    const [user] = await this.createUsers([userUUID]);
+    this.cacheUser(user);
+    this.sortUser(user);
   };
 
   public removeUser = (userUUID: string): void => {
@@ -182,13 +188,14 @@ export class UserStore {
       // 必须首先转换为observable，以便其他逻辑可以重用它
       observable.object<User>({
         userUUID,
-        rtcUID: users[userUUID].rtcUID,
+        rtcUID: String(users[userUUID].rtcUID),
         avatar: users[userUUID].avatarURL,
         name: users[userUUID].name,
         camera: userUUID === this.userUUID ? preferencesStore.autoCameraOn : false,
         mic: userUUID === this.userUUID ? preferencesStore.autoMicOn : false,
         isSpeak: userUUID === this.userUUID && this.isCreator,
         isRaiseHand: false,
+        hasLeft: !this.isInRoom(userUUID),
       }),
     );
   }

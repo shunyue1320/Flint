@@ -106,6 +106,7 @@ export class AgoraRTCWeb extends IServiceVideoChat {
     if (!this.isJoinedRoom) {
       return;
     }
+
     if (!uid || this.uid === uid) {
       return this.localAvatar;
     }
@@ -114,7 +115,6 @@ export class AgoraRTCWeb extends IServiceVideoChat {
     }
 
     let remoteAvatar = this._remoteAvatars.get(uid);
-    console.log("this.client?.remoteUsers==1==", this.client?.remoteUsers);
 
     // 如果没有就去 client.remoteUsers 找到该用户并设置到 _remoteAvatars 数组中
     if (!remoteAvatar) {
@@ -122,7 +122,6 @@ export class AgoraRTCWeb extends IServiceVideoChat {
       remoteAvatar = new RTCRemoteAvatar({ rtcRemoteUser });
       this._remoteAvatars.set(uid, remoteAvatar);
     }
-    console.log("remoteAvatar====", remoteAvatar);
     return remoteAvatar;
   }
 
