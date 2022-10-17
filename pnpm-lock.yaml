@@ -294,6 +294,35 @@ importers:
       prettier: 2.7.1
       typescript: 4.8.4
 
+  service-providers/fastboard:
+    specifiers:
+      '@lukeed/uuid': ^2.0.0
+      '@netless/fastboard': 1.0.0-canary.7
+      '@netless/flint-i18n': workspace:*
+      '@netless/flint-server-api': workspace:*
+      '@netless/flint-services': workspace:*
+      '@netless/white-snapshot': ^0.4.2
+      '@netless/window-manager': 1.0.0-canary.61
+      prettier: ^2.7.1
+      side-effect-manager: ^1.2.1
+      typescript: ^4.8.3
+      value-enhancer: ^1.3.2
+      white-web-sdk: npm:white-web-sdk-esm@2.16.34
+    dependencies:
+      '@lukeed/uuid': 2.0.0
+      '@netless/fastboard': 1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky
+      '@netless/flint-i18n': link:../../packages/flint-i18n
+      '@netless/flint-server-api': link:../../packages/flint-server-api
+      '@netless/flint-services': link:../../packages/flint-services
+      '@netless/white-snapshot': 0.4.2
+      '@netless/window-manager': 1.0.0-canary.61_white-web-sdk-esm@2.16.34
+      side-effect-manager: 1.2.1
+      value-enhancer: 1.3.2
+      white-web-sdk: /white-web-sdk-esm/2.16.34
+    devDependencies:
+      prettier: 2.7.1
+      typescript: 4.8.4
+
   web/flint-web:
     specifiers:
       '@ant-design/icons': ^4.7.0
@@ -305,6 +334,7 @@ importers:
       '@netless/flint-pages': workspace:*
       '@netless/flint-service-provider-agora-rtc-web': workspace:*
       '@netless/flint-service-provider-agora-rtm': workspace:*
+      '@netless/flint-service-provider-fastboard': workspace:*
       '@netless/flint-services': workspace:*
       '@netless/window-manager': ^0.4.37
       '@types/loadable__component': ^5.13.4
@@ -350,6 +380,7 @@ importers:
       '@netless/flint-pages': link:../../packages/flint-pages
       '@netless/flint-service-provider-agora-rtc-web': link:../../service-providers/agora-rtc/agora-rtc-web
       '@netless/flint-service-provider-agora-rtm': link:../../service-providers/agora-rtm
+      '@netless/flint-service-provider-fastboard': link:../../service-providers/fastboard
       '@netless/flint-services': link:../../packages/flint-services
       '@netless/window-manager': 0.4.37_white-web-sdk@2.16.28
       agora-rtc-sdk-ng: 4.13.0
@@ -3579,14 +3610,12 @@ packages:
   /@lukeed/csprng/1.0.1:
     resolution: {integrity: sha512-uSvJdwQU5nK+Vdf6zxcWAY2A8r7uqe+gePwLWzJ+fsQehq18pc0I2hJKwypZ2aLM90+Er9u1xn4iLJPZ+xlL4g==}
     engines: {node: '>=8'}
-    dev: true
 
   /@lukeed/uuid/2.0.0:
     resolution: {integrity: sha512-dUz8OmYvlY5A9wXaroHIMSPASpSYRLCqbPvxGSyHguhtTQIy24lC+EGxQlwv71AhRCO55WOtgwhzQLpw27JaJQ==}
     engines: {node: '>=8'}
     dependencies:
       '@lukeed/csprng': 1.0.1
-    dev: true
 
   /@mdx-js/mdx/1.6.22:
     resolution: {integrity: sha512-AMxuLxPz2j5/6TpF/XSdKpQP1NlG0z11dFOlq+2IP/lSgl11GY8ji6S/rgsViN/L0BDvHvUMruRb7ub+24LUYA==}
@@ -3642,6 +3671,12 @@ packages:
     resolution: {integrity: sha512-P+cymtUXS0gTcpOVz7khdIyfizKvN9nw70tEIYvz+3p4LKE+20iIs6rJcwowB63jGYLoZAEZY4FuJumLmYbang==}
     dev: false
 
+  /@netless/app-slide/0.3.0-canary.13:
+    resolution: {integrity: sha512-PHzhx322hpWto5wm1ldOmtZhnwi/Aj/VQ/dxTUxB0HZuZMy4Rnmj3LQSbkMDjwJC3ioIeu5LQi6WI0t+VlFkKw==}
+    dependencies:
+      '@netless/slide': 0.7.8
+    dev: false
+
   /@netless/app-slide/0.3.0-canary.7:
     resolution: {integrity: sha512-k93RBwVnNHH6OdG5Q+6WKnxBcJm0WHJ4sQAZcgGBW4c87/TaZiE2h7NoEcG45Au+D+szos8TxjaLV/zM0mmKXg==}
     dependencies:
@@ -3662,6 +3697,18 @@ packages:
       '@netless/synced-store': 2.0.7
     dev: true
 
+  /@netless/fastboard-core/1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky:
+    resolution: {integrity: sha512-wblXojxoGw7QE+H+YkAoydm0zx7CQtp66EESx902g9e4skghP7V+RgeevrB0DdipPFHme/jolBbpSWa9i4qxww==}
+    peerDependencies:
+      '@netless/window-manager': '>=1.0.0-canary.0'
+      white-web-sdk: '>=2.16.0'
+    dependencies:
+      '@lukeed/uuid': 2.0.0
+      '@netless/synced-store': 2.0.7_white-web-sdk-esm@2.16.34
+      '@netless/window-manager': 1.0.0-canary.61_white-web-sdk-esm@2.16.34
+      white-web-sdk: /white-web-sdk-esm/2.16.34
+    dev: false
+
   /@netless/fastboard-ui/1.0.0-canary.6_m23f4skpfoq3arppzbqjiodchi:
     resolution: {integrity: sha512-yvAhixIuv5QrJ1w49iRNCXUm+bLCl9U2bEU5IaCiPDL0neuo8vLOONI96KBqxS9JQLQVwNtJ/ZCnfbIUVh1/1g==}
     peerDependencies:
@@ -3670,6 +3717,15 @@ packages:
       '@netless/fastboard-core': 1.0.0-canary.6
       tippy.js: 6.3.7
     dev: true
+
+  /@netless/fastboard-ui/1.0.0-canary.7_cdb3cxxszhadikmporkl6mi74y:
+    resolution: {integrity: sha512-fFDTCf//0RFrnwVtSNa0C2MgQihKU9Vl1F9jyO5/Azjiuzrw+mWIEMMW5tS/JkjToiujP1USZQOa2mP0T6dOfA==}
+    peerDependencies:
+      '@netless/fastboard-core': 1.0.0-canary.7
+    dependencies:
+      '@netless/fastboard-core': 1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky
+      tippy.js: 6.3.7
+    dev: false
 
   /@netless/fastboard/1.0.0-canary.6:
     resolution: {integrity: sha512-w36BHxkkreCVztCirKRItaMtSy80aRLaE6ApYyVLvegyiopOa4LoY5GRkL117ySxnXLK+DGnAicgB7eFc9gEqA==}
@@ -3681,6 +3737,19 @@ packages:
       '@netless/fastboard-core': 1.0.0-canary.6
       '@netless/fastboard-ui': 1.0.0-canary.6_m23f4skpfoq3arppzbqjiodchi
     dev: true
+
+  /@netless/fastboard/1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky:
+    resolution: {integrity: sha512-1/veeLuG8/YO//pqb9LkEqMLBDKcy3j3iPS03dDB9neeZy5WxcGMjU8rbE98jW/JUb9lUpZxQlOTmIklg2MNUQ==}
+    peerDependencies:
+      '@netless/window-manager': '>=1.0.0-canary.0'
+      white-web-sdk: '>=2.16.0'
+    dependencies:
+      '@netless/app-slide': 0.3.0-canary.13
+      '@netless/fastboard-core': 1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky
+      '@netless/fastboard-ui': 1.0.0-canary.7_cdb3cxxszhadikmporkl6mi74y
+      '@netless/window-manager': 1.0.0-canary.61_white-web-sdk-esm@2.16.34
+      white-web-sdk: /white-web-sdk-esm/2.16.34
+    dev: false
 
   /@netless/mini-svg-data-uri/0.0.1:
     resolution: {integrity: sha512-HsQ04Yzuh8PV4+N31erOeS2pEC6IHGCO/Y7RNwi3AWaQ5ASRpzUka5TxWE4QEXZoseccthcjVL5XN687b/cwRg==}
@@ -3698,6 +3767,17 @@ packages:
       lodash: 4.17.21
     dev: true
 
+  /@netless/slide/0.7.8:
+    resolution: {integrity: sha512-35JhrL2y2Yxwxrl8mEVpO/4jS2I++a38B+cOBCDDIJyRq1SCXCy0x6UQaEnu/sY6h4uJMKsNL/Flje87js5Wyg==}
+    dependencies:
+      '@juggle/resize-observer': 3.3.1
+      '@types/lodash': 4.14.182
+      dat.gui: 0.7.9
+      eventemitter3: 4.0.7
+      localforage: 1.10.0
+      lodash: 4.17.21
+    dev: false
+
   /@netless/synced-store/2.0.7:
     resolution: {integrity: sha512-E5ukXMTLa0Mlhlv9Rcy3MJSAM5kwiLoXQy42OCSIFdBR8jf0BKbSUXSjnA8J+FZq6UidNtGaadDWjhwlM1z5MA==}
     peerDependencies:
@@ -3709,6 +3789,18 @@ packages:
       value-enhancer: 1.3.2
     dev: true
 
+  /@netless/synced-store/2.0.7_white-web-sdk-esm@2.16.34:
+    resolution: {integrity: sha512-E5ukXMTLa0Mlhlv9Rcy3MJSAM5kwiLoXQy42OCSIFdBR8jf0BKbSUXSjnA8J+FZq6UidNtGaadDWjhwlM1z5MA==}
+    peerDependencies:
+      white-web-sdk: '>= 2.16'
+    dependencies:
+      lodash-es: 4.17.21
+      remitter: 0.2.9
+      side-effect-manager: 1.2.1
+      value-enhancer: 1.3.2
+      white-web-sdk: /white-web-sdk-esm/2.16.34
+    dev: false
+
   /@netless/telebox-insider/0.2.26:
     resolution: {integrity: sha512-HOBi9HWK0Zf0nvzfjM0V/0QmZ69ec7L/lCKMwRcfiQHxAAJ/zo9fEm468WocYFsliixWW5L7HwMN0eHb0mw7hA==}
     dependencies:
@@ -3718,6 +3810,24 @@ packages:
       side-effect-manager: 0.1.6
       stylefire: 7.0.3
       value-enhancer: 0.0.8
+    dev: false
+
+  /@netless/telebox-insider/1.0.0-alpha.37:
+    resolution: {integrity: sha512-Fazjl/sLaqXPASEvc3ZC+uQSzaCmlmOIpcTwokP//Hn9u4f6C1HvU1veIF1An+s6s44gSYkS9IegYZrGt5cOsg==}
+    dependencies:
+      '@juggle/resize-observer': 3.3.1
+      '@types/shallowequal': 1.1.1
+      emittery: 0.11.0
+      shallowequal: 1.1.0
+      side-effect-manager: 1.2.1
+      stylefire: 7.0.3
+      value-enhancer: 1.3.2
+    dev: false
+
+  /@netless/white-snapshot/0.4.2:
+    resolution: {integrity: sha512-lEDeDNQp6lQXyUsjqBtHgFUDznlef0ihLrN8fzJJvaBxSrhtrYp9S8DSp+2jl9CgznDmTt8z8RlQHqNZ768Dng==}
+    dependencies:
+      html2canvas: 1.4.1
     dev: false
 
   /@netless/window-manager/0.4.37_white-web-sdk@2.16.28:
@@ -3734,6 +3844,23 @@ packages:
       uuid: 7.0.3
       video.js: 7.20.1
       white-web-sdk: 2.16.28
+    dev: false
+
+  /@netless/window-manager/1.0.0-canary.61_white-web-sdk-esm@2.16.34:
+    resolution: {integrity: sha512-37fwXPD3QjUj4DimOsVOpTr8/proELXmHexQbj5vdxquLLtUyhEth091z5vPEl4EkO7jOuPtuwm38Wak1QCBYw==}
+    peerDependencies:
+      white-web-sdk: ^2.16.0
+    dependencies:
+      '@juggle/resize-observer': 3.3.1
+      '@netless/synced-store': 2.0.7_white-web-sdk-esm@2.16.34
+      '@netless/telebox-insider': 1.0.0-alpha.37
+      emittery: 0.11.0
+      lodash: 4.17.21
+      p-retry: 4.6.2
+      side-effect-manager: 1.2.1
+      uuid: 7.0.3
+      value-enhancer: 1.3.2
+      white-web-sdk: /white-web-sdk-esm/2.16.34
     dev: false
 
   /@netless/xml-js/1.6.15:
@@ -3875,7 +4002,6 @@ packages:
 
   /@popperjs/core/2.11.5:
     resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
-    dev: true
 
   /@protobufjs/aspromise/1.1.2:
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -5565,7 +5691,6 @@ packages:
 
   /@types/lodash/4.14.182:
     resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
-    dev: true
 
   /@types/long/4.0.2:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
@@ -7132,6 +7257,11 @@ packages:
       pascalcase: 0.1.1
     dev: true
 
+  /base64-arraybuffer/1.0.2:
+    resolution: {integrity: sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==}
+    engines: {node: '>= 0.6.0'}
+    dev: false
+
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
@@ -8254,6 +8384,12 @@ packages:
       isobject: 3.0.1
     dev: false
 
+  /css-line-break/2.1.0:
+    resolution: {integrity: sha512-FHcKFCZcAha3LwfVBhCQbW2nCNbkZXn7KVUJcsT5/P8YmfsVja0FMPJr0B903j/E69HUphKiV9iQArX8SDYA4w==}
+    dependencies:
+      utrie: 1.0.2
+    dev: false
+
   /css-loader/3.6.0_webpack@4.46.0:
     resolution: {integrity: sha512-M5lSukoWi1If8dhQAUCvj4H8vUt3vOnwbQBH9DdTm/s4Ym2B/3dPMtYZeJmq7Q3S3Pa+I94DcZ7pc9bP14cWIQ==}
     engines: {node: '>= 8.9.0'}
@@ -8350,7 +8486,6 @@ packages:
 
   /dat.gui/0.7.9:
     resolution: {integrity: sha512-sCNc1OHobc+Erc1HqiswYgHdVNpSJUlk/Hz8vzOCsER7rl+oF/4+v8GXFUyCgtXpoCX6+bnmg07DedLvBLwYKQ==}
-    dev: true
 
   /date-fns/2.29.1:
     resolution: {integrity: sha512-dlLD5rKaKxpFdnjrs+5azHDFOPEu4ANy/LTh04A1DTzMM7qoajmKCBc8pkKRFT41CNzw+4gQh79X5C+Jq27HAw==}
@@ -8725,6 +8860,11 @@ packages:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
     dev: true
+
+  /emittery/0.11.0:
+    resolution: {integrity: sha512-S/7tzL6v5i+4iJd627Nhv9cLFIo5weAIlGccqJFpnBoDB8U1TF2k5tez4J/QNuxyyhWuFqHg1L84Kd3m7iXg6g==}
+    engines: {node: '>=12'}
+    dev: false
 
   /emittery/0.9.2:
     resolution: {integrity: sha512-sweWHu3j4dQm+NjLPu17pv+m5lCeK7g4Ov0NgfbRUEyzLc59DYDeRYXqlxEvuolaToI0VR3ThjFAghzl7Acjfw==}
@@ -10734,6 +10874,14 @@ packages:
       webpack: 5.73.0
     dev: true
 
+  /html2canvas/1.4.1:
+    resolution: {integrity: sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      css-line-break: 2.1.0
+      text-segmentation: 1.0.3
+    dev: false
+
   /htmlparser2/6.1.0:
     resolution: {integrity: sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==}
     dependencies:
@@ -10840,7 +10988,6 @@ packages:
 
   /immediate/3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
-    dev: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -11677,7 +11824,6 @@ packages:
     resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
     dependencies:
       immediate: 3.0.6
-    dev: true
 
   /lilconfig/2.0.4:
     resolution: {integrity: sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA==}
@@ -11774,7 +11920,6 @@ packages:
     resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
     dependencies:
       lie: 3.1.1
-    dev: true
 
   /locate-path/2.0.0:
     resolution: {integrity: sha1-K1aLJl7slExtnA3pw9u7ygNUzY4=}
@@ -16778,6 +16923,12 @@ packages:
     engines: {node: '>=0.10'}
     dev: true
 
+  /text-segmentation/1.0.3:
+    resolution: {integrity: sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==}
+    dependencies:
+      utrie: 1.0.2
+    dev: false
+
   /text-table/0.2.0:
     resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
     dev: true
@@ -16823,7 +16974,6 @@ packages:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
     dependencies:
       '@popperjs/core': 2.11.5
-    dev: true
 
   /tmpl/1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
@@ -17340,6 +17490,12 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: true
 
+  /utrie/1.0.2:
+    resolution: {integrity: sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==}
+    dependencies:
+      base64-arraybuffer: 1.0.2
+    dev: false
+
   /uuid-browser/3.1.0:
     resolution: {integrity: sha512-dsNgbLaTrd6l3MMxTtouOCFw4CBFc/3a+GgYA2YyrJvyQ1u6q4pcu3ktLoUZ/VN/Aw9WsauazbgsgdfVWgAKQg==}
     dev: true
@@ -17738,6 +17894,31 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: true
+
+  /white-web-sdk-esm/2.16.34:
+    resolution: {integrity: sha512-qXf/31W6aqr7p2u/NMo8FAQMKeclsU+B0tUmYa0DNRtM/IbBqNfLhnnu+UVQXqtLwA2eiz1lDPmlJgtC2yRO6w==}
+    dependencies:
+      '@juggle/resize-observer': 3.3.1
+      '@netless/canvas-polyfill': 0.0.4
+      '@netless/xml-js': 1.6.15
+      atob: 2.1.2
+      bezier-js: 2.6.1
+      bowser: 2.11.0
+      color: 3.2.1
+      core-js: 3.23.2
+      detect-it: 3.0.7
+      eventemitter3: 4.0.7
+      mathjs: 10.6.4
+      mobx: 6.6.1
+      protobufjs: 6.11.3
+      query-string: 5.1.1
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      spark-md5: 3.0.2
+      textarea-caret-ts: 4.1.1
+      url-parse: 1.5.10
+      uuid: 7.0.3
+    dev: false
 
   /white-web-sdk/2.16.28:
     resolution: {integrity: sha512-O/SsaLMw2qcAQgc2wjFimuvz56TvP8dXgJFogWkXh2uPK5A9+6uCAbOuw4J1ozoUL4ZxtKIZLtxhUdJNftWHgw==}

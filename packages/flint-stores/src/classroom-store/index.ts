@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SideEffectManager } from "side-effect-manager";
 import { action, autorun, makeAutoObservable, observable, reaction, runInAction } from "mobx";
 
-import type { Storage } from "@netless/fastboard";
+import { Fastboard, Storage } from "@netless/fastboard";
 import { RoomType, generateRTCToken } from "@netless/flint-server-api";
 import {
   // IServiceRecording,
@@ -10,21 +10,21 @@ import {
   IServiceVideoChat,
   IServiceVideoChatMode,
   // IServiceVideoChatRole,
-  // IServiceWhiteboard,
+  IServiceWhiteboard,
 } from "@netless/flint-services";
 
 import { globalStore } from "../global-store";
 import { ClassModeType } from "./constants";
 import { RoomItem, roomStore } from "../room-store";
 import { User, UserStore } from "../user-store";
-// import { WhiteboardStore } from "../whiteboard-store";
+import { WhiteboardStore } from "../whiteboard-store";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
   ownerUUID: string;
   rtc: IServiceVideoChat;
   rtm: IServiceTextChat;
-  // whiteboard: IServiceWhiteboard;
+  whiteboard: IServiceWhiteboard;
   // recording: IServiceRecording;
 }
 
@@ -74,7 +74,7 @@ export class ClassroomStore {
 
   public readonly rtc: IServiceVideoChat;
   public readonly rtm: IServiceTextChat;
-  // public readonly whiteboardStore: WhiteboardStore;
+  public readonly whiteboardStore: WhiteboardStore;
   // public readonly recording: IServiceRecording;
 
   public constructor(config: ClassroomStoreConfig) {
@@ -106,18 +106,18 @@ export class ClassroomStore {
       isInRoom: userUUID => this.rtm.members.has(userUUID),
     });
 
-    // this.whiteboardStore = new WhiteboardStore({
-    //   isCreator: this.isCreator,
-    //   isWritable: this.isCreator,
-    //   getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
-    //   whiteboard: config.whiteboard,
-    // });
+    this.whiteboardStore = new WhiteboardStore({
+      isCreator: this.isCreator,
+      isWritable: this.isCreator,
+      getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
+      whiteboard: config.whiteboard,
+    });
 
     makeAutoObservable<this, "sideEffect">(this, {
       rtc: observable.ref,
       rtm: observable.ref,
       sideEffect: false,
-      // deviceStateStorage: false,
+      deviceStateStorage: false,
       // classroomStorage: false,
       // onStageUsersStorage: false,
     });
@@ -152,7 +152,16 @@ export class ClassroomStore {
       token: globalStore.rtmToken,
     });
 
+    const fastboard = await this.whiteboardStore.joinWhiteboardRoom();
+
     await this.users.initUsers([...this.rtm.members]);
+
+    const deviceStateStorage = fastboard.syncedStore.connectStorage<DeviceStateStorageState>(
+      "deviceState",
+      {},
+    );
+
+    this.deviceStateStorage = deviceStateStorage;
   }
 
   public get roomInfo(): RoomItem | undefined {
@@ -224,8 +233,10 @@ export class ClassroomStore {
 
   /** joiner更新自己的摄像机和麦克风状态 */
   public updateDeviceState = (userUUID: string, camera: boolean, mic: boolean): void => {
-    // 只有创建者才能更改设备状态
+    // 只有自己或创建者才能更改设备状态
+    console.log("更改设备状态====1111");
     if (this.deviceStateStorage?.isWritable && (this.userUUID === userUUID || this.isCreator)) {
+      console.log("更改设备状态====22222");
       const deviceState = this.deviceStateStorage.state[userUUID];
       if (deviceState) {
         // 创建者可以关闭joiner的相机和麦克风
@@ -251,6 +262,8 @@ export class ClassroomStore {
 
   public async destroy(): Promise<void> {
     this.sideEffect.flushAll();
+
+    this.deviceStateStorage = undefined;
     this.classroomStorage = undefined;
   }
 
