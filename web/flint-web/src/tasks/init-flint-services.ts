@@ -25,7 +25,7 @@ export function initFlintServices(): void {
 
   flintServices.register("whiteboard", async () => {
     const { Fastboard, register, stockedApps } = await import(
-      "@netless/flat-service-provider-fastboard"
+      "@netless/flint-service-provider-fastboard"
     );
 
     void register({

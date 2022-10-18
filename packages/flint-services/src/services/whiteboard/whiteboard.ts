@@ -12,6 +12,11 @@ export interface IServiceWhiteboard$Val {
   readonly allowDrawing$: ReadonlyVal<boolean>;
 }
 
+export interface IServiceWhiteboardOptions {
+  /** 渲染笔划尾部 */
+  strokeTail?: boolean;
+}
+
 export interface IServiceWhiteboardJoinRoomConfig extends IService {
   appID?: string;
   roomID: string;
@@ -20,6 +25,7 @@ export interface IServiceWhiteboardJoinRoomConfig extends IService {
   nickName: string;
   region: Region;
   classroomType: RoomType;
+  options?: IServiceWhiteboardOptions;
 }
 
 export abstract class IServiceWhiteboard {
@@ -42,6 +48,8 @@ export abstract class IServiceWhiteboard {
   public abstract leaveRoom(): Promise<void>;
 
   public abstract render(el: HTMLElement): void;
+
+  public abstract setTheme(theme: "light" | "dark"): void;
 
   public abstract exportAnnotations(): Array<Promise<HTMLCanvasElement | null>>;
 
