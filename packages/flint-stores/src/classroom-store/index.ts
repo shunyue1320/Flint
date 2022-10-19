@@ -18,6 +18,7 @@ import { ClassModeType } from "./constants";
 import { RoomItem, roomStore } from "../room-store";
 import { User, UserStore } from "../user-store";
 import { WhiteboardStore } from "../whiteboard-store";
+import { preferencesStore } from "../preferences-store";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
@@ -34,6 +35,7 @@ export type ClassroomStorageState = {
   raiseHandUsers: string[];
   isWritable?: boolean;
 };
+export type OnStageUsersStorageState = Record<string, boolean>;
 
 export class ClassroomStore {
   private readonly sideEffect = new SideEffectManager();
@@ -67,6 +69,7 @@ export class ClassroomStore {
 
   public deviceStateStorage?: Storage<DeviceStateStorageState>;
   public classroomStorage?: Storage<ClassroomStorageState>;
+  public onStageUsersStorage?: Storage<OnStageUsersStorageState>;
 
   public readonly users: UserStore;
 
@@ -120,7 +123,7 @@ export class ClassroomStore {
       sideEffect: false,
       deviceStateStorage: false,
       // classroomStorage: false,
-      // onStageUsersStorage: false,
+      onStageUsersStorage: false,
     });
   }
 
@@ -158,13 +161,58 @@ export class ClassroomStore {
     await this.users.initUsers([...this.rtm.members]);
 
     // 同步存储文档：https://www.npmjs.com/package/@netless/synced-store
+    // 存储：用户的 { uuid: {相机 录音} } 状态
     const deviceStateStorage = fastboard.syncedStore.connectStorage<DeviceStateStorageState>(
       "deviceState",
       {},
     );
+    // 存储：禁言 举手人数
+    const classroomStorage = fastboard.syncedStore.connectStorage<ClassroomStorageState>(
+      "classroom",
+      {
+        ban: false,
+        raiseHandUsers: [],
+      },
+    );
+    // 存储：正在发言用户 { uuid: true }
+    const onStageUsersStorage = fastboard.syncedStore.connectStorage<OnStageUsersStorageState>(
+      "onStageUsers",
+      {},
+    );
 
     this.deviceStateStorage = deviceStateStorage;
+    this.classroomStorage = classroomStorage;
+    this.onStageUsersStorage = onStageUsersStorage;
     console.log("更改设备状态=======", deviceStateStorage.state);
+
+    // 创建者默认 相机:false 录音:true 状态设置给本地
+    if (this.isCreator) {
+      this.updateDeviceState(
+        this.userUUID,
+        Boolean(preferencesStore.autoCameraOn),
+        Boolean(preferencesStore.autoMicOn),
+      );
+    } else {
+      this.whiteboardStore.updateWritable(Boolean(onStageUsersStorage.state[this.userUUID]));
+    }
+
+    // 同步禁言状态
+    this._updateIsBan(classroomStorage.state.ban);
+
+    this.sideEffect.addDisposer(
+      deviceStateStorage.on("stateChanged", () => {
+        this.users.updateUsers(user => {
+          const deviceState = deviceStateStorage.state[user.userUUID];
+          if (deviceState) {
+            user.camera = deviceState.camera;
+            user.mic = deviceState.mic;
+          } else {
+            user.mic = false;
+            user.camera = false;
+          }
+        });
+      }),
+    );
   }
 
   public get roomInfo(): RoomItem | undefined {
@@ -177,10 +225,22 @@ export class ClassroomStore {
 
   /** 当前用户举手时 */
   public onToggleHandRaising = (): void => {
-    if (this.isCreator || this.classroomStorage?.isWritable) {
-      this.classroomStorage.setState({ raiseHandUsers: [] });
+    if (this.isCreator || this.users.currentUser?.isSpeak) {
+      return;
+    }
+
+    if (this.users.currentUser) {
+      void this.rtm.sendPeerCommand(
+        "raise-hand",
+        { roomUUID: this.roomUUID, raiseHand: !this.users.currentUser.isRaiseHand },
+        this.ownerUUID,
+      );
     }
   };
+
+  private _updateIsBan(ban: boolean): void {
+    this.isBan = ban;
+  }
 
   private async initRTC(): Promise<void> {
     this.sideEffect.addDisposer(

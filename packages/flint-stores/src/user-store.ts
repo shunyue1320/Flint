@@ -102,11 +102,13 @@ export class UserStore {
    * 返回“false”以停止遍历。
    */
   public updateUsers = (editUser: (user: User) => boolean | void): void => {
+    // action 包裹的回调函数中有响应式数据就触发响应式
     const editUserAction = action("editUser", editUser);
     const unSortedUsers: User[] = [];
 
     let shouldStopEditUser = false;
 
+    // 创建者更新回调就返回创建者
     if (this.creator) {
       shouldStopEditUser = editUserAction(this.creator) === false;
     }

@@ -4,6 +4,11 @@
   height: 100%;
   background: #f3f6f9;
 
+  .whiteboard {
+    width: 100%;
+    height: 100%;
+  }
+
   .telebox-collector {
     position: absolute;
     left: 90px;
@@ -26,11 +31,13 @@
 
   .fastboard-bottom-left,
   .fastboard-bottom-right {
-    bottom: 0;
-
     button {
       outline: 0;
     }
+  }
+
+  .telebox-manager-stage {
+    box-shadow: none;
   }
 
   &.is-readonly {
@@ -74,6 +81,32 @@
   z-index: 3;
 }
 
+.whiteboard-scroll-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 120px;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 4px 8px;
+  transition: ease-out 0.2s;
+  z-index: 3;
+  font-variant-numeric: tabular-nums;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.whiteboard-scroll-page.is-active {
+  opacity: 0.9;
+}
+
+.is-readonly .whiteboard-scroll-page {
+  opacity: 0;
+}
+
 .flat-color-scheme-dark {
   .whiteboard-container {
     background: #15181d;
@@ -81,6 +114,10 @@
 
   .netless-window-manager-sizer::before,
   .netless-window-manager-sizer::after {
+    background: #15181d;
+  }
+
+  .whiteboard-scroll-page {
     background: #15181d;
   }
 }
