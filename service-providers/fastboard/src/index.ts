@@ -12,6 +12,7 @@ import {
   IServiceWhiteboardJoinRoomConfig,
 } from "@netless/flint-services";
 import type { FlintI18n } from "@netless/flint-i18n";
+import { RoomType } from "@netless/flint-server-api";
 
 import { registerColorShortcut } from "./color-shortcut";
 import { injectCursor } from "./inject-cursor";
@@ -221,6 +222,8 @@ export class Fastboard extends IServiceWhiteboard {
           // @deprecated
           cursorName: nickName,
         },
+        // 只有可写用户才能修改状态和分派事件。
+        // 对于只读用户（受众），将此设置为false以获得更好的性能
         isWritable: this.allowDrawing,
         uid,
         floatBar: true,
@@ -238,13 +241,16 @@ export class Fastboard extends IServiceWhiteboard {
               room.setWritable(true);
             }
           },
+          // 白板连接状态变化时
           onPhaseChanged: phase => {
             this._roomPhase$.setValue(phase);
           },
+          // 在发生错误时断开连接
           onDisconnectWithError: error => {
             this.toaster.emit("error", this.flintI18n.t("on-disconnect-with-error"));
             console.error(error);
           },
+          // 被踢， 房间删除，房间被禁
           onKickedWithReason: async reason => {
             this.events.emit(
               "kicked",
@@ -369,6 +375,7 @@ export class Fastboard extends IServiceWhiteboard {
     return canvases;
   }
 
+  /** window 上注入 服务器地区 白板版本 方便白板调试 */
   private setUA(): void {
     const exist = window.__netlessUA || "";
     if (!exist.includes("FLAT/")) {

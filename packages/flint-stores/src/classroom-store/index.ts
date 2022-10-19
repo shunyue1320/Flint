@@ -111,6 +111,7 @@ export class ClassroomStore {
       isWritable: this.isCreator,
       getRoomType: () => this.roomInfo?.roomType || RoomType.BigClass,
       whiteboard: config.whiteboard,
+      onDrop: this.onDrop,
     });
 
     makeAutoObservable<this, "sideEffect">(this, {
@@ -152,16 +153,18 @@ export class ClassroomStore {
       token: globalStore.rtmToken,
     });
 
+    // 创建白板室返回到 fastboardAPP https://docs.agora.io/cn/whiteboard/fastboard_api_web?platform=Web#createfastboard
     const fastboard = await this.whiteboardStore.joinWhiteboardRoom();
-
     await this.users.initUsers([...this.rtm.members]);
 
+    // 同步存储文档：https://www.npmjs.com/package/@netless/synced-store
     const deviceStateStorage = fastboard.syncedStore.connectStorage<DeviceStateStorageState>(
       "deviceState",
       {},
     );
 
     this.deviceStateStorage = deviceStateStorage;
+    console.log("更改设备状态=======", deviceStateStorage.state);
   }
 
   public get roomInfo(): RoomItem | undefined {
@@ -234,9 +237,7 @@ export class ClassroomStore {
   /** joiner更新自己的摄像机和麦克风状态 */
   public updateDeviceState = (userUUID: string, camera: boolean, mic: boolean): void => {
     // 只有自己或创建者才能更改设备状态
-    console.log("更改设备状态====1111");
     if (this.deviceStateStorage?.isWritable && (this.userUUID === userUUID || this.isCreator)) {
-      console.log("更改设备状态====22222");
       const deviceState = this.deviceStateStorage.state[userUUID];
       if (deviceState) {
         // 创建者可以关闭joiner的相机和麦克风
@@ -254,6 +255,9 @@ export class ClassroomStore {
           return;
         }
       }
+      console.log("set更改设备状态====", {
+        [userUUID]: camera || mic ? { camera, mic } : undefined,
+      });
       this.deviceStateStorage.setState({
         [userUUID]: camera || mic ? { camera, mic } : undefined,
       });
@@ -266,6 +270,8 @@ export class ClassroomStore {
     this.deviceStateStorage = undefined;
     this.classroomStorage = undefined;
   }
+
+  public onDrop = (): void => { };
 
   public toggleRecording = async ({ onStop }: { onStop?: () => void } = {}): Promise<void> => {
     this.isRecordingLoading = true;

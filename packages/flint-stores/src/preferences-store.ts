@@ -30,6 +30,10 @@ export class PreferencesStore {
   public microphoneId?: string | null = null;
 
   public prefersColorScheme: FlintPrefersColorScheme = "auto";
+  /** 加入聊天室时打开录制 */
+  public autoRecording = false;
+  /** 显示或隐藏笔划尾部 */
+  public strokeTail = true;
 
   public constructor() {
     autoPersistStore({ storeLSName: "PreferencesStore", store: this, version: LS_VERSION });
