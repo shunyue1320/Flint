@@ -1,7 +1,6 @@
 import "./style.less";
 
-import React, { useContext, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import { useTranslate } from "@netless/flint-i18n";
 import {
   CloudRecordBtn,
@@ -118,10 +117,7 @@ export const BigClassPage = withClassroomStore<BigClassPageProps>(
       console.log("creator===", creator);
       return (
         <RealtimePanel
-          chatSlot={
-            <div>聊天列表</div>
-            // <ChatPanel classRoomStore={classroomStore} maxSpeakingUsers={1}></ChatPanel>
-          }
+          chatSlot={<ChatPanel classRoomStore={classroomStore} maxSpeakingUsers={1}></ChatPanel>}
           isShow={isRealtimeSideOpen}
           isVideoOn={classroomStore.isJoinedRTC}
           videoSlot={

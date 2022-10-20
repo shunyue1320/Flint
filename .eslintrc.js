@@ -1,24 +1,25 @@
-module.exports = {
+// @ts-check
+const { defineConfig } = require("eslint-define-config");
+
+module.exports = defineConfig({
   root: true,
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    sourceType: "module",
+  },
   extends: [
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:@netless/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:eslint-comments/recommended",
   ],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: "latest",
-    sourceType: "module",
-  },
   plugins: ["@typescript-eslint", "eslint-comments", "jsx-a11y", "react"],
   rules: {
+    "@netless/consistent-type-exports": "off",
     "array-callback-return": "warn",
     "default-case": "off",
     "dot-location": ["warn", "property"],
@@ -287,4 +288,4 @@ module.exports = {
       },
     },
   ],
-};
+});

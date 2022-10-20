@@ -19,6 +19,7 @@ import { RoomItem, roomStore } from "../room-store";
 import { User, UserStore } from "../user-store";
 import { WhiteboardStore } from "../whiteboard-store";
 import { preferencesStore } from "../preferences-store";
+import { ChatStore } from "./chat-store";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
@@ -77,6 +78,7 @@ export class ClassroomStore {
 
   public readonly rtc: IServiceVideoChat;
   public readonly rtm: IServiceTextChat;
+  public readonly chatStore: ChatStore;
   public readonly whiteboardStore: WhiteboardStore;
   // public readonly recording: IServiceRecording;
 
@@ -95,12 +97,12 @@ export class ClassroomStore {
     this.rtm = config.rtm;
     // this.recording = config.recording;
 
-    // this.chatStore = new ChatStore({
-    //   roomUUID: this.roomUUID,
-    //   ownerUUID: this.ownerUUID,
-    //   rtm: this.rtm,
-    //   isShowUserGuide: globalStore.isShowGuide,
-    // });
+    this.chatStore = new ChatStore({
+      roomUUID: this.roomUUID,
+      ownerUUID: this.ownerUUID,
+      rtm: this.rtm,
+      isShowUserGuide: globalStore.isShowGuide,
+    });
 
     this.users = new UserStore({
       roomUUID: this.roomUUID,
@@ -198,6 +200,13 @@ export class ClassroomStore {
 
     // 同步禁言状态
     this._updateIsBan(classroomStorage.state.ban);
+
+    // 更新消息列表后更新消息列表缓存
+    this.chatStore.onNewMessage = message => {
+      if (this.isRecording) {
+        fastboard.syncedStore.dispatchEvent("new-message", message);
+      }
+    };
 
     this.sideEffect.addDisposer(
       deviceStateStorage.on("stateChanged", () => {

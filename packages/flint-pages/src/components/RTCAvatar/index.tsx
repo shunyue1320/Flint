@@ -7,7 +7,7 @@ import {
 } from "@netless/flint-components";
 import { AvatarCanvas, AvatarCanvasProps } from "./AvatarCanvas";
 
-export type RTCAvatarProps = Omit<VideoAvatarProps, "getVolumeLevel" | "avatarUser"> &
+export type RTCAvatarProps = Omit<VideoAvatarProps, "getVolumeLevel" | "avatarUser" | "children"> &
   VideoAvatarAbsentProps &
   AvatarCanvasProps;
 

@@ -45,15 +45,15 @@ export const AvatarCanvas = observer<
     [rtcAvatar],
   );
 
+  // 摄像头 开启/关闭
   useEffect(() => {
-    console.log("启用摄像机", rtcAvatar);
     if (rtcAvatar) {
       rtcAvatar.enableCamera(Boolean(camera));
     }
   }, [camera, rtcAvatar]);
 
+  // 麦克风 开启/关闭
   useEffect(() => {
-    console.log("启用麦克风", rtcAvatar);
     if (rtcAvatar) {
       rtcAvatar.enableMic(Boolean(mic));
     }
