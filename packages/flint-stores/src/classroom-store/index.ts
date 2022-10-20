@@ -3,7 +3,7 @@ import { SideEffectManager } from "side-effect-manager";
 import { action, autorun, makeAutoObservable, observable, reaction, runInAction } from "mobx";
 
 import { Fastboard, Storage } from "@netless/fastboard";
-import { RoomType, generateRTCToken } from "@netless/flint-server-api";
+import { RoomType, generateRTCToken, checkRTMCensor } from "@netless/flint-server-api";
 import {
   // IServiceRecording,
   IServiceTextChat,
@@ -51,6 +51,8 @@ export class ClassroomStore {
   public isBan = false;
   /** 正在进行云录制 */
   public isRecording = false;
+  /** 云存储面板是否可见 */
+  public isCloudStoragePanelVisible = false;
   /** 正在切换云录制 */
   public isRecordingLoading = false;
 
@@ -324,9 +326,6 @@ export class ClassroomStore {
           return;
         }
       }
-      console.log("set更改设备状态====", {
-        [userUUID]: camera || mic ? { camera, mic } : undefined,
-      });
       this.deviceStateStorage.setState({
         [userUUID]: camera || mic ? { camera, mic } : undefined,
       });
@@ -340,7 +339,63 @@ export class ClassroomStore {
     this.classroomStorage = undefined;
   }
 
+  public onCancelAllHandRaising = (): void => {
+    if (this.isCreator && this.classroomStorage?.isWritable) {
+      this.classroomStorage?.setState({ raiseHandUsers: [] });
+    }
+  };
+
+  /** 清空云存储举手列表 */
+  public toggleCloudStoragePanel = (visible: boolean): void => {
+    this.isCloudStoragePanelVisible = visible;
+  };
+
+  /** 设置云存储是禁止举手 */
+  public onToggleBan = (): void => {
+    if (this.isCreator && this.classroomStorage?.isWritable) {
+      this.classroomStorage.setState({ ban: !this.classroomStorage.state.ban });
+    }
+  };
+
+  public onStaging = async (userUUID: string, onStage: boolean): Promise<void> => {
+    if (
+      this.classMode === ClassModeType.Interaction ||
+      userUUID === this.ownerUUID ||
+      !this.onStageUsersStorage?.isWritable
+    ) {
+      return;
+    }
+
+    // 是创建者可以修改任何用户的视频录音状态
+    if (this.isCreator) {
+      this.onStageUsersStorage.setState({ [userUUID]: onStage });
+    } else {
+      // 不是创建者只能停止讲话
+      if (!onStage && userUUID === this.userUUID) {
+        this.onStageUsersStorage.setState({ [userUUID]: false });
+      }
+    }
+    if (!onStage && (!this.isCreator || userUUID !== this.userUUID)) {
+      this.updateDeviceState(userUUID, false, false);
+    }
+  };
+
+  public acceptRaiseHand = (): void => { };
+
   public onDrop = (): void => { };
+
+  public onMessageSend = async (text: string): Promise<void> => {
+    if (this.isBan && !this.isCreator) {
+      return;
+    }
+
+    // 中国需要检查文字是否合规 合规才能发送消息
+    if (process.env.FLAT_REGION === "CN" && !(await checkRTMCensor({ text })).valid) {
+      return;
+    }
+
+    await this.rtm.sendRoomMessage(text);
+  };
 
   public toggleRecording = async ({ onStop }: { onStop?: () => void } = {}): Promise<void> => {
     this.isRecordingLoading = true;

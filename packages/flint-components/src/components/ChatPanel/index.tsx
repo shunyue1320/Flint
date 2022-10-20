@@ -1,9 +1,9 @@
 import "./style.less";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Tabs } from "antd";
 import { observer } from "mobx-react-lite";
-import { useTranslation } from "react-i18next";
+import { useTranslate } from "@netless/flint-i18n";
 
 import { SVGChat, SVGUserGroup } from "../FlatIcons";
 import { ChatTabTitle, ChatTabTitleProps } from "./ChatTabTitle";
@@ -15,38 +15,51 @@ export type ChatPanelProps = ChatTabTitleProps &
   ChatUsersProps;
 
 export const ChatPanel = observer<ChatPanelProps>(function ChatPanel(props) {
-  const { t } = useTranslation();
+  const t = useTranslate();
   const [activeTab, setActiveTab] = useState<"messages" | "users">("messages");
-
+  const usersCount = useMemo(() => {
+    const count = props.users.length;
+    if (count === 0) {
+      return "";
+    }
+    if (count > 999) {
+      return "(999+)";
+    }
+    return `(${count})`;
+  }, [props.users.length]);
   return (
     <div className="chat-panel">
-      <Tabs activeKey={activeTab} tabBarGutter={0} onChange={setActiveTab as (key: string) => void}>
-        {/* 消息列表 */}
-        <Tabs.TabPane
-          key="messages"
-          tab={
-            <ChatTabTitle>
-              <SVGChat />
-              <span>{t("messages")}</span>
-            </ChatTabTitle>
-          }
-        >
-          <ChatMessages {...props} visible={activeTab === "messages"} />
-        </Tabs.TabPane>
-
-        {/* 用户列表 */}
-        <Tabs.TabPane
-          key="users"
-          tab={
-            <ChatTabTitle {...props}>
-              <SVGUserGroup />
-              <span>{t("users")}</span>
-            </ChatTabTitle>
-          }
-        >
-          <ChatUsers {...props} />
-        </Tabs.TabPane>
-      </Tabs>
+      <Tabs
+        activeKey={activeTab}
+        items={[
+          // 消息列表
+          {
+            key: "messages",
+            label: (
+              <ChatTabTitle>
+                <SVGChat />
+                <span>{t("messages")}</span>
+              </ChatTabTitle>
+            ),
+            children: <ChatMessages {...props} visible={activeTab === "messages"} />,
+          },
+          // 用户列表
+          {
+            key: "users",
+            label: (
+              <ChatTabTitle {...props}>
+                <SVGUserGroup />
+                <span>
+                  {t("users")} {usersCount}
+                </span>
+              </ChatTabTitle>
+            ),
+            children: <ChatUsers {...props} />,
+          },
+        ]}
+        tabBarGutter={0}
+        onChange={setActiveTab as (key: string) => void}
+      />
     </div>
   );
 });

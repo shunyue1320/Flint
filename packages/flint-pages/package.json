@@ -11,7 +11,7 @@
     "@netless/flint-server-api": "workspace:*",
     "@netless/flint-services": "workspace:*",
     "@netless/flint-stores": "workspace:*",
-    "antd": "^4.22.8",
+    "antd": "^4.23.2",
     "axios": "^0.26.1",
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",

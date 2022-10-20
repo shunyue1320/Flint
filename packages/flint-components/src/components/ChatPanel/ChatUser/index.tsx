@@ -12,6 +12,7 @@ export interface ChatUserProps {
   userUUID: string;
   // 用户数据
   user: User;
+  disableEndSpeaking?: boolean;
   // 当老师接受举手时
   onAcceptRaiseHand: (uid: string) => void;
   // 用户停止说话
@@ -24,6 +25,7 @@ export const ChatUser = observer<ChatUserProps>(function ChatUser({
   ownerUUID,
   userUUID,
   user,
+  disableEndSpeaking,
   onAcceptRaiseHand,
   onEndSpeaking,
   generateAvatar,
@@ -50,7 +52,7 @@ export const ChatUser = observer<ChatUserProps>(function ChatUser({
         // 在对话，老师端 或 学生显示 结束 按钮
         <>
           <span className="chat-user-status is-speaking">{t("during-the-presentation")}</span>
-          {(isCreator || isCurrentUser) && (
+          {(isCreator || isCurrentUser) && !disableEndSpeaking && (
             <button
               className="chat-user-ctl-btn is-speaking"
               onClick={() => onEndSpeaking(user.userUUID)}

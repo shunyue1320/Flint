@@ -2,10 +2,10 @@ import "./style.less";
 
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { useTranslation } from "react-i18next";
+import { useTranslate } from "@netless/flint-i18n";
 import { format } from "date-fns";
 
-import { ChatMsg, ChatMsgType } from "../types";
+import { ChatMsg } from "../types";
 
 export interface ChatMessageProps {
   userUUID: string;
@@ -23,7 +23,7 @@ export const ChatMessage = observer<ChatMessageProps>(function ChatMessage({
   // 打开云存储
   openCloudStorage,
 }) {
-  const { t } = useTranslation();
+  const t = useTranslate();
 
   useEffect(() => {
     onMount();
@@ -31,23 +31,23 @@ export const ChatMessage = observer<ChatMessageProps>(function ChatMessage({
   }, []);
 
   switch (message.type) {
-    // 根据消息类型返回对应样式
-    case ChatMsgType.Notice:
+    case "notice": {
       return (
         <div className="chat-message-line">
-          <div className="chat-message-notice">{message.value}</div>
+          <div className="chat-message-notice">{message.text}</div>
         </div>
       );
-    case ChatMsgType.BanText: {
+    }
+    case "ban": {
       return (
         <div className="chat-message-line">
           <div className="chat-message-ban">
-            <span>{message.value ? t("banned") : t("unban")}</span>
+            <span>{message.status ? t("banned") : t("unban")}</span>
           </div>
         </div>
       );
     }
-    case ChatMsgType.UserGuide: {
+    case "user-guide": {
       return (
         <div className="chat-message-line">
           <div className="chat-message-user-guide-bubble">
@@ -61,9 +61,9 @@ export const ChatMessage = observer<ChatMessageProps>(function ChatMessage({
         </div>
       );
     }
-
-    default: // not default
+    default: {
       break;
+    }
   }
 
   const time = new Date(message.timestamp);
@@ -74,11 +74,11 @@ export const ChatMessage = observer<ChatMessageProps>(function ChatMessage({
   const finalTimeString = dateString === dateToday ? timeString : fullTimeString;
 
   // 是自己 消息在右边
-  if (userUUID === message.userUUID) {
+  if (userUUID === message.senderID) {
     return (
       <div className="chat-message-line is-reverse">
         <div className="chat-message-bubble is-self">
-          <pre>{message.value}</pre>
+          <pre>{message.text}</pre>
         </div>
         <div className="chat-message-user">
           <time
@@ -88,7 +88,7 @@ export const ChatMessage = observer<ChatMessageProps>(function ChatMessage({
           >
             {finalTimeString}
           </time>
-          <span className="chat-message-user-name">{messageUser?.name || message.userUUID}</span>
+          <span className="chat-message-user-name">{messageUser?.name || message.senderID}</span>
           <span className="chat-message-user-avatar">
             <img alt="[avatar]" src={messageUser?.avatar} />
           </span>
@@ -100,13 +100,13 @@ export const ChatMessage = observer<ChatMessageProps>(function ChatMessage({
   return (
     <div className="chat-message-line">
       <div className="chat-message-bubble">
-        <pre>{message.value}</pre>
+        <pre>{message.text}</pre>
       </div>
       <div className="chat-message-user">
         <span className="chat-message-user-avatar">
           <img alt="[avatar]" src={messageUser?.avatar} />
         </span>
-        <span className="chat-message-user-name">{messageUser?.name || message.userUUID}</span>
+        <span className="chat-message-user-name">{messageUser?.name || message.senderID}</span>
         <time
           className="chat-message-user-time"
           dateTime={time.toISOString()}

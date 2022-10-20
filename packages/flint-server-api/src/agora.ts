@@ -26,3 +26,13 @@ export async function generateRTMToken(): Promise<string> {
   );
   return token;
 }
+
+export interface RTMCensorPayload {
+  text: string;
+}
+export interface RTMCensorResult {
+  valid: boolean;
+}
+export function checkRTMCensor(payload: RTMCensorPayload): Promise<RTMCensorResult> {
+  return post<RTMCensorPayload, RTMCensorResult>("agora/rtm/censor", payload);
+}
