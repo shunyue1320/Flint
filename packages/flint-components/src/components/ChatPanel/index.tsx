@@ -5,7 +5,6 @@ import { Tabs } from "antd";
 import { observer } from "mobx-react-lite";
 import { useTranslate } from "@netless/flint-i18n";
 
-import { SVGChat, SVGUserGroup } from "../FlatIcons";
 import { ChatTabTitle, ChatTabTitleProps } from "./ChatTabTitle";
 import { ChatMessages, ChatMessagesProps } from "./ChatMessages";
 import { ChatUsers, ChatUsersProps } from "./ChatUsers";
@@ -37,7 +36,6 @@ export const ChatPanel = observer<ChatPanelProps>(function ChatPanel(props) {
             key: "messages",
             label: (
               <ChatTabTitle>
-                <SVGChat />
                 <span>{t("messages")}</span>
               </ChatTabTitle>
             ),
@@ -48,7 +46,6 @@ export const ChatPanel = observer<ChatPanelProps>(function ChatPanel(props) {
             key: "users",
             label: (
               <ChatTabTitle {...props}>
-                <SVGUserGroup />
                 <span>
                   {t("users")} {usersCount}
                 </span>
