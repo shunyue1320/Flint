@@ -9,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { WhiteboardStore, ClassroomStore } from "@netless/flint-stores";
 import { RaiseHand, DarkModeContext } from "@netless/flint-components";
 import { useTranslate, FlintI18nTFunction } from "@netless/flint-i18n";
+import { message } from "antd";
 
 export interface WhiteboardProps {
   whiteboardStore: WhiteboardStore;
@@ -27,12 +28,19 @@ export const Whiteboard = observer<WhiteboardProps>(function Whiteboard({
 }) {
   const t = useTranslate();
   const { room, phase, whiteboard } = whiteboardStore;
+  const isReconnecting = phase === RoomPhase.Reconnecting;
   const isDark = useContext(DarkModeContext);
 
   const [page, setPage] = useState(0);
   const [maxPage, setMaxPage] = useState(Infinity);
   const [showPage, setShowPage] = useState(false);
 
+  // 网络已断线，尝试重连中…
+  useEffect(() => {
+    return isReconnecting ? message.info(t("reconnecting"), 0) : noop;
+  }, [isReconnecting, t]);
+
+  // 设置滑动当前页提示弹窗
   useEffect(() => {
     const stopListenPage = whiteboard.events.on("scrollPage", setPage);
     const stopListenMaxPage = whiteboard.events.on("maxScrollPage", setMaxPage);
@@ -43,6 +51,27 @@ export const Whiteboard = observer<WhiteboardProps>(function Whiteboard({
       stopListenUserScroll();
     };
   }, [whiteboard]);
+
+  // 一秒后关闭当前页提示
+  useEffect(() => {
+    if (showPage) {
+      let isMounted = true;
+      const timer = setTimeout(() => {
+        isMounted && setShowPage(false);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+        isMounted = false;
+      };
+    }
+    return;
+  }, [showPage]);
+
+  // 设置白板主题
+  useEffect(() => {
+    whiteboard.setTheme(isDark ? "dark" : "light");
+  }, [isDark, whiteboard]);
 
   // 挂载白板
   const bindWhiteboard = useCallback(
