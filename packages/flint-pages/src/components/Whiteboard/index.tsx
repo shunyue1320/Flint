@@ -1,7 +1,7 @@
 import "@netless/window-manager/dist/style.css";
 import "./style.less";
 
-import React, { useCallback, useContext, useState, useEffect, useTransition } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import classNames from "classnames";
 import { RoomPhase } from "white-web-sdk";
 import { observer } from "mobx-react-lite";
