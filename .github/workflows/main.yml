@@ -1,4 +1,4 @@
-name: Deploy Flat Web Dev
+name: Deploy Flint Web Dev
 on:
   push:
     branches:
@@ -47,14 +47,9 @@ jobs:
         env:
           COMMIT_SHA_TAG: development-${{ github.sha }}
           LATEST_DEV_TAG: dev-latest
-          PRIVATE_DOCKERHUB_REGISTRY: ${{ secrets.PRIVATE_DOCKERHUB_REGISTRY }}
           PRIVATE_DOCKERHUB_USERNAME: ${{ secrets.PRIVATE_DOCKERHUB_USERNAME }}
           PRIVATE_DOCKERHUB_PASSWORD: ${{ secrets.PRIVATE_DOCKERHUB_PASSWORD }}
         run: |
-          docker build . -f web/flint-web/deploy/Dockerfile -t shunyue/flint-web:$COMMIT_SHA_TAG -t shunyue/flint-web:$LATEST_DEV_TAG -t $PRIVATE_DOCKERHUB_REGISTRY/shunyue/flint-web:$COMMIT_SHA_TAG -t $PRIVATE_DOCKERHUB_REGISTRY/shunyue/flint-web:$LATEST_DEV_TAG
+          docker build . -f web/flint-web/deploy/Dockerfile -t shunyue/flint-web:$COMMIT_SHA_TAG -t shunyue/flint-web:$LATEST_DEV_TAG
           docker push shunyue/flint-web:$COMMIT_SHA_TAG
           docker push shunyue/flint-web:$LATEST_DEV_TAG
-
-          docker login -u $PRIVATE_DOCKERHUB_USERNAME -p $PRIVATE_DOCKERHUB_PASSWORD $PRIVATE_DOCKERHUB_REGISTRY
-          docker push $PRIVATE_DOCKERHUB_REGISTRY/shunyue/flint-web:$COMMIT_SHA_TAG
-          docker push $PRIVATE_DOCKERHUB_REGISTRY/shunyue/flint-web:$LATEST_DEV_TAG
