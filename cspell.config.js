@@ -152,6 +152,7 @@ module.exports = {
 
     // readme
     "customizational",
+    "shunyue",
 
     // vscode
     "dbaeumer",

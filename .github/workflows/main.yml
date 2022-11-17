@@ -58,22 +58,3 @@ jobs:
           docker login -u $PRIVATE_DOCKERHUB_USERNAME -p $PRIVATE_DOCKERHUB_PASSWORD $PRIVATE_DOCKERHUB_REGISTRY
           docker push $PRIVATE_DOCKERHUB_REGISTRY/shunyue/flint-web:$COMMIT_SHA_TAG
           docker push $PRIVATE_DOCKERHUB_REGISTRY/shunyue/flint-web:$LATEST_DEV_TAG
-
-      - name: Prep helm chart
-        env:
-          DOCKER_IMAGE_NAME: ${{ secrets.PRIVATE_DOCKERHUB_REGISTRY }}/shunyue/flint-web
-          DOCKER_IMAGE_TAG: development-${{ github.sha }}
-        run: |
-          export APPVERSION=development-${{ github.sha }}
-          export CHART=./web/flint-web/helm/Chart.yaml
-          sed -i "s/^appVersion:.*$/appVersion: $APPVERSION/" $CHART
-
-          export VALUE=./web/flint-web/helm/values.yaml
-          sed -i "s|DOCKER_IMAGE_NAME|$DOCKER_IMAGE_NAME|" $VALUE
-          sed -i "s|DOCKER_IMAGE_TAG|$DOCKER_IMAGE_TAG|" $VALUE
-
-      - name: Deploy
-        uses: WyriHaximus/github-action-helm3@v2
-        with:
-          exec: helm upgrade flint-web ./web/flint-web/helm --install --wait --atomic --namespace=default
-          kubeconfig: "${{ secrets.KUBECONFIG }}"

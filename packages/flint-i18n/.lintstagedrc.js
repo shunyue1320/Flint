@@ -1,3 +1,4 @@
+const path = require("path");
 const baseLintConfig = require("../../.lintstagedrc.js");
 
 module.exports = {
