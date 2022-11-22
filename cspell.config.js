@@ -157,6 +157,9 @@ module.exports = {
     // vscode
     "dbaeumer",
     "keystyle",
+
+    // github
+    "appleboy",
   ],
   flagWords: ["fuck", "bitch", "asshole", "bullshit", "crap", "suck", "wtf"],
   dictionaries: [
