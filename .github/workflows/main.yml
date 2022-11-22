@@ -52,17 +52,21 @@ jobs:
           docker push shunyue/flint-web:$COMMIT_SHA_TAG
           docker push shunyue/flint-web:$LATEST_DEV_TAG
 
-  deploy:
+  deploy-flint-web:
     runs-on: ubuntu-latest
     needs: build-flint-web
     steps:
       - name: deploy
         uses: appleboy/ssh-action@v0.1.4
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
+          envs: DOCKERHUB_USERNAME
           script: |
             docker pull $DOCKERHUB_USERNAME/flint-web:latest
             docker rm -f flint-web
