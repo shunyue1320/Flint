@@ -57,7 +57,7 @@ export const MainPageLayoutHorizontalContainer: React.FC<
       key: "getGitHubCode",
       icon: (): React.ReactNode => <SVGGithub />,
       title: <></>,
-      route: "https://github.com/netless-io/flat/",
+      route: "https://github.com/shunyue1320/Flint/",
     },
   ];
 
