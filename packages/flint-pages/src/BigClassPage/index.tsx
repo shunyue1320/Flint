@@ -1,6 +1,6 @@
 import "./style.less";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslate } from "@netless/flint-i18n";
 import {
   CloudRecordBtn,
@@ -29,6 +29,7 @@ import { RTCAvatar } from "../components/RTCAvatar";
 import { ChatPanel } from "../components/ChatPanel";
 import { withClassroomStore, WithClassroomStoreProps } from "../utils/with-classroom-store";
 import { WindowsSystemBtnContext } from "../components/StoreProvider";
+import { RoomStatus } from "@netless/flint-server-api";
 
 // const recordingConfig: RecordingConfig = Object.freeze({
 //   channelType: RtcChannelType.Broadcast, // 广播
@@ -41,13 +42,20 @@ export type BigClassPageProps = {};
 
 export const BigClassPage = withClassroomStore<BigClassPageProps>(
   observer<WithClassroomStoreProps<BigClassPageProps>>(function BigClassPage({ classroomStore }) {
-    // useLoginCheck();
+    useLoginCheck();
+
     const t = useTranslate();
     const whiteboardStore = classroomStore.whiteboardStore;
     const windowsBtn = useContext(WindowsSystemBtnContext);
 
     const { confirm, ...exitConfirmModalProps } = useExitRoomConfirmModal(classroomStore);
     const [isRealtimeSideOpen, openRealtimeSide] = useState(true);
+
+    useEffect(() => {
+      if (classroomStore.isCreator && classroomStore.roomStatus === RoomStatus.Idle) {
+        void classroomStore.startClass();
+      }
+    }, [classroomStore]);
 
     return (
       <div className="big-class-realtime-container">

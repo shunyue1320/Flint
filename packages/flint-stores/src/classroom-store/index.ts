@@ -3,7 +3,7 @@ import { SideEffectManager } from "side-effect-manager";
 import { action, autorun, makeAutoObservable, observable, reaction, runInAction } from "mobx";
 
 import { Fastboard, Storage } from "@netless/fastboard";
-import { RoomType, generateRTCToken, checkRTMCensor } from "@netless/flint-server-api";
+import { RoomType, generateRTCToken, checkRTMCensor, RoomStatus } from "@netless/flint-server-api";
 import {
   // IServiceRecording,
   IServiceTextChat,
@@ -14,7 +14,7 @@ import {
 } from "@netless/flint-services";
 
 import { globalStore } from "../global-store";
-import { ClassModeType } from "./constants";
+import { ClassModeType, RoomStatusLoadingType } from "./constants";
 import { RoomItem, roomStore } from "../room-store";
 import { User, UserStore } from "../user-store";
 import { WhiteboardStore } from "../whiteboard-store";
@@ -63,6 +63,8 @@ export class ClassroomStore {
   public isScreenSharing = false;
   /** 其他用户是否共享屏幕 */
   public isRemoteScreenSharing = false;
+  /** 房间状态是加载 */
+  public roomStatusLoading = RoomStatusLoadingType.Null;
 
   public networkQuality = {
     delay: 0,
@@ -337,6 +339,19 @@ export class ClassroomStore {
 
     this.deviceStateStorage = undefined;
     this.classroomStorage = undefined;
+  }
+
+  public startClass = (): Promise<void> => this.switchRoomStatus(RoomStatus.Started);
+
+  public async switchRoomStatus(roomStatus: RoomStatus): Promise<void> {
+    // 不是创建者 或者 房间还在加载中 则退出程序
+    if (!this.isCreator || this.roomStatusLoading !== RoomStatusLoadingType.Null) {
+      return;
+    }
+
+    if (!this.roomInfo) {
+      throw new Error("房间没有准备好！");
+    }
   }
 
   public onCancelAllHandRaising = (): void => {

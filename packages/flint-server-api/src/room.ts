@@ -143,3 +143,14 @@ export function ordinaryRoomInfo(roomUUID: string): Promise<OrdinaryRoomInfoResu
     roomUUID,
   });
 }
+
+export interface StartClassPayload {
+  roomUUID: string;
+}
+export type StartClassResult = {};
+
+export function startClass(roomUUID: string): Promise<StartClassResult> {
+  return post<StartClassPayload, StartClassResult>("room/update-status/started", {
+    roomUUID,
+  });
+}
