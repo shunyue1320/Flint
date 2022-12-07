@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 import { InviteModal as InviteModalImpl } from "@netless/flint-components";
 
-import { RoomItem } from "../../stores/room-store";
+import { RoomItem } from "@netless/flint-stores";
 import { FLAT_WEB_BASE_URL } from "../../constants/process";
 import { GlobalStoreContext, RoomStoreContext } from "../StoreProvider";
 import { message } from "antd";

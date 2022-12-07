@@ -30,6 +30,7 @@ import { ChatPanel } from "../components/ChatPanel";
 import { withClassroomStore, WithClassroomStoreProps } from "../utils/with-classroom-store";
 import { WindowsSystemBtnContext } from "../components/StoreProvider";
 import { RoomStatus } from "@netless/flint-server-api";
+import { useLoginCheck } from "../utils/use-login-check";
 
 // const recordingConfig: RecordingConfig = Object.freeze({
 //   channelType: RtcChannelType.Broadcast, // 广播
@@ -51,6 +52,7 @@ export const BigClassPage = withClassroomStore<BigClassPageProps>(
     const { confirm, ...exitConfirmModalProps } = useExitRoomConfirmModal(classroomStore);
     const [isRealtimeSideOpen, openRealtimeSide] = useState(true);
 
+    // 房间设为开始状态
     useEffect(() => {
       if (classroomStore.isCreator && classroomStore.roomStatus === RoomStatus.Idle) {
         void classroomStore.startClass();

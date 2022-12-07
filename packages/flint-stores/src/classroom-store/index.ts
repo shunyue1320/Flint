@@ -3,7 +3,13 @@ import { SideEffectManager } from "side-effect-manager";
 import { action, autorun, makeAutoObservable, observable, reaction, runInAction } from "mobx";
 
 import { Fastboard, Storage } from "@netless/fastboard";
-import { RoomType, generateRTCToken, checkRTMCensor, RoomStatus } from "@netless/flint-server-api";
+import {
+  RoomType,
+  generateRTCToken,
+  checkRTMCensor,
+  RoomStatus,
+  startClass,
+} from "@netless/flint-server-api";
 import {
   // IServiceRecording,
   IServiceTextChat,
@@ -20,6 +26,7 @@ import { User, UserStore } from "../user-store";
 import { WhiteboardStore } from "../whiteboard-store";
 import { preferencesStore } from "../preferences-store";
 import { ChatStore } from "./chat-store";
+import { errorTips } from "@netless/flint-components";
 
 export interface ClassroomStoreConfig {
   roomUUID: string;
@@ -131,6 +138,16 @@ export class ClassroomStore {
       // classroomStorage: false,
       onStageUsersStorage: false,
     });
+
+    // 不是创建者就监听房间状态改变并更新
+    if (!this.isCreator) {
+      this.rtm.events.on("update-room-status", event => {
+        // 是当前房间 && 发件人是创建者
+        if (event.roomUUID === this.roomUUID && event.senderID === this.ownerUUID) {
+          this.updateRoomStatus(event.status);
+        }
+      });
+    }
   }
 
   /** 获取第一个发言用户 */
@@ -189,7 +206,6 @@ export class ClassroomStore {
     this.deviceStateStorage = deviceStateStorage;
     this.classroomStorage = classroomStorage;
     this.onStageUsersStorage = onStageUsersStorage;
-    console.log("更改设备状态=======", deviceStateStorage.state);
 
     // 创建者默认 相机:false 录音:true 状态设置给本地
     if (this.isCreator) {
@@ -234,6 +250,13 @@ export class ClassroomStore {
 
   public get isCreator(): boolean {
     return this.ownerUUID === this.userUUID;
+  }
+
+  public get roomStatus(): RoomStatus {
+    if (this.whiteboardStore.isKicked) {
+      return RoomStatus.Stopped;
+    }
+    return this.roomInfo?.roomStatus ?? RoomStatus.Idle;
   }
 
   /** 当前用户举手时 */
@@ -352,11 +375,51 @@ export class ClassroomStore {
     if (!this.roomInfo) {
       throw new Error("房间没有准备好！");
     }
+
+    try {
+      switch (roomStatus) {
+        case RoomStatus.Started: {
+          this.updateRoomStatusLoading(RoomStatusLoadingType.Starting);
+          await startClass(this.roomUUID);
+          await roomStore.syncOrdinaryRoomInfo(this.roomUUID);
+          break;
+        }
+
+        default: {
+          break;
+        }
+      }
+
+      // 最终更新房间状态
+      // 以便在发送命令之前组件不会卸载
+      this.updateRoomStatus(roomStatus);
+    } catch (e) {
+      errorTips(e as Error);
+      console.error(e);
+    }
+    this.updateRoomStatusLoading(RoomStatusLoadingType.Null);
   }
+
+  private updateRoomStatusLoading = (loading: RoomStatusLoadingType): void => {
+    this.roomStatusLoading = loading;
+  };
 
   public onCancelAllHandRaising = (): void => {
     if (this.isCreator && this.classroomStorage?.isWritable) {
       this.classroomStorage?.setState({ raiseHandUsers: [] });
+    }
+  };
+
+  public updateRoomStatus = (roomStatus: RoomStatus): void => {
+    if (this.roomInfo && this.roomInfo.roomStatus !== roomStatus) {
+      this.roomInfo.roomStatus = roomStatus;
+      // 是创建者就发送房间状态更新命令
+      if (this.isCreator) {
+        this.rtm.sendRoomCommand("update-room-status", {
+          roomUUID: this.roomUUID,
+          status: roomStatus,
+        });
+      }
     }
   };
 
