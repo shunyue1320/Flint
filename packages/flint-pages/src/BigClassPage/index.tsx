@@ -16,28 +16,16 @@ import {
 import { observer } from "mobx-react-lite";
 import { message } from "antd";
 
-// import { runtime } from "../utils/runtime";
-// import { RouteNameType, RouteParams } from "../../utils/routes";
-// import { RecordingConfig, useClassRoomStore, User } from "../../stores/class-room-store";
-// import { RtcChannelType } from "../../api-middleware/rtc/room";
-// import { CloudStorageButton } from "../components/CloudStorageButton";
+import { RoomStatus } from "@netless/flint-server-api";
 import InviteButton from "../components/InviteButton";
 import { ExitRoomConfirmType, useExitRoomConfirmModal } from "../components/ExitRoomConfirm";
 import { Whiteboard } from "../components/Whiteboard";
 import { RealtimePanel } from "../components/RealtimePanel";
 import { RTCAvatar } from "../components/RTCAvatar";
 import { ChatPanel } from "../components/ChatPanel";
-import { withClassroomStore, WithClassroomStoreProps } from "../utils/with-classroom-store";
 import { WindowsSystemBtnContext } from "../components/StoreProvider";
-import { RoomStatus } from "@netless/flint-server-api";
+import { withClassroomStore, WithClassroomStoreProps } from "../utils/with-classroom-store";
 import { useLoginCheck } from "../utils/use-login-check";
-
-// const recordingConfig: RecordingConfig = Object.freeze({
-//   channelType: RtcChannelType.Broadcast, // 广播
-//   transcodingConfig: {},
-//   maxIdleTime: 60,
-//   subscribeUidGroup: 0,
-// });
 
 export type BigClassPageProps = {};
 
