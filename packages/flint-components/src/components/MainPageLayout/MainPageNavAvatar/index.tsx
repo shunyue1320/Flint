@@ -45,7 +45,7 @@ export const MainPageNavAvatar: React.FC<MainPageNavAvatarProps> = ({
       placement="bottomRight"
       title={renderPopMenuTitle}
       trigger="click"
-      onVisibleChange={togglePopMenuVisible}
+      onOpenChange={togglePopMenuVisible}
     >
       <Avatar
         className="main-page-nav-avatar"
