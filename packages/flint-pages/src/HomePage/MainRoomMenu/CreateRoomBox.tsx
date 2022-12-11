@@ -89,8 +89,8 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
             {t("begin")}
           </Button>,
         ]}
+        open={isShowModal}
         title={t("home-page-hero-button-type.begin")}
-        visible={isShowModal}
         width={400}
         wrapClassName="create-room-box-container"
         onCancel={handleCancel}

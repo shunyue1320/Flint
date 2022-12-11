@@ -40,11 +40,11 @@ export const MainPageNavAvatar: React.FC<MainPageNavAvatarProps> = ({
   return (
     <Popover
       content={renderPopMenuInner}
+      open={popMenuVisible}
       overlayClassName="main-page-nav-popover"
       placement="bottomRight"
       title={renderPopMenuTitle}
       trigger="click"
-      visible={popMenuVisible}
       onVisibleChange={togglePopMenuVisible}
     >
       <Avatar

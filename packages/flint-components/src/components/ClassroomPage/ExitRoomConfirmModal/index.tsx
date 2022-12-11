@@ -21,8 +21,8 @@ export const StopClassConfirmModal: FC<StopClassConfirmModalProps> = ({
   return (
     <Modal
       okButtonProps={{ loading }}
+      open={visible}
       title={t("confirmation-of-the-end-of-classes")}
-      visible={visible}
       onCancel={onCancel}
       onOk={onStop}
     >
