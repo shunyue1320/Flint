@@ -12,7 +12,6 @@ import {
   IServiceWhiteboardJoinRoomConfig,
 } from "@netless/flint-services";
 import type { FlintI18n } from "@netless/flint-i18n";
-import { RoomType } from "@netless/flint-server-api";
 
 import { registerColorShortcut } from "./color-shortcut";
 import { injectCursor } from "./inject-cursor";
@@ -175,7 +174,6 @@ export class Fastboard extends IServiceWhiteboard {
     uid,
     nickName,
     region,
-    classroomType,
     options = {},
   }: IServiceWhiteboardJoinRoomConfig): Promise<void> {
     if (!appID) {
@@ -201,9 +199,8 @@ export class Fastboard extends IServiceWhiteboard {
       },
       // 窗口样式配置
       managerConfig: {
-        containerSizeRatio: classroomType === RoomType.SmallClass ? 8.3 / 16 : 10.46 / 16,
+        containerSizeRatio: options.ratio ?? 11 / 16,
         cursor: true,
-        chessboard: false,
         collectorStyles: {
           position: "absolute",
           bottom: "8px",

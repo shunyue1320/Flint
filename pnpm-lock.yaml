@@ -297,28 +297,28 @@ importers:
   service-providers/fastboard:
     specifiers:
       '@lukeed/uuid': ^2.0.0
-      '@netless/fastboard': 1.0.0-canary.7
+      '@netless/fastboard': 1.0.0-canary.8
       '@netless/flint-i18n': workspace:*
       '@netless/flint-server-api': workspace:*
       '@netless/flint-services': workspace:*
       '@netless/white-snapshot': ^0.4.2
-      '@netless/window-manager': 1.0.0-canary.61
+      '@netless/window-manager': 1.0.0-canary.72
       prettier: ^2.7.1
       side-effect-manager: ^1.2.1
       typescript: ^4.8.3
       value-enhancer: ^1.3.2
-      white-web-sdk: npm:white-web-sdk-esm@2.16.34
+      white-web-sdk: npm:white-web-sdk-esm@2.16.40
     dependencies:
       '@lukeed/uuid': 2.0.0
-      '@netless/fastboard': 1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky
+      '@netless/fastboard': 1.0.0-canary.8_gdjpwljtm73kcudnxru4minugy
       '@netless/flint-i18n': link:../../packages/flint-i18n
       '@netless/flint-server-api': link:../../packages/flint-server-api
       '@netless/flint-services': link:../../packages/flint-services
       '@netless/white-snapshot': 0.4.2
-      '@netless/window-manager': 1.0.0-canary.61_white-web-sdk-esm@2.16.34
+      '@netless/window-manager': 1.0.0-canary.72_white-web-sdk-esm@2.16.40
       side-effect-manager: 1.2.1
       value-enhancer: 1.3.2
-      white-web-sdk: /white-web-sdk-esm/2.16.34
+      white-web-sdk: /white-web-sdk-esm/2.16.40
     devDependencies:
       prettier: 2.7.1
       typescript: 4.8.4
@@ -2866,7 +2866,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
-    dev: false
 
   /@babel/runtime/7.5.5:
     resolution: {integrity: sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==}
@@ -3581,6 +3580,10 @@ packages:
 
   /@juggle/resize-observer/3.3.1:
     resolution: {integrity: sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==}
+    dev: false
+
+  /@juggle/resize-observer/3.4.0:
+    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
   /@loadable/component/5.15.2_react@18.1.0:
     resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==}
@@ -3694,16 +3697,16 @@ packages:
       '@netless/synced-store': 2.0.7
     dev: true
 
-  /@netless/fastboard-core/1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky:
-    resolution: {integrity: sha512-wblXojxoGw7QE+H+YkAoydm0zx7CQtp66EESx902g9e4skghP7V+RgeevrB0DdipPFHme/jolBbpSWa9i4qxww==}
+  /@netless/fastboard-core/1.0.0-canary.8_gdjpwljtm73kcudnxru4minugy:
+    resolution: {integrity: sha512-y5Tp0I5Du8NvFQpg78+T60gazhfXXXUZXg2F7Yw5eSPb3hnG/Y16NIAFEzA+oAvfL93o6MbAIq8LLy8HlBGO3g==}
     peerDependencies:
       '@netless/window-manager': '>=1.0.0-canary.0'
       white-web-sdk: '>=2.16.0'
     dependencies:
       '@lukeed/uuid': 2.0.0
-      '@netless/synced-store': 2.0.7_white-web-sdk-esm@2.16.34
-      '@netless/window-manager': 1.0.0-canary.61_white-web-sdk-esm@2.16.34
-      white-web-sdk: /white-web-sdk-esm/2.16.34
+      '@netless/synced-store': 2.0.7_white-web-sdk-esm@2.16.40
+      '@netless/window-manager': 1.0.0-canary.72_white-web-sdk-esm@2.16.40
+      white-web-sdk: /white-web-sdk-esm/2.16.40
     dev: false
 
   /@netless/fastboard-ui/1.0.0-canary.6_m23f4skpfoq3arppzbqjiodchi:
@@ -3715,12 +3718,12 @@ packages:
       tippy.js: 6.3.7
     dev: true
 
-  /@netless/fastboard-ui/1.0.0-canary.7_cdb3cxxszhadikmporkl6mi74y:
-    resolution: {integrity: sha512-fFDTCf//0RFrnwVtSNa0C2MgQihKU9Vl1F9jyO5/Azjiuzrw+mWIEMMW5tS/JkjToiujP1USZQOa2mP0T6dOfA==}
+  /@netless/fastboard-ui/1.0.0-canary.8_httwwgffgctxwa6rjutf67vesy:
+    resolution: {integrity: sha512-r4C1tuG+LdEiA89hLlWaNthWQcJ4K82SBTiJ587IxwSc0fpimAkMlVkLgxQzsa2ndkqIbMgj15vOO4MYSRX4hw==}
     peerDependencies:
-      '@netless/fastboard-core': 1.0.0-canary.7
+      '@netless/fastboard-core': 1.0.0-canary.8
     dependencies:
-      '@netless/fastboard-core': 1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky
+      '@netless/fastboard-core': 1.0.0-canary.8_gdjpwljtm73kcudnxru4minugy
       tippy.js: 6.3.7
     dev: false
 
@@ -3735,17 +3738,17 @@ packages:
       '@netless/fastboard-ui': 1.0.0-canary.6_m23f4skpfoq3arppzbqjiodchi
     dev: true
 
-  /@netless/fastboard/1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky:
-    resolution: {integrity: sha512-1/veeLuG8/YO//pqb9LkEqMLBDKcy3j3iPS03dDB9neeZy5WxcGMjU8rbE98jW/JUb9lUpZxQlOTmIklg2MNUQ==}
+  /@netless/fastboard/1.0.0-canary.8_gdjpwljtm73kcudnxru4minugy:
+    resolution: {integrity: sha512-9DQpm87m+RowXj+wzpGWuhSkdSsSRYnjY3j1PmpLbJe0+Od01EQTalKuBxesSXpUOSnWz6d0JLHrgshMJJr15g==}
     peerDependencies:
       '@netless/window-manager': '>=1.0.0-canary.0'
       white-web-sdk: '>=2.16.0'
     dependencies:
       '@netless/app-slide': 0.3.0-canary.13
-      '@netless/fastboard-core': 1.0.0-canary.7_occjor4zlwwx2gcceupsv4ldky
-      '@netless/fastboard-ui': 1.0.0-canary.7_cdb3cxxszhadikmporkl6mi74y
-      '@netless/window-manager': 1.0.0-canary.61_white-web-sdk-esm@2.16.34
-      white-web-sdk: /white-web-sdk-esm/2.16.34
+      '@netless/fastboard-core': 1.0.0-canary.8_gdjpwljtm73kcudnxru4minugy
+      '@netless/fastboard-ui': 1.0.0-canary.8_httwwgffgctxwa6rjutf67vesy
+      '@netless/window-manager': 1.0.0-canary.72_white-web-sdk-esm@2.16.40
+      white-web-sdk: /white-web-sdk-esm/2.16.40
     dev: false
 
   /@netless/mini-svg-data-uri/0.0.1:
@@ -3756,7 +3759,7 @@ packages:
   /@netless/slide/0.5.13:
     resolution: {integrity: sha512-Epb2WOtVwZLDbtGlWEinfHi74JdnrqcW3AwuoISYHzirCRwGgrqWqFYSb8IxMuUrBWCEvJ3I1WDAaDmzUD5YSg==}
     dependencies:
-      '@juggle/resize-observer': 3.3.1
+      '@juggle/resize-observer': 3.4.0
       '@types/lodash': 4.14.182
       dat.gui: 0.7.9
       eventemitter3: 4.0.7
@@ -3767,7 +3770,7 @@ packages:
   /@netless/slide/0.7.8:
     resolution: {integrity: sha512-35JhrL2y2Yxwxrl8mEVpO/4jS2I++a38B+cOBCDDIJyRq1SCXCy0x6UQaEnu/sY6h4uJMKsNL/Flje87js5Wyg==}
     dependencies:
-      '@juggle/resize-observer': 3.3.1
+      '@juggle/resize-observer': 3.4.0
       '@types/lodash': 4.14.182
       dat.gui: 0.7.9
       eventemitter3: 4.0.7
@@ -3786,7 +3789,7 @@ packages:
       value-enhancer: 1.3.2
     dev: true
 
-  /@netless/synced-store/2.0.7_white-web-sdk-esm@2.16.34:
+  /@netless/synced-store/2.0.7_white-web-sdk-esm@2.16.40:
     resolution: {integrity: sha512-E5ukXMTLa0Mlhlv9Rcy3MJSAM5kwiLoXQy42OCSIFdBR8jf0BKbSUXSjnA8J+FZq6UidNtGaadDWjhwlM1z5MA==}
     peerDependencies:
       white-web-sdk: '>= 2.16'
@@ -3795,7 +3798,7 @@ packages:
       remitter: 0.2.9
       side-effect-manager: 1.2.1
       value-enhancer: 1.3.2
-      white-web-sdk: /white-web-sdk-esm/2.16.34
+      white-web-sdk: /white-web-sdk-esm/2.16.40
     dev: false
 
   /@netless/telebox-insider/0.2.26:
@@ -3812,7 +3815,7 @@ packages:
   /@netless/telebox-insider/1.0.0-alpha.37:
     resolution: {integrity: sha512-Fazjl/sLaqXPASEvc3ZC+uQSzaCmlmOIpcTwokP//Hn9u4f6C1HvU1veIF1An+s6s44gSYkS9IegYZrGt5cOsg==}
     dependencies:
-      '@juggle/resize-observer': 3.3.1
+      '@juggle/resize-observer': 3.4.0
       '@types/shallowequal': 1.1.1
       emittery: 0.11.0
       shallowequal: 1.1.0
@@ -3843,25 +3846,31 @@ packages:
       white-web-sdk: 2.16.28
     dev: false
 
-  /@netless/window-manager/1.0.0-canary.61_white-web-sdk-esm@2.16.34:
-    resolution: {integrity: sha512-37fwXPD3QjUj4DimOsVOpTr8/proELXmHexQbj5vdxquLLtUyhEth091z5vPEl4EkO7jOuPtuwm38Wak1QCBYw==}
+  /@netless/window-manager/1.0.0-canary.72_white-web-sdk-esm@2.16.40:
+    resolution: {integrity: sha512-cs54o31Fryz5YVBUv3/rPLXhlVGBJN+W88d8afq6tTtYMxeHgu6UnBa/ko0A1vRKKmai8u62oHelp6/RAX3VpQ==}
     peerDependencies:
       white-web-sdk: ^2.16.0
     dependencies:
-      '@juggle/resize-observer': 3.3.1
-      '@netless/synced-store': 2.0.7_white-web-sdk-esm@2.16.34
+      '@juggle/resize-observer': 3.4.0
+      '@netless/synced-store': 2.0.7_white-web-sdk-esm@2.16.40
       '@netless/telebox-insider': 1.0.0-alpha.37
       emittery: 0.11.0
+      jspdf: 2.5.1
       lodash: 4.17.21
-      p-retry: 4.6.2
+      p-retry: 5.1.2
       side-effect-manager: 1.2.1
-      uuid: 7.0.3
+      uuid: 9.0.0
       value-enhancer: 1.3.2
-      white-web-sdk: /white-web-sdk-esm/2.16.34
+      white-web-sdk: /white-web-sdk-esm/2.16.40
     dev: false
 
   /@netless/xml-js/1.6.15:
     resolution: {integrity: sha512-e0emMs7YtDB/ATUns1SJ61R9n9nfVvwwFodoc539Qt0ScksaCLCaFWgpEbLloj9sr60ry6Xd8QFHKULFIZB6zA==}
+    hasBin: true
+    dev: false
+
+  /@netless/xml-js/1.6.16:
+    resolution: {integrity: sha512-QnSH8y3j3DDEW0S3MalYBmR0opeyaecAkzx0ocKYncMDiOdQkhByJgD7AVhXQqH8bA/PVHU0VFP445AbJq6fDQ==}
     hasBin: true
     dev: false
 
@@ -5217,7 +5226,7 @@ packages:
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.7
       '@storybook/node-logger': 6.5.9
       '@storybook/react': 6.5.9_77qya4viz6n5uqluzf7gq77ukm
-      '@storybook/react-docgen-typescript-plugin': 1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0
+      '@storybook/react-docgen-typescript-plugin': 1.0.2--canary.7.324a727c65a1819f7f3ede5abc1f32d440e4530a.0
       '@types/babel__core': 7.1.19
       babel-plugin-react-docgen: 4.2.1
       pnp-webpack-plugin: 1.7.0
@@ -5261,8 +5270,8 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/react-docgen-typescript-plugin/1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0:
-    resolution: {integrity: sha512-eVg3BxlOm2P+chijHBTByr90IZVUtgRW56qEOLX7xlww2NBuKrcavBlcmn+HH7GIUktquWkMPtvy6e0W0NgA5w==}
+  /@storybook/react-docgen-typescript-plugin/1.0.2--canary.7.324a727c65a1819f7f3ede5abc1f32d440e4530a.0:
+    resolution: {integrity: sha512-tnaT0VqSGhmMi/I880aMOToSrNd7XCr1avS/M1tk/+FDO+0GqHXo9abC5sos705ly3Hmi1FxFvHnzV/cvU1JTg==}
     peerDependencies:
       typescript: '>= 3.x'
       webpack: '>= 4'
@@ -5768,6 +5777,11 @@ packages:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
     dev: true
 
+  /@types/raf/3.4.0:
+    resolution: {integrity: sha512-taW5/WYqo36N7V39oYyHP9Ipfd5pNFvGTIQsNGj86xV88YQ7GnI30/yMfKDF7Zgin0m3e+ikX88FvImnK4RjGw==}
+    dev: false
+    optional: true
+
   /@types/react-dom/18.0.4:
     resolution: {integrity: sha512-FgTtbqPOCI3dzZPZoC2T/sx3L34qxy99ITWn4eoSA95qPyXDMH0ALoAqUp49ITniiJFsXUVBtalh/KffMpg21Q==}
     dependencies:
@@ -5811,6 +5825,10 @@ packages:
 
   /@types/retry/0.12.0:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
+    dev: false
+
+  /@types/retry/0.12.1:
+    resolution: {integrity: sha512-xoDlM2S4ortawSWORYqsdU+2rxdh4LRW9ytc3zmT37RIKQh6IHyKwwtKhKis9ah8ol07DCkZxPt8BBvPjC6v4g==}
     dev: false
 
   /@types/scheduler/0.16.2:
@@ -7117,7 +7135,7 @@ packages:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
     engines: {node: '>=10', npm: '>=6'}
     dependencies:
-      '@babel/runtime': 7.17.9
+      '@babel/runtime': 7.18.9
       cosmiconfig: 7.0.1
       resolve: 1.22.0
     dev: true
@@ -7238,7 +7256,7 @@ packages:
       '@babel/preset-env': 7.17.12_@babel+core@7.17.10
       '@babel/preset-react': 7.17.12_@babel+core@7.17.10
       '@babel/preset-typescript': 7.17.12_@babel+core@7.17.10
-      '@babel/runtime': 7.17.9
+      '@babel/runtime': 7.18.9
       babel-plugin-macros: 3.1.0
       babel-plugin-transform-react-remove-prop-types: 0.4.24
     transitivePeerDependencies:
@@ -7494,6 +7512,12 @@ packages:
       node-int64: 0.4.0
     dev: true
 
+  /btoa/1.2.1:
+    resolution: {integrity: sha512-SB4/MIGlsiVkMcHmT+pSmIPoNDoHg+7cMzmt3Uxt628MTz2487DKSqK/fuhFBrkuqrYv5UCEnACpF4dTFNKc/g==}
+    engines: {node: '>= 0.4.0'}
+    hasBin: true
+    dev: false
+
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: true
@@ -7669,6 +7693,22 @@ packages:
   /caniuse-lite/1.0.30001341:
     resolution: {integrity: sha512-2SodVrFFtvGENGCv0ChVJIDQ0KPaS1cg7/qtfMaICgeMolDdo/Z2OD32F0Aq9yl6F4YFwGPBS5AaPqNYiW4PoA==}
     dev: true
+
+  /canvg/3.0.10:
+    resolution: {integrity: sha512-qwR2FRNO9NlzTeKIPIKpnTY6fqwuYSequ8Ru8c0YkYU7U0oW+hLUvWadLvAu1Rl72OMNiFhoLu4f8eUjQ7l/+Q==}
+    engines: {node: '>=10.0.0'}
+    requiresBuild: true
+    dependencies:
+      '@babel/runtime': 7.18.9
+      '@types/raf': 3.4.0
+      core-js: 3.23.2
+      raf: 3.4.1
+      regenerator-runtime: 0.13.9
+      rgbcolor: 1.0.1
+      stackblur-canvas: 2.5.0
+      svg-pathdata: 6.0.3
+    dev: false
+    optional: true
 
   /capture-exit/2.0.0:
     resolution: {integrity: sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==}
@@ -8804,6 +8844,12 @@ packages:
       domelementtype: 2.3.0
     dev: true
 
+  /dompurify/2.4.1:
+    resolution: {integrity: sha512-ewwFzHzrrneRjxzmK6oVz/rZn9VWspGFRDb4/rRtIsM1n36t9AKma/ye8syCpcw+XJ25kOK/hOG7t1j2I2yBqA==}
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /domutils/2.8.0:
     resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
     dependencies:
@@ -9921,6 +9967,10 @@ packages:
   /fetch-retry/5.0.2:
     resolution: {integrity: sha512-57Hmu+1kc6pKFUGVIobT7qw3NeAzY/uNN26bSevERLVvf6VGFR/ooDCOFBHMNDgAxBiU2YJq1D0vFzc6U1DcPw==}
     dev: true
+
+  /fflate/0.4.8:
+    resolution: {integrity: sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==}
+    dev: false
 
   /figgy-pudding/3.5.2:
     resolution: {integrity: sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==}
@@ -11719,6 +11769,20 @@ packages:
     engines: {'0': node >= 0.2.0}
     dev: true
 
+  /jspdf/2.5.1:
+    resolution: {integrity: sha512-hXObxz7ZqoyhxET78+XR34Xu2qFGrJJ2I2bE5w4SM8eFaFEkW2xcGRVUss360fYelwRSid/jT078kbNvmoW0QA==}
+    dependencies:
+      '@babel/runtime': 7.18.9
+      atob: 2.1.2
+      btoa: 1.2.1
+      fflate: 0.4.8
+    optionalDependencies:
+      canvg: 3.0.10
+      core-js: 3.23.2
+      dompurify: 2.4.1
+      html2canvas: 1.4.1
+    dev: false
+
   /jsx-ast-utils/3.3.0:
     resolution: {integrity: sha512-XzO9luP6L0xkxwhIJMTJQpZo/eeN60K08jHdexfD569AGxeNug6UketeHXEhROoM8aR7EcUoOQmIhcJQjcuq8Q==}
     engines: {node: '>=4.0'}
@@ -11784,7 +11848,7 @@ packages:
     resolution: {integrity: sha512-prXSYk799h3GY3iOWnC6ZigYzMPjxN2svgjJ9shk7oMadSNX3wXy0B6F32PMJv7qtMnrIbUxoEHzbutvxR2LBQ==}
     engines: {node: '>=6.0.0', npm: '>=6.0.0', yarn: '>=1.0.0'}
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       app-root-dir: 1.0.2
       core-js: 3.23.2
       dotenv: 8.6.0
@@ -13098,6 +13162,14 @@ packages:
       retry: 0.13.1
     dev: false
 
+  /p-retry/5.1.2:
+    resolution: {integrity: sha512-couX95waDu98NfNZV+i/iLt+fdVxmI7CbrrdC2uDWfPdUAApyxT4wmDlyOtR5KtTDmkDO0zDScDjDou9YHhd9g==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@types/retry': 0.12.1
+      retry: 0.13.1
+    dev: false
+
   /p-timeout/3.2.0:
     resolution: {integrity: sha512-rhIwUycgwwKcP9yTOOFK/AKsAopjjCakVqLHePO3CC6Mir1Z99xT+R63jZxAT5lFZLa2inS5h+ZS2GvR99/FBg==}
     engines: {node: '>=8'}
@@ -13298,6 +13370,11 @@ packages:
       safe-buffer: 5.2.1
       sha.js: 2.4.11
     dev: true
+
+  /performance-now/2.1.0:
+    resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
+    dev: false
+    optional: true
 
   /picocolors/0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
@@ -13823,6 +13900,13 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /raf/3.4.1:
+    resolution: {integrity: sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==}
+    dependencies:
+      performance-now: 2.1.0
+    dev: false
+    optional: true
+
   /ramda/0.28.0:
     resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
     dev: true
@@ -13936,7 +14020,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -13948,7 +14032,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
@@ -13960,7 +14044,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-motion: 2.6.0_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
@@ -13975,7 +14059,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-motion: 2.6.0_ef5jwxihqo6n7gxfmzogljlgcm
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
@@ -14046,7 +14130,7 @@ packages:
       react: '>=16.11.0'
       react-dom: '>=16.11.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-trigger: 5.3.1_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
@@ -14060,7 +14144,7 @@ packages:
       react: '>=16.11.0'
       react-dom: '>=16.11.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-trigger: 5.3.1_ef5jwxihqo6n7gxfmzogljlgcm
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
@@ -14248,7 +14332,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14261,7 +14345,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -14301,7 +14385,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-motion: 2.6.0_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
@@ -14316,7 +14400,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-motion: 2.6.0_ef5jwxihqo6n7gxfmzogljlgcm
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
@@ -14420,7 +14504,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14433,7 +14517,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -14447,7 +14531,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14461,7 +14545,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -14474,7 +14558,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14488,7 +14572,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -14502,7 +14586,7 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-motion: 2.6.0_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
@@ -14516,7 +14600,7 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-motion: 2.6.0_ef5jwxihqo6n7gxfmzogljlgcm
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
@@ -14567,7 +14651,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-tooltip: 5.1.1_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
@@ -14583,7 +14667,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-tooltip: 5.1.1_ef5jwxihqo6n7gxfmzogljlgcm
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
@@ -14599,7 +14683,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14613,7 +14697,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -14626,7 +14710,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14639,7 +14723,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -14750,7 +14834,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       rc-trigger: 5.3.1_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -14762,7 +14846,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       rc-trigger: 5.3.1_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
@@ -14863,7 +14947,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-align: 4.0.12_biqbaboplfbrettd7655fr4n2y
       rc-motion: 2.6.0_biqbaboplfbrettd7655fr4n2y
@@ -14879,7 +14963,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-align: 4.0.12_ef5jwxihqo6n7gxfmzogljlgcm
       rc-motion: 2.6.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -14894,7 +14978,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -14907,7 +14991,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       classnames: 2.3.1
       rc-util: 5.21.5_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -15219,7 +15303,7 @@ packages:
     peerDependencies:
       react: '>= 0.14.0'
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
       highlight.js: 10.7.3
       lowlight: 1.20.0
       prismjs: 1.28.0
@@ -15497,7 +15581,7 @@ packages:
   /regenerator-transform/0.15.0:
     resolution: {integrity: sha512-LsrGtPmbYg19bcPHwdtmXwbW+TqNvtY4riE3P83foeHRroMbH6/2ddFBfab3t7kbzc7v7p4wbkIecHImqt0QNg==}
     dependencies:
-      '@babel/runtime': 7.17.9
+      '@babel/runtime': 7.18.9
     dev: true
 
   /regex-not/1.0.2:
@@ -15737,6 +15821,12 @@ packages:
     resolution: {integrity: sha512-V2hovdzFbOi77/WajaSMXk2OLm+xNIeQdMMuB7icj7bk6zi2F8GGAxigcnDFpJHbNyNcgyJDiP+8nOrY5cZGrA==}
     dev: true
 
+  /rgbcolor/1.0.1:
+    resolution: {integrity: sha512-9aZLIrhRaD97sgVhtJOW6ckOEh6/GnvQtdVNfdZ6s67+3/XwLS9lBcQYzEEhYVeUowN7pRzMLsyGhK2i/xvWbw==}
+    engines: {node: '>= 0.8.15'}
+    dev: false
+    optional: true
+
   /rimraf/2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
     hasBin: true
@@ -15774,7 +15864,7 @@ packages:
   /rtl-css-js/1.15.0:
     resolution: {integrity: sha512-99Cu4wNNIhrI10xxUaABHsdDqzalrSRTie4GeCmbGVuehm4oj+fIy8fTzB+16pmKe8Bv9rl+hxIBez6KxExTew==}
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.18.9
     dev: false
 
   /run-parallel/1.2.0:
@@ -16295,6 +16385,12 @@ packages:
       stackframe: 1.3.4
     dev: false
 
+  /stackblur-canvas/2.5.0:
+    resolution: {integrity: sha512-EeNzTVfj+1In7aSLPKDD03F/ly4RxEuF/EX0YcOG0cKoPXs+SLZxDawQbexQDBzwROs4VKLWTOaZQlZkGBFEIQ==}
+    engines: {node: '>=0.1.14'}
+    dev: false
+    optional: true
+
   /stackframe/1.3.4:
     resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==}
 
@@ -16649,6 +16745,12 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
     dev: true
+
+  /svg-pathdata/6.0.3:
+    resolution: {integrity: sha512-qsjeeq5YjBZ5eMdFuUa4ZosMLxgr5RZ+F+Y1OrDhuOCEInRMA3x74XdBtggJcj9kOeInz0WE+LgCPDkZFlBYJw==}
+    engines: {node: '>=12.0.0'}
+    dev: false
+    optional: true
 
   /symbol.prototype.description/1.0.5:
     resolution: {integrity: sha512-x738iXRYsrAt9WBhRCVG5BtIC3B7CUkFwbHW2zOvGtwM33s7JjrCDyq8V0zgMYVb5ymsL8+qkzzpANH63CPQaQ==}
@@ -17783,12 +17885,12 @@ packages:
       isexe: 2.0.0
     dev: true
 
-  /white-web-sdk-esm/2.16.34:
-    resolution: {integrity: sha512-qXf/31W6aqr7p2u/NMo8FAQMKeclsU+B0tUmYa0DNRtM/IbBqNfLhnnu+UVQXqtLwA2eiz1lDPmlJgtC2yRO6w==}
+  /white-web-sdk-esm/2.16.40:
+    resolution: {integrity: sha512-7gfK9FyVbdzENc2+vp9xnE1M7GQp+/pbWizSigD6eXVMQwFUvcGFdZY/El//dGz60cJ91qDuS2G+SnKoUNTTcQ==}
     dependencies:
       '@juggle/resize-observer': 3.3.1
       '@netless/canvas-polyfill': 0.0.4
-      '@netless/xml-js': 1.6.15
+      '@netless/xml-js': 1.6.16
       atob: 2.1.2
       bezier-js: 2.6.1
       bowser: 2.11.0
