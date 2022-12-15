@@ -8,10 +8,10 @@ import { useTranslate } from "@netless/flint-i18n";
 
 export interface LoadingPageProps {
   text?: string;
-  timeMS: number;
+  timeMS?: number;
   hasHeader?: boolean;
   onTimeout?: "return-home" | "full-reload" | (() => void);
-  onTimeoutText: string;
+  onTimeoutText?: string;
 }
 
 export const LoadingPage: React.FC<LoadingPageProps> = ({
