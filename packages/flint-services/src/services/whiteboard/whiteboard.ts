@@ -15,6 +15,8 @@ export interface IServiceWhiteboard$Val {
 export interface IServiceWhiteboardOptions {
   /** 渲染笔划尾部 */
   strokeTail?: boolean;
+  /** 白板比率，在所有平台上都应相同 */
+  ratio?: number;
 }
 
 export interface IServiceWhiteboardJoinRoomConfig extends IService {

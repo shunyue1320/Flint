@@ -14,6 +14,7 @@ import { preferencesStore } from "../preferences-store";
 // import { CloudStorageStore } from "../cloud-storage-store";
 import { ClassroomReplayEventData } from "../classroom-store/event";
 // import { coursewarePreloader } from "../utils/courseware-preloader"; // 课件预加载程序
+import { WHITEBOARD_RATIO } from "../constants";
 
 export class WhiteboardStore {
   private sideEffect = new SideEffectManager();
@@ -165,6 +166,7 @@ export class WhiteboardStore {
       classroomType: this.getRoomType(),
       options: {
         strokeTail: preferencesStore.strokeTail,
+        ratio: WHITEBOARD_RATIO,
       },
     });
 
