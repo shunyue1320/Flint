@@ -48,7 +48,7 @@ export const BigClassPage = withClassroomStore<BigClassPageProps>(
     }, [classroomStore]);
 
     return (
-      <div className="big-class-realtime-container">
+      <div className="big-class-page-container">
         <div className="big-class-realtime-container">
           <div className="big-class-realtime-box">
             {windowsBtn ? (
