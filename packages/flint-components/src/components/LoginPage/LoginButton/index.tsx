@@ -2,17 +2,19 @@ import wechatSVG from "./icons/wechat.svg";
 import agoraSVG from "./icons/agora.svg";
 import githubSVG from "./icons/github.svg";
 import googleSVG from "./icons/google.svg";
+import qqSVG from "./icons/qq.svg";
 import "./index.less";
 
 import React from "react";
 
-export type LoginButtonProviderType = "wechat" | "agora" | "github" | "google";
+export type LoginButtonProviderType = "wechat" | "agora" | "github" | "google" | "qq";
 
 const svgDict: Record<LoginButtonProviderType, string> = {
   wechat: wechatSVG,
   agora: agoraSVG,
   github: githubSVG,
   google: googleSVG,
+  qq: qqSVG,
 };
 
 export interface LoginButtonProps {

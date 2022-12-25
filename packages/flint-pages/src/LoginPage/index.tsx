@@ -10,6 +10,7 @@ import {
 } from "@netless/flint-components";
 
 import { LoginDisposer } from "./utils";
+import { qqLogin } from "./qqLogin";
 import { WeChatLogin } from "./WeChatLogin";
 import { githubLogin } from "./githubLogin";
 import { googleLogin } from "./googleLogin";
@@ -100,6 +101,10 @@ export const LoginPage: React.FC = () => {
           loginDisposer.current = googleLogin(onLoginResult);
           return;
         }
+        case "qq": {
+          loginDisposer.current = qqLogin(onLoginResult);
+          return;
+        }
         default: {
           return;
         }
@@ -147,7 +152,7 @@ export const LoginPage: React.FC = () => {
           bindingPhone={async (countryCode, phone, code) =>
             wrap(bindingPhone(countryCode + phone, Number(code)).then(onBoundPhone))
           }
-          buttons={["github"]}
+          buttons={["qq", "github"]}
           // 清空 userInfo
           cancelBindingPhone={() => setLoginResult(null)}
           isBindingPhone={NEED_BINDING_PHONE && (loginResult ? !loginResult.hasPhone : false)}

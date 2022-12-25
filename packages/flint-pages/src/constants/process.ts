@@ -14,6 +14,10 @@ export const SERVICE_URL = "https://flat.whiteboard.agora.io/service.html";
 
 export const FLAT_SERVER_DOMAIN = process.env.FLAT_SERVER_DOMAIN;
 
+export const QQ = Object.freeze({
+  CLIENT_ID: process.env.QQ_CLIENT_ID,
+});
+
 export const WECHAT = Object.freeze({
   APP_ID: process.env.WECHAT_APP_ID,
 });
