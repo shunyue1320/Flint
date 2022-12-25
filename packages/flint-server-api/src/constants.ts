@@ -7,7 +7,7 @@ export const FLAT_SERVER_LOGIN = {
   GITHUB_CALLBACK: `${FLAT_SERVER_BASE_URL_V1}/login/github/callback?platform=web`,
   GOOGLE_CALLBACK: `${FLAT_SERVER_BASE_URL_V1}/login/google/callback`,
   AGORA_CALLBACK: `${FLAT_SERVER_BASE_URL_V1}/login/agora/callback`,
-  QQ_CALLBACK: `${FLAT_SERVER_BASE_URL_V1}/login/qq/callback?platform=web`,
+  QQ_CALLBACK: `${FLAT_SERVER_BASE_URL_V1}/login/qq/callback`,
 };
 
 export enum Status {

@@ -15,7 +15,7 @@ export const qqLogin: LoginExecutor = onSuccess => {
       errorTips(err);
     }
 
-    void window.open(getQQURL(authUUID, FLAT_SERVER_LOGIN.QQ_CALLBACK));
+    void window.open(getQqURL(authUUID, FLAT_SERVER_LOGIN.QQ_CALLBACK));
 
     const qqLoginProcessRequest = async (): Promise<void> => {
       try {
@@ -39,7 +39,7 @@ export const qqLogin: LoginExecutor = onSuccess => {
   };
 };
 
-export function getQQURL(authUUID: string, redirect_uri: string): string {
+export function getQqURL(authUUID: string, redirect_uri: string): string {
   const redirectURL = encodeURIComponent(redirect_uri);
-  return `https://graph.qq.com/oauth2.0/authorize?client_id=${QQ.CLIENT_ID}&redirect_uri=${redirectURL}&state=${authUUID}`;
+  return `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${QQ.CLIENT_ID}&redirect_uri=${redirectURL}&state=${authUUID}`;
 }
