@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { FlintThemeBodyProvider } from "@netless/flint-components";
 
 import { RouteConfig, routeConfig } from "../route-config";
 import { routePages } from "./route-pages";
@@ -10,7 +9,6 @@ import { AppRouteContainer } from "./AppRouteContainer";
 export const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
-      {/* <FlintThemeBodyProvider> */}
       <MainPageLayout>
         <Routes>
           {Object.keys(routeConfig).map(((name: keyof RouteConfig) => {
@@ -27,7 +25,6 @@ export const AppRoutes: React.FC = () => {
           }) as (name: string) => React.ReactElement)}
         </Routes>
       </MainPageLayout>
-      {/* </FlintThemeBodyProvider> */}
     </BrowserRouter>
   );
 };

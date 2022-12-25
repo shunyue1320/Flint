@@ -31,7 +31,6 @@ import {
 
 export const LoginPage: React.FC = () => {
   const language = useLanguage();
-  // const { i18n } = useTranslation();
   const pushNavigate = usePushNavigate();
   const globalStore = useContext(GlobalStoreContext);
   const [loginResult, setLoginResult_] = useState<LoginProcessResult | null>(null);
@@ -148,7 +147,7 @@ export const LoginPage: React.FC = () => {
           bindingPhone={async (countryCode, phone, code) =>
             wrap(bindingPhone(countryCode + phone, Number(code)).then(onBoundPhone))
           }
-          buttons={["wechat", "github"]}
+          buttons={["github"]}
           // 清空 userInfo
           cancelBindingPhone={() => setLoginResult(null)}
           isBindingPhone={NEED_BINDING_PHONE && (loginResult ? !loginResult.hasPhone : false)}
