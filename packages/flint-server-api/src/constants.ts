@@ -1,6 +1,6 @@
 export const FLAT_SERVER_PROTOCOL = `https://${process.env.FLAT_SERVER_DOMAIN}`;
-export const FLAT_SERVER_BASE_URL_V1 = `https://${process.env.FLAT_SERVER_DOMAIN}/v1`;
-export const FLAT_SERVER_BASE_URL_V2 = `https://${process.env.FLAT_SERVER_DOMAIN}/v2`;
+export const FLAT_SERVER_BASE_URL_V1 = `${FLAT_SERVER_PROTOCOL}/v1`;
+export const FLAT_SERVER_BASE_URL_V2 = `${FLAT_SERVER_PROTOCOL}/v2`;
 
 export const FLAT_SERVER_LOGIN = {
   WECHAT_CALLBACK: `${FLAT_SERVER_BASE_URL_V1}/login/weChat/web/callback`,

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { RoomList } from "@netless/flint-components";
 import { MainRoomList } from "./MainRoomList";
-import { ListRoomsType } from "../../../api-middleware/flatServer";
+import { ListRoomsType } from "@netless/flint-server-api";
 
 export interface MainRoomListPanelProps {
   isLogin: boolean;
