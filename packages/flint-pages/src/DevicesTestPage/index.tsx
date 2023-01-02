@@ -8,7 +8,7 @@ import { IServiceVideoChatDevice } from "@netless/flint-services";
 import { useSafePromise } from "../utils/hooks/lifecycle";
 import { GlobalStoreContext, PreferencesStoreContext } from "../components/StoreProvider";
 import { joinRoomHandler } from "../utils/join-room-handler";
-import { RouteNameType, RouteParams, usePushNavigate } from "../utils/routes";
+import { RouteNameType, RouteParams, useReplaceNavigate } from "../utils/routes";
 import { useFlintService } from "../components/FlintServicesContext";
 import { useLoginCheck } from "../utils/use-login-check";
 
@@ -17,7 +17,7 @@ export const DevicesTestPage: React.FC = () => {
   const globalStore = useContext(GlobalStoreContext);
   const preferencesStore = useContext(PreferencesStoreContext);
   const sp = useSafePromise();
-  const pushNavigate = usePushNavigate();
+  const replaceNavigate = useReplaceNavigate();
 
   useLoginCheck();
 
@@ -148,7 +148,7 @@ export const DevicesTestPage: React.FC = () => {
   const joinRoom = async (): Promise<void> => {
     preferencesStore.updateCameraId(cameraDeviceId);
     preferencesStore.updateMicrophoneId(microphoneDeviceId);
-    await joinRoomHandler(roomUUID, pushNavigate);
+    await joinRoomHandler(roomUUID, replaceNavigate);
   };
 
   return (

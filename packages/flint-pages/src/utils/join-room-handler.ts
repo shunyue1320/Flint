@@ -1,11 +1,11 @@
-import { usePushNavigate, RouteNameType } from "../utils/routes";
+import { useReplaceNavigate, RouteNameType } from "../utils/routes";
 import { errorTips } from "@netless/flint-components";
 import { roomStore } from "@netless/flint-stores";
 import { RoomType } from "@netless/flint-server-api";
 
 export const joinRoomHandler = async (
   roomUUID: string,
-  pushNavigate: ReturnType<typeof usePushNavigate>,
+  replaceNavigate: ReturnType<typeof useReplaceNavigate>,
 ): Promise<void> => {
   try {
     const formatRoomUUID = roomUUID.replace(/\s+/g, "");
@@ -17,7 +17,7 @@ export const joinRoomHandler = async (
     switch (data.roomType) {
       case RoomType.BigClass: {
         console.log("进入大班");
-        pushNavigate(RouteNameType.BigClassPage, data);
+        replaceNavigate(RouteNameType.BigClassPage, data);
         break;
       }
       case RoomType.SmallClass: {
@@ -33,7 +33,7 @@ export const joinRoomHandler = async (
       }
     }
   } catch (e) {
-    pushNavigate(RouteNameType.HomePage);
+    replaceNavigate(RouteNameType.HomePage);
     errorTips(e);
   }
 };
