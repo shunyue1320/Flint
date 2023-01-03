@@ -52,22 +52,21 @@ export const LoadingPage: React.FC<LoadingPageProps> = ({
         className={classNames("loading-page-mask", {
           "is-transparent": hasHeader,
         })}
-      >
-        <div className="loading-page-content">
-          <div className="loading-page-image" />
-          {text && <span>{text}</span>}
-        </div>
-
-        <Button
-          className={classNames("loading-page-return-btn", {
-            "is-show": isShowReturnHomePage,
-          })}
-          size="large"
-          onClick={typeof onTimeout === "string" ? timeoutBehavior(onTimeout) : onTimeout}
-        >
-          {timeoutText}
-        </Button>
+      />
+      <div className="loading-page-content">
+        <div className="loading-page-image" />
+        {text && <span>{text}</span>}
       </div>
+
+      <Button
+        className={classNames("loading-page-return-btn", {
+          "is-show": isShowReturnHomePage,
+        })}
+        size="large"
+        onClick={typeof onTimeout === "string" ? timeoutBehavior(onTimeout) : onTimeout}
+      >
+        {timeoutText}
+      </Button>
     </div>
   );
 };
