@@ -1,6 +1,6 @@
 import "./CreateRoomBox.less";
 
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, Fragment } from "react";
 import { Button, Modal, Form, Input, InputRef, Dropdown, Menu, Checkbox } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -50,17 +50,18 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
   const regionMenu = (
     <Menu
       className="create-room-modal-menu-item"
+      items={regions.map(region => ({
+        key: region,
+        label: (
+          <Fragment>
+            <img alt={region} src={RegionSVG[region]} style={{ width: 22 }} />
+            <span style={{ paddingLeft: 8 }}>{t(`region-${region}`)}</span>
+          </Fragment>
+        ),
+      }))}
       style={{ width: "auto" }}
       onClick={e => setRoomRegion(e.key as Region)}
-    >
-      <div style={{ padding: "4px 12px 0 14px", color: "gray" }}>{t("servers")}</div>
-      {regions.map(region => (
-        <Menu.Item key={region}>
-          <img alt={region} src={RegionSVG[region]} style={{ width: 22 }} />
-          <span style={{ paddingLeft: 8 }}>{t(`region-${region}`)}</span>
-        </Menu.Item>
-      ))}
-    </Menu>
+    />
   );
 
   return (
