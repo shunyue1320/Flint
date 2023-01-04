@@ -75,7 +75,7 @@ export const CreateRoomBox: React.FC<CreateRoomBoxProps> = ({ onCreateRoom }) =>
         }}
       />
       <Modal
-        destroyOnClose
+        forceRender // make "form" usable
         footer={[
           <Button key="cancel" onClick={handleCancel}>
             {t("cancel")}
