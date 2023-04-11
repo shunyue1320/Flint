@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-flint-web:
-    environment: development
+    environment: production
     env:
       FLAT_UA: ${{ secrets.FLAT_UA }}
 
@@ -28,8 +28,8 @@ jobs:
           # failure automatically retries 3 times
           pnpm i || pnpm i || pnpm i
 
-      - name: Build flint web development
-        run: pnpm -F flint-web build -m development
+      - name: Build flint web production
+        run: pnpm -F flint-web build -m production
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -45,12 +45,12 @@ jobs:
 
       - name: Build and push images
         env:
-          COMMIT_SHA_TAG: development-${{ github.sha }}
-          LATEST_DEV_TAG: latest
+          COMMIT_SHA_TAG: production-${{ github.sha }}
+          LATEST_PROD_TAG: latest
         run: |
-          docker build . -f web/flint-web/deploy/Dockerfile -t shunyue/flint-web:$COMMIT_SHA_TAG -t shunyue/flint-web:$LATEST_DEV_TAG
+          docker build . -f web/flint-web/deploy/Dockerfile -t shunyue/flint-web:$COMMIT_SHA_TAG -t shunyue/flint-web:$LATEST_PROD_TAG
           docker push shunyue/flint-web:$COMMIT_SHA_TAG
-          docker push shunyue/flint-web:$LATEST_DEV_TAG
+          docker push shunyue/flint-web:$LATEST_PROD_TAG
 
   deploy-flint-web:
     runs-on: ubuntu-latest
