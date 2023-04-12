@@ -12,3 +12,6 @@ pnpm run start:web
 ```
 pnpm run storybook
 ```
+
+# back-end
+https://github.com/shunyue1320/flint-server
